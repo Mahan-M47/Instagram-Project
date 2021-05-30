@@ -1,7 +1,7 @@
 package Server.Controller;
 
+import Server.Utils;
 import com.google.gson.Gson;
-
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,13 +15,13 @@ public class ServerJsonHandler
     private Gson gson;
 
     ServerJsonHandler () throws IOException {
-        serverSocket = new ServerSocket(6000);
+        serverSocket = new ServerSocket(Utils.PORT);
         socket = serverSocket.accept();
         in = new DataInputStream( socket.getInputStream() );
         gson = new Gson();
     }
 
-    Request recieveFromClient () throws IOException {
+    Request receiveFromClient () throws IOException {
         byte[] bytes = new byte[in.readInt()];
         in.readFully(bytes);
         String json = new String(bytes);

@@ -1,5 +1,6 @@
 package Client.Controller;
 
+import Client.Utils;
 import com.google.gson.Gson;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class ClientJsonHandler
     private Gson gson;
 
     ClientJsonHandler () throws IOException {
-        socket = new Socket("localhost", 6000);
+        socket = new Socket(Utils.IP_ADDRESS, Utils.PORT);
         out = new DataOutputStream( socket.getOutputStream() );
         gson = new Gson();
     }
