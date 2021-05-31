@@ -1,4 +1,4 @@
 package Client.View;
 
-public class Response {
+public class Search {
 }
