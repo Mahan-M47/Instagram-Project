@@ -14,17 +14,30 @@ public class ServerJsonHandler
     private DataInputStream in;
     private Gson gson;
 
-    ServerJsonHandler () throws IOException {
-        serverSocket = new ServerSocket(Utils.PORT);
-        socket = serverSocket.accept();
-        in = new DataInputStream( socket.getInputStream() );
+    public ServerJsonHandler () {
+        try {
+            serverSocket = new ServerSocket(Utils.PORT);
+            socket = serverSocket.accept();
+            in = new DataInputStream( socket.getInputStream() );
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         gson = new Gson();
     }
 
-    Request receiveFromClient () throws IOException {
-        byte[] bytes = new byte[in.readInt()];
-        in.readFully(bytes);
-        String json = new String(bytes);
+    public Request receiveFromClient () {
+        String json = "";
+
+        try {
+            byte[] bytes = new byte[in.readInt()];
+            in.readFully(bytes);
+            json = new String(bytes);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return gson.fromJson(json, Request.class);
     }
 

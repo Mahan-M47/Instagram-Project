@@ -12,13 +12,13 @@ public class ClientJsonHandler
     private DataOutputStream out;
     private Gson gson;
 
-    ClientJsonHandler () throws IOException {
+    public ClientJsonHandler () throws IOException {
         socket = new Socket(Utils.IP_ADDRESS, Utils.PORT);
         out = new DataOutputStream( socket.getOutputStream() );
         gson = new Gson();
     }
 
-    void sendToServer(Request req) throws IOException {
+    public void sendToServer(Request req) throws IOException {
         String json = gson.toJson(req);
         byte[] bytes = json.getBytes();
         out.writeInt(bytes.length);

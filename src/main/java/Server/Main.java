@@ -1,7 +1,11 @@
 package Server;
 
-public class Main {
-    public static void main(String[] args) {
+import Server.Controller.MainManager;
 
+public class Main
+{
+    public static void main(String[] args)
+    {
+        MainManager.startMainManager();
     }
 }

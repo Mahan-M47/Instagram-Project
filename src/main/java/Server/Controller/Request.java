@@ -3,12 +3,19 @@ package Server.Controller;
 public class Request
 {
     private long reqID;
-    private String request;
+    private String title;
     private Data data;
 
     public Request (String title, Data data) {
-        this.request = title;
+        this.title = title;
         this.data = data;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public Data getData() {
+        return data;
+    }
 }
