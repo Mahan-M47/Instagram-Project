@@ -7,9 +7,9 @@ public class Get implements Runnable
     private BlockingQueue<Request> queue;
     private ServerJsonHandler SJH;
 
-    public Get(BlockingQueue<Request> queue) {
+    public Get(BlockingQueue<Request> queue, ServerJsonHandler SJH) {
         this.queue = queue;
-        SJH = new ServerJsonHandler();
+        this.SJH = SJH;
     }
 
     @Override
@@ -18,8 +18,8 @@ public class Get implements Runnable
         {
             try {
                 queue.put( SJH.receiveFromClient() );
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException | NullPointerException e) {
+                break;
             }
         }
     }

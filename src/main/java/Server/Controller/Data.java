@@ -1,7 +1,18 @@
 package Server.Controller;
 
-public class Data
+public abstract class Data
 {
+    public String clientUsername;
+
+    public static class BasicRequest extends Data
+    {
+        public String str;
+        public BasicRequest(String clientUsername, String str) {
+            super.clientUsername = clientUsername;
+            this.str = str;
+        }
+    }
+
     public static class Login extends Data
     {
         public String username, password;
@@ -11,21 +22,6 @@ public class Data
         }
     }
 
-    public static class Follow extends Data
-    {
-        public String username;
-        public Follow(String username) {
-            this.username = username;
-        }
-    }
-
-    public static class SetBio extends Data
-    {
-        public String bioText;
-        public SetBio(String bioText) {
-            this.bioText = bioText;
-        }
-    }
 
     public static class Heartbeat extends Data
     {

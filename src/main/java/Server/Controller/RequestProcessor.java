@@ -5,9 +5,11 @@ import java.util.concurrent.BlockingQueue;
 public class RequestProcessor implements Runnable
 {
     private BlockingQueue<Request> queue;
+    private ServerJsonHandler SJH;
 
-    public RequestProcessor(BlockingQueue<Request> queue) {
+    public RequestProcessor(BlockingQueue<Request> queue, ServerJsonHandler SJH) {
         this.queue = queue;
+        this.SJH = SJH;
     }
 
     @Override
@@ -17,13 +19,14 @@ public class RequestProcessor implements Runnable
             try {
                 Request req = queue.take();
                 process(req);
+//                SJH.sendToClient( process(req) );
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                break;
             }
         }
     }
 
-    public void process(Request req) {
+    public Response process(Request req) {
         switch ( req.getTitle() ) {
             case "login":
                 System.out.println("login");
@@ -34,8 +37,7 @@ public class RequestProcessor implements Runnable
             case "setBio":
                 System.out.println("setBio");
                 break;
-            default:
-                System.out.println("hehehe");
         }
+        return null;
     }
 }
