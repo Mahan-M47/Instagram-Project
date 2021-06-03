@@ -24,6 +24,19 @@ public class NetworkManager
 
         getThread.start();
         processThread.start();
+
+        Data.Basic Dat = new Data.Basic("test", "hello");
+        Request req = new Request("login", Dat);
+
+        while (true) {
+            CJH.sendToServer(req);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void stopClient() {

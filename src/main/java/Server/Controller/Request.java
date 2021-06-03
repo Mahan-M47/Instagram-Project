@@ -2,7 +2,6 @@ package Server.Controller;
 
 public class Request
 {
-    private long reqID;
     private String title;
     private Data data;
 
@@ -11,11 +10,7 @@ public class Request
         this.data = data;
     }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title; }
 
-    public Data getData() {
-        return data;
-    }
+    public Data getData() { return data; }
 }

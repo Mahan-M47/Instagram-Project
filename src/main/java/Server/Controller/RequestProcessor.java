@@ -18,8 +18,8 @@ public class RequestProcessor implements Runnable
         {
             try {
                 Request req = queue.take();
-                process(req);
-//                SJH.sendToClient( process(req) );
+//                process(req);
+                SJH.sendToClient( process(req) );
             } catch (InterruptedException e) {
                 break;
             }
@@ -30,7 +30,7 @@ public class RequestProcessor implements Runnable
         switch ( req.getTitle() ) {
             case "login":
                 System.out.println("login");
-                break;
+                return new Response("basicResponse",new Data.Basic("hey","hello"));
             case "follow":
                 System.out.println("follow");
                 break;

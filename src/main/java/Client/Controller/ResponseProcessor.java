@@ -25,7 +25,8 @@ public class ResponseProcessor implements Runnable
 
     public void process(Response response) {
         switch ( response.getTitle() ) {
-
+            case "basicResponse":
+                System.out.println("basic");
         }
         //each case in switch statement calls a method from GUIManager.
 

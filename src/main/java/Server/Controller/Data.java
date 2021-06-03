@@ -1,32 +1,84 @@
 package Server.Controller;
 
-public abstract class Data
+import Server.Model.Chat;
+import Server.Model.Message;
+import Server.Model.Post;
+import Server.Model.User;
+
+public class Data
 {
     public String clientUsername;
 
-    public static class BasicRequest extends Data
+    //used by all Requests and Responses with just ONE String of data other than the client's username.
+    public static class Basic extends Data
     {
-        public String str;
-        public BasicRequest(String clientUsername, String str) {
-            super.clientUsername = clientUsername;
-            this.str = str;
+        public String dataString;
+        public Basic(String clientUsername, String dataString) {
+            this.clientUsername = clientUsername;
+            this.dataString = dataString;
         }
     }
 
-    public static class Login extends Data
+    public static class Comment extends Data
     {
-        public String username, password;
-        public Login(String username, String password) {
-            this.username = username;
-            this.password = password;
+        public String postID;
+        public String text;
+        public Comment(String clientUsername, String postID, String text) {
+            this.clientUsername = clientUsername;
+            this.postID = postID;
+            this.text = text;
         }
     }
 
-
-    public static class Heartbeat extends Data
+    public static class UserData extends Data
     {
-        public Heartbeat() {}
+        public User user;
+        public UserData(String clientUsername, User user) {
+            this.clientUsername = clientUsername;
+            this.user = user;
+        }
     }
 
-    // need to add more...
+    public static class PostData extends Data
+    {
+        public Post post;
+        public PostData(String clientUsername, Post post) {
+            this.clientUsername = clientUsername;
+            this.post = post;
+        }
+    }
+
+    public static class ChatData extends Data
+    {
+        public Chat chat;
+        public ChatData(String clientUsername, Chat chat) {
+            this.clientUsername = clientUsername;
+            this.chat = chat;
+        }
+    }
+
+    public static class MessageData extends Data
+    {
+        public Message message;
+        public MessageData(String clientUsername, Message message) {
+            this.clientUsername = clientUsername;
+            this.message = message;
+        }
+    }
+
+    //only used by the server so there's no need to add the client's username.
+    public static class BooleanData extends Data
+    {
+        public boolean flag;
+        public BooleanData(boolean flag) {
+            this.flag = flag;
+        }
+    }
+
+    //mostly used by the Heartbeat thread
+    public static class Empty extends Data
+    {
+        public Empty() {}
+    }
+
 }
