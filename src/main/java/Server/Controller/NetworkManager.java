@@ -12,9 +12,9 @@ public class NetworkManager
     private AtomicBoolean state;
 
 
-    public NetworkManager() {
+    public NetworkManager(ServerJsonHandler SJH) {
+        this.SJH = SJH;
         queue = new ArrayBlockingQueue<>(20);
-        SJH   = new ServerJsonHandler();
         state = new AtomicBoolean(true);
     }
 

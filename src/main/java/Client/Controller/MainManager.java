@@ -1,18 +1,23 @@
 package Client.Controller;
 
+import java.net.Socket;
+
 public class MainManager
 {
-    private static NetworkManager networkManager;
+    private NetworkManager networkManager;
+    private Socket socket;
 
-    public static void startMainManager()
+    public MainManager(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void startMainManager()
     {
-        networkManager = new NetworkManager();
+        ClientJsonHandler CJH  = new ClientJsonHandler(socket);
+        networkManager = new NetworkManager(CJH);
         networkManager.startClient();
 
-        //next step: creates an instance of GUIManager and loads the UI from View.
+        //next step: create an instance of GUIManager and load the UI from View
     }
 
-    public static void terminate() {
-        networkManager.stopClient();
-    }
 }

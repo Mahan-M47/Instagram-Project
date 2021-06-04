@@ -16,10 +16,10 @@ public class ServerJsonHandler
     private DataOutputStream out;
     private Gson gson;
 
-    public ServerJsonHandler() {
+    public ServerJsonHandler(ServerSocket serverSocket, Socket socket) {
         try {
-            serverSocket = new ServerSocket(Utils.PORT);
-            socket = serverSocket.accept();
+            this.serverSocket = serverSocket;
+            this.socket = socket;
             in  = new DataInputStream( socket.getInputStream() );
             out = new DataOutputStream( socket.getOutputStream() );
         }

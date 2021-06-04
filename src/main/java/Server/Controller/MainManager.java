@@ -1,12 +1,26 @@
 package Server.Controller;
 
-public class MainManager
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class MainManager implements Runnable
 {
-    public static void startMainManager()
+    private ServerSocket serverSocket;
+    private Socket socket;
+    private ServerJsonHandler SJH;
+
+    public MainManager(ServerSocket serverSocket, Socket socket)
     {
-        NetworkManager networkManager = new NetworkManager();
-        networkManager.startServer();
+        this.serverSocket = serverSocket;
+        this.socket = socket;
     }
 
+    @Override
+    public void run()
+    {
+        SJH = new ServerJsonHandler(serverSocket, socket);
+        NetworkManager networkManager = new NetworkManager(SJH);
+        networkManager.startServer();
+    }
 
 }

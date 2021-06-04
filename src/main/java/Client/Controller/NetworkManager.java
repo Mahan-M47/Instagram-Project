@@ -9,9 +9,9 @@ public class NetworkManager
     private ClientJsonHandler CJH;
     private Thread getThread, processThread;
 
-    public NetworkManager() {
+    public NetworkManager(ClientJsonHandler CJH) {
         queue = new ArrayBlockingQueue<>(20);
-        CJH = new ClientJsonHandler();
+        this.CJH = CJH;
     }
 
     public void startClient()

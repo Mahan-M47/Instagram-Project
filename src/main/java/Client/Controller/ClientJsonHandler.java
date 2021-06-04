@@ -14,9 +14,9 @@ public class ClientJsonHandler
     private DataOutputStream out;
     private Gson gson;
 
-    public ClientJsonHandler() {
+    public ClientJsonHandler(Socket socket) {
         try {
-            socket = new Socket(Utils.IP_ADDRESS, Utils.PORT);
+            this.socket = socket;
             in  = new DataInputStream( socket.getInputStream() );
             out = new DataOutputStream( socket.getOutputStream() );
         }
