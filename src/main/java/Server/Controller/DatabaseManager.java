@@ -1,7 +1,7 @@
 package Server.Controller;
 
+import Server.Model.User;
 import com.mongodb.*;
-import com.mongodb.client.MongoDatabase;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class DatabaseManager {
     DB db;
 
 
-    public DatabaseManager(String database) throws UnknownHostException {
+    public DatabaseManager(String database) {
         mongoClient = new MongoClient();
         db = mongoClient.getDB(database);
     }
@@ -23,21 +23,21 @@ public class DatabaseManager {
         collection.insert(data);
     }
 
-    public List<user> getusers(String collectionName){
+    public List<User> getusers(String collectionName){
             DBCollection collection = db.getCollection(collectionName);
             DBCursor dbObjects = collection.find();
-            List<user> users = new ArrayList<>();
+            List<User> Users = new ArrayList<>();
             for (DBObject dbObject : dbObjects) {
-                users.add(user.parsePlayer(dbObject));
+                Users.add(User.parsePlayer(dbObject));
             }
-            return users ;
+            return Users;
     }
 
-    public user getPlayer(String collectionName, String username) {
+    public User getPlayer(String collectionName, String username) {
         DBCollection collection = db.getCollection(collectionName);
         BasicDBObject obj = new BasicDBObject().append("username", username);
         DBObject one = collection.findOne(obj);
-        return user.parsePlayer(one);
+        return User.parsePlayer(one);
     }
 
 

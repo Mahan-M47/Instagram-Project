@@ -1,20 +1,33 @@
 package Server;
 
 import Server.Controller.DatabaseManager;
-import Server.Controller.user;
-import com.mongodb.*;
+import Server.Model.User;
 
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws UnknownHostException {
-        String tableName = "login";
-        user player2 = new user("ali", "qwertyhn");
-        String databaseName = "instagram";
-        DatabaseManager mongo = new DatabaseManager(databaseName);
-        mongo.insertToCollection(tableName, player2.getDBObject());
 
-    }
+
+
+
+
+
+
+
+    // server database test
+//    public static void main(String[] args)  {
+//        String tableName = "login";
+//        User player2 = new User("ali", "qwertyhn");
+//        String databaseName = "instagram";
+//        DatabaseManager mongo = null;
+//        try {
+//            mongo = new DatabaseManager(databaseName);
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+//        mongo.insertToCollection(tableName, player2.getDBObject());
+//
+//    }
+
+
 }
