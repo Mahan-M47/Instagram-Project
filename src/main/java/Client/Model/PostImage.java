@@ -1,6 +1,7 @@
 package Client.Model;
 
-import Server.Model.Post;
+import java.util.Date;
 
 public class PostImage extends Post {
+
 }
