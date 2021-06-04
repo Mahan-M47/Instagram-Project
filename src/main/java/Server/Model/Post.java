@@ -20,14 +20,6 @@ public abstract class Post {
         this.comments = comments ;
     }
 
-    public Post(String username , Date date){
-        Id = Idbuilder(username);
-        this.date = date ;
-        this.username = username ;
-        like = 0 ;
-        comments = new ArrayList<>() ;
-    }
-
     public Date getDate() {
         return date;
     }
