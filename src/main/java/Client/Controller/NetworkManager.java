@@ -1,5 +1,6 @@
 package Client.Controller;
 
+import Client.Utils;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -10,7 +11,7 @@ public class NetworkManager
     private Thread getThread, processThread;
 
     public NetworkManager(ClientJsonHandler CJH) {
-        queue = new ArrayBlockingQueue<>(20);
+        queue = new ArrayBlockingQueue<>(Utils.BLOCKING_QUEUE_CAPACITY);
         this.CJH = CJH;
     }
 
@@ -25,17 +26,24 @@ public class NetworkManager
         getThread.start();
         processThread.start();
 
-        Data.Basic Dat = new Data.Basic("test", "hello");
-        Request req = new Request("login", Dat);
+        //for testing purposes:
+//        Request req = new Request("login", new Data.Empty());
+//        while (true) {
+//            CJH.sendToServer(req);
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        while (true) {
-            CJH.sendToServer(req);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        Request req2 = new Request("login");
+//        CJH.sendToServer(req2);
+//        CJH.sendToServer(req2);
+//        CJH.sendToServer(req2);
+//
+//        Request req = new Request.Termination();
+//        CJH.sendToServer(req);
 
     }
 

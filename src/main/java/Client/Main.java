@@ -19,7 +19,7 @@ public class Main
                 flag = false;
             }
             catch (Exception e) {
-                Thread.sleep(100);
+                Thread.sleep(Utils.MAIN_SLEEP_TIMER);
             }
         }
 

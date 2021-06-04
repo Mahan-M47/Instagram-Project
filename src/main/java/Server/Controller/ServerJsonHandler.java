@@ -59,7 +59,8 @@ public class ServerJsonHandler
 
     public void close() {
         try {
-            serverSocket.close();
+            in.close();
+            out.close();
             socket.close();
         }
         catch (IOException e) {

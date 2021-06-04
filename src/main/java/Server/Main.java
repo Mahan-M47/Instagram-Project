@@ -14,11 +14,13 @@ public class Main
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
+                System.out.println("New Client Accepted.");
                 MainManager mainManager = new MainManager(serverSocket, socket);
                 Thread thread = new Thread(mainManager);
                 thread.start();
             }
             catch (IOException e) {
+                e.printStackTrace();
                 break;
             }
         }

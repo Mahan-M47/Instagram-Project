@@ -5,17 +5,28 @@ import Client.Model.Message;
 import Client.Model.Post;
 import Client.Model.User;
 
+import java.util.List;
+
 public class Data
 {
     public String clientUsername;
 
-    //used by all Requests and Responses with just ONE String of data other than the client's username.
+    //used by all Requests and Responses with just ONE String of data other than the client's username. (e.g. login)
     public static class Basic extends Data
     {
         public String dataString;
         public Basic(String clientUsername, String dataString) {
             this.clientUsername = clientUsername;
             this.dataString = dataString;
+        }
+    }
+
+    //only used by the server so there's no need to add the client's username. (e.g. returning the list of followers)
+    public static class UsernameList extends Data
+    {
+        public List<String> usernames;
+        public UsernameList(List<String> usernames) {
+            this.usernames.addAll(usernames);
         }
     }
 
@@ -39,12 +50,21 @@ public class Data
         }
     }
 
-    public static class PostData extends Data
+    public static class PostSingle extends Data
     {
         public Post post;
-        public PostData(String clientUsername, Post post) {
+        public PostSingle(String clientUsername, Post post) {
             this.clientUsername = clientUsername;
             this.post = post;
+        }
+    }
+
+    //only used by the server so there's no need to add the client's username. (e.g. returning all posts made by your following)
+    public static class PostList extends Data
+    {
+        public List<Post> posts;
+        public PostList(List<Post> posts) {
+            this.posts.addAll(posts);
         }
     }
 
@@ -66,7 +86,7 @@ public class Data
         }
     }
 
-    //only used by the server so there's no need to add the client's username.
+    //only used by the server so there's no need to add the client's username
     public static class BooleanData extends Data
     {
         public boolean flag;
@@ -75,7 +95,6 @@ public class Data
         }
     }
 
-    //mostly used by the Heartbeat thread
     public static class Empty extends Data
     {
         public Empty() {}

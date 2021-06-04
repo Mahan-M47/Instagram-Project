@@ -18,6 +18,7 @@ public class Get implements Runnable
         {
             try {
                 queue.put( SJH.receiveFromClient() );
+                System.out.println("Received a Request From Client.");
             } catch (InterruptedException | NullPointerException e) {
                 break;
             }

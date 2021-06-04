@@ -17,7 +17,7 @@ public class MainManager
         networkManager = new NetworkManager(CJH);
         networkManager.startClient();
 
-        //next step: create an instance of GUIManager and load the UI from View
+        //next step:  use GUIManager to load the UI from View
     }
 
 }

@@ -1,6 +1,5 @@
 package Client.Controller;
 
-import Client.Utils;
 import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -56,6 +55,8 @@ public class ClientJsonHandler
     public void close() {
         try {
             socket.close();
+            in.close();
+            out.close();
         }
         catch (IOException e) {
             e.printStackTrace();

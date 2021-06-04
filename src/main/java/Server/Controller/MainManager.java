@@ -13,12 +13,12 @@ public class MainManager implements Runnable
     {
         this.serverSocket = serverSocket;
         this.socket = socket;
+        SJH = new ServerJsonHandler(this.serverSocket, this.socket);
     }
 
     @Override
     public void run()
     {
-        SJH = new ServerJsonHandler(serverSocket, socket);
         NetworkManager networkManager = new NetworkManager(SJH);
         networkManager.startServer();
     }

@@ -1,15 +1,18 @@
 package Server.Controller;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RequestProcessor implements Runnable
 {
     private BlockingQueue<Request> queue;
     private ServerJsonHandler SJH;
+    private AtomicBoolean state;
 
-    public RequestProcessor(BlockingQueue<Request> queue, ServerJsonHandler SJH) {
+    public RequestProcessor(BlockingQueue<Request> queue, ServerJsonHandler SJH, AtomicBoolean state) {
         this.queue = queue;
         this.SJH = SJH;
+        this.state = state;
     }
 
     @Override
@@ -18,26 +21,30 @@ public class RequestProcessor implements Runnable
         {
             try {
                 Request req = queue.take();
-//                process(req);
                 SJH.sendToClient( process(req) );
+                System.out.println("Sent a Response to Client.");
             } catch (InterruptedException e) {
                 break;
             }
         }
     }
 
-    public Response process(Request req) {
+    public Response process(Request req)
+    {
         switch ( req.getTitle() ) {
             case "login":
-                System.out.println("login");
-                return new Response("basicResponse",new Data.Basic("hey","hello"));
+                return null;
             case "follow":
-                System.out.println("follow");
-                break;
+                return null;
             case "setBio":
-                System.out.println("setBio");
-                break;
+                return null;
+            case "terminate":
+                state.set(false);
         }
+
         return null;
+
+        //each Request.title corresponds to a case in the switch statement which summons a static method from other
+        //classes to process the Request. These methods should all return a Response object which is sent back to the client.
     }
 }
