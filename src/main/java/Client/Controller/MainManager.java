@@ -5,15 +5,13 @@ import java.net.Socket;
 public class MainManager
 {
     private NetworkManager networkManager;
-    private ClientJsonHandler CJH;
 
     public MainManager(Socket socket) {
-        CJH  = new ClientJsonHandler(socket);
+        networkManager = new NetworkManager(socket);
     }
 
     public void startMainManager()
     {
-        networkManager = new NetworkManager(CJH);
         networkManager.startClient();
         GUIManager.start();
 
@@ -22,7 +20,7 @@ public class MainManager
 
     public void disconnect() {
         Request terminate = new Request.Termination();
-        CJH.sendToServer(terminate);
+        NetworkManager.CJH.sendToServer(terminate);
         networkManager.stopClient();
     }
 

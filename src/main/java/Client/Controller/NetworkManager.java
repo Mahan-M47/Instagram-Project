@@ -1,23 +1,25 @@
 package Client.Controller;
 
 import Client.Utils;
+import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class NetworkManager
 {
+    public static ClientJsonHandler CJH;
+
     private BlockingQueue<Response> queue;
-    private ClientJsonHandler CJH;
     private Thread getThread, processThread;
 
-    public NetworkManager(ClientJsonHandler CJH) {
+    public NetworkManager(Socket socket) {
         queue = new ArrayBlockingQueue<>(Utils.BLOCKING_QUEUE_CAPACITY);
-        this.CJH = CJH;
+        CJH = new ClientJsonHandler(socket);
     }
 
     public void startClient()
     {
-        Get get = new Get(queue, CJH);
+        Get get = new Get(queue);
         getThread = new Thread(get);
 
         ResponseProcessor reqProcessor = new ResponseProcessor(queue);

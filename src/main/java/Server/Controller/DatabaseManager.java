@@ -21,7 +21,7 @@ public class DatabaseManager {
         collection.insert(data);
     }
 
-    public List<User> getusers(String collectionName){
+    public List<User> getUsers(String collectionName){
             DBCollection collection = db.getCollection(collectionName);
             DBCursor dbObjects = collection.find();
             List<User> Users = new ArrayList<>();

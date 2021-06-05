@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Server.Utils;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,7 +20,8 @@ public class MainManager implements Runnable
     @Override
     public void run()
     {
-        NetworkManager networkManager = new NetworkManager(SJH);
+        DatabaseManager mongo = new DatabaseManager(Utils.DATABASE_NAME);
+        NetworkManager networkManager = new NetworkManager(SJH, mongo);
         networkManager.startServer();
     }
 
