@@ -3,26 +3,27 @@ package Client.Model;
 import java.util.ArrayList;
 import java.util.Date;
 
-public abstract class Post {
+public abstract class Post
+{
     private String username ;
-    private String Id ;
-    private int like ;
-    private Date date ;
+    private String ID;
+    private int likes;
+    private Date date;
     private ArrayList<String> comments ;
 
-    public Post(String username , Date date , int like , String Id , ArrayList<String> comments){
-        this.Id = Id ;
+    public Post(String username , Date date , int likes, String ID, ArrayList<String> comments) {
+        this.ID = ID;
         this.date = date ;
         this.username = username ;
-        this.like = like ;
+        this.likes = likes;
         this.comments = comments ;
     }
 
     public Post(String username){
-        Id = Idbuilder(username);
+        ID = IDBuilder(username);
         date = new Date() ;
         this.username = username ;
-        like = 0 ;
+        likes = 0 ;
         comments = new ArrayList<>() ;
     }
 
@@ -30,12 +31,12 @@ public abstract class Post {
         return date;
     }
 
-    public String getId() {
-        return Id;
+    public String getID() {
+        return ID;
     }
 
-    public int getLike() {
-        return like;
+    public int getLikes() {
+        return likes;
     }
 
     public String getUsername() {
@@ -46,7 +47,7 @@ public abstract class Post {
         return comments;
     }
 
-    public String Idbuilder(String username){
+    public String IDBuilder(String username){
         return null ;
     }
 }

@@ -7,11 +7,15 @@ public class RequestProcessor implements Runnable
 {
     private BlockingQueue<Request> queue;
     private ServerJsonHandler SJH;
+    private DatabaseManager mongo;
     private AtomicBoolean state;
 
-    public RequestProcessor(BlockingQueue<Request> queue, ServerJsonHandler SJH, AtomicBoolean state) {
+    public RequestProcessor(BlockingQueue<Request> queue, ServerJsonHandler SJH,
+                            DatabaseManager mongo, AtomicBoolean state)
+    {
         this.queue = queue;
         this.SJH = SJH;
+        this.mongo = mongo;
         this.state = state;
     }
 
@@ -22,7 +26,6 @@ public class RequestProcessor implements Runnable
             try {
                 Request req = queue.take();
                 SJH.sendToClient( process(req) );
-                System.out.println("Sent a Response to Client.");
             } catch (InterruptedException e) {
                 break;
             }
@@ -44,7 +47,7 @@ public class RequestProcessor implements Runnable
 
         return null;
 
-        //each Request.title corresponds to a case in the switch statement which summons a static method from other
-        //classes to process the Request. These methods should all return a Response object which is sent back to the client.
+        //each Request.title corresponds to a case in the switch statement which summons a method from mongo
+        //to process the Request. These methods should all return a Response object which is sent back to the client.
     }
 }

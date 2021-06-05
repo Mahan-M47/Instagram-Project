@@ -5,19 +5,24 @@ import java.net.Socket;
 public class MainManager
 {
     private NetworkManager networkManager;
-    private Socket socket;
 
     public MainManager(Socket socket) {
-        this.socket = socket;
+        networkManager = new NetworkManager(socket);
     }
 
     public void startMainManager()
     {
-        ClientJsonHandler CJH  = new ClientJsonHandler(socket);
-        networkManager = new NetworkManager(CJH);
         networkManager.startClient();
+        GUIManager.start();
 
-        //next step:  use GUIManager to load the UI from View
+        //once the user closes the app window, GUIManager.start() will end and move to the disconnect method below.
+        disconnect();
+    }
+
+    public void disconnect() {
+        Request terminate = new Request.Termination();
+        NetworkManager.CJH.sendToServer(terminate);
+        networkManager.stopClient();
     }
 
 }
