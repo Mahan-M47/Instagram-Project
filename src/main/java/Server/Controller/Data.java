@@ -1,5 +1,9 @@
 package Server.Controller;
 
+import Server.Model.User;
+
+import java.net.UnknownHostException;
+
 public class Data
 {
     public static class Login extends Data
