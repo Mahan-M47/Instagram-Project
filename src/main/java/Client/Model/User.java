@@ -37,8 +37,8 @@ public class User {
                 .append("password", getPassword());
     }
 
-    public static Server.Model.User parsePlayer(DBObject object) {
-        Server.Model.User user = new Server.Model.User();
+    public static User parseUser(DBObject object) {
+        User user = new User();
         user.setUsername((String) object.get("username"));
         user.setPassword((String) object.get("password"));
         return user;
