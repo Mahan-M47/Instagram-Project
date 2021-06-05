@@ -10,7 +10,9 @@ public class RequestProcessor implements Runnable
     private DatabaseManager mongo;
     private AtomicBoolean state;
 
-    public RequestProcessor(BlockingQueue<Request> queue, ServerJsonHandler SJH, DatabaseManager mongo, AtomicBoolean state) {
+    public RequestProcessor(BlockingQueue<Request> queue, ServerJsonHandler SJH,
+                            DatabaseManager mongo, AtomicBoolean state)
+    {
         this.queue = queue;
         this.SJH = SJH;
         this.mongo = mongo;

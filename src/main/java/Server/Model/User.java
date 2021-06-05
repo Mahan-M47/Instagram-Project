@@ -37,7 +37,7 @@ public class User {
                     .append("password", getPassword());
         }
 
-        public static User parsePlayer(DBObject object) {
+        public static User parseUser(DBObject object) {
             User user = new User();
             user.setUsername((String) object.get("username"));
             user.setPassword((String) object.get("password"));

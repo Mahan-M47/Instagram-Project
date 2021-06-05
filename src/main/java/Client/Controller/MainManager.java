@@ -15,6 +15,7 @@ public class MainManager
         networkManager.startClient();
         GUIManager.start();
 
+        //once the user closes the app window, GUIManager.start() will end and move to the disconnect method below.
         disconnect();
     }
 
