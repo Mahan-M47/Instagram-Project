@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SplashScreenController">
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SplashScreenController">
    <children>
-      <Label layoutX="213.0" layoutY="154.0" text="splash">
-         <font>
-            <Font size="63.0" />
-         </font>
-      </Label>
+      <ImageView fitHeight="470.0" fitWidth="635.0" layoutX="333.0" layoutY="190.0">
+         <image>
+            <Image url="@splash.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

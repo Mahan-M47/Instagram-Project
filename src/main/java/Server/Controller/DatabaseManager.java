@@ -2,8 +2,6 @@ package Server.Controller;
 
 import Server.Model.User;
 import com.mongodb.*;
-
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 

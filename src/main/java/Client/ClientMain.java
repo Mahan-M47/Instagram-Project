@@ -3,7 +3,7 @@ package Client;
 import Client.Controller.MainManager;
 import java.net.Socket;
 
-public class Main
+public class ClientMain
 {
     public static void main(String[] args) throws InterruptedException
     {
