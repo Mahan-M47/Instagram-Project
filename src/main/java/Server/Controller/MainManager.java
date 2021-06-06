@@ -12,7 +12,7 @@ public class MainManager
         networkManagerList.add(networkManager);
     }
 
-    public static void removeClient(NetworkManager networkManager) {
+    public synchronized static void removeClient(NetworkManager networkManager) {
         networkManagerList.remove(networkManager);
     }
 

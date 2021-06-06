@@ -12,7 +12,7 @@ public class ServerMain
 {
     public static void main(String[] args) throws IOException
     {
-        DatabaseManager mongo = new DatabaseManager(Utils.DATABASE_NAME);
+        new DatabaseManager(Utils.DATABASE_NAME);
         ServerSocket serverSocket = new ServerSocket(Utils.PORT);
 
         while (true) {
