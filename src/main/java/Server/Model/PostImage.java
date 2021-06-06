@@ -8,8 +8,8 @@ public class PostImage extends Post {
 
     private File image ;
 
-    public PostImage(File image , String username , Date date , int like , String Id , ArrayList<String> comments){
-        super(username, date, like, Id , comments);
+    public PostImage(File image , String username , Date date , int likes , String Id , ArrayList<String> comments, ArrayList<String> likedBy){
+        super(username, date, likes, Id , comments, likedBy);
         this.image = image ;
     }
 
