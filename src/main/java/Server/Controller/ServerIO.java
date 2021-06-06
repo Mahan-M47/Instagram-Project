@@ -1,24 +1,20 @@
 package Server.Controller;
 
-import Server.Utils;
 import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerJsonHandler
+public class ServerIO
 {
-    private ServerSocket serverSocket;
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
     private Gson gson;
 
-    public ServerJsonHandler(ServerSocket serverSocket, Socket socket) {
+    public ServerIO(Socket socket) {
         try {
-            this.serverSocket = serverSocket;
             this.socket = socket;
             in  = new DataInputStream( socket.getInputStream() );
             out = new DataOutputStream( socket.getOutputStream() );
