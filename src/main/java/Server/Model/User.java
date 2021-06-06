@@ -11,6 +11,8 @@ public class User
     private String password;
     private List<String> followers;
     private List<String> following;
+    private List<Post> posts;
+    private List<Chat> chats;
 
     public User() {
     }
@@ -20,6 +22,8 @@ public class User
         this.password = password;
         followers = new ArrayList<>();
         following = new ArrayList<>();
+        posts = new ArrayList<>();
+        chats = new ArrayList<>();
     }
 
     public String getUsername() {
