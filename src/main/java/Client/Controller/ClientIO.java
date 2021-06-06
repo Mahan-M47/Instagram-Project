@@ -6,14 +6,14 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientJsonHandler
+public class ClientIO
 {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
     private Gson gson;
 
-    public ClientJsonHandler(Socket socket) {
+    public ClientIO(Socket socket) {
         try {
             this.socket = socket;
             in  = new DataInputStream( socket.getInputStream() );

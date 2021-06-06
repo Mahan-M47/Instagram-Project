@@ -2,13 +2,13 @@ package Client.Controller;
 
 import java.util.concurrent.BlockingQueue;
 
-public class Get implements Runnable
+public class Send implements Runnable
 {
-    private BlockingQueue<Response> queue;
+    private BlockingQueue<Request> queue;
     private ClientIO clientIO;
 
-    public Get(BlockingQueue<Response> queue, ClientIO clientIO) {
-        this.queue = queue;
+    public Send(ClientIO clientIO) {
+        this.queue = NetworkManager.queueRequest;
         this.clientIO = clientIO;
     }
 
@@ -17,8 +17,8 @@ public class Get implements Runnable
         while (true)
         {
             try {
-                Response response = clientIO.receiveFromServer();
-                queue.put(response);
+                Request req = queue.take();
+                clientIO.sendToServer(req);
             }
             catch (InterruptedException | NullPointerException e) {
                 break;

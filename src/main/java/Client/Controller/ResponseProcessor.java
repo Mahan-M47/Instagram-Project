@@ -16,21 +16,11 @@ public class ResponseProcessor implements Runnable
         {
             try {
                 Response response = queue.take();
-                process(response);
-            } catch (InterruptedException e) {
+                MainManager.process(response);
+            } catch (InterruptedException | NullPointerException e) {
                 break;
             }
         }
     }
 
-    public void process(Response response) {
-        switch ( response.getTitle() ) {
-            case "basicResponse":
-                break;
-            case "booleanResponse":
-                break;
-        }
-
-        //each case in switch statement calls a method from GUIManager.
-    }
 }
