@@ -15,8 +15,7 @@ public class MainManager implements Runnable
     @Override
     public void run()
     {
-        DatabaseManager mongo = new DatabaseManager(Utils.DATABASE_NAME);
-        NetworkManager networkManager = new NetworkManager(SJH, mongo);
+        NetworkManager networkManager = new NetworkManager(SJH);
         networkManager.startServer();
     }
 

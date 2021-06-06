@@ -9,14 +9,11 @@ public class NetworkManager
 {
     private BlockingQueue<Request> queue;
     private ServerJsonHandler SJH;
-    private DatabaseManager mongo;
     private Thread getThread, processThread;
     private AtomicBoolean state;
 
-
-    public NetworkManager(ServerJsonHandler SJH, DatabaseManager mongo) {
+    public NetworkManager(ServerJsonHandler SJH) {
         this.SJH = SJH;
-        this.mongo = mongo;
         queue = new ArrayBlockingQueue<>(Utils.BLOCKING_QUEUE_CAPACITY);
         state = new AtomicBoolean(true);
     }
@@ -26,7 +23,7 @@ public class NetworkManager
         Get get = new Get(queue, SJH);
         getThread = new Thread(get);
 
-        RequestProcessor reqProcessor = new RequestProcessor(queue, SJH, mongo, state);
+        RequestProcessor reqProcessor = new RequestProcessor(queue, SJH, state);
         processThread = new Thread(reqProcessor);
 
         getThread.start();
