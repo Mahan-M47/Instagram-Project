@@ -6,9 +6,9 @@ import java.net.Socket;
 
 public class MainManager
 {
-    private NetworkManager networkManager;
+    private static NetworkManager networkManager;
 
-    public MainManager(Socket socket) {
+    public static void startClient (Socket socket) {
         networkManager = new NetworkManager(socket);
         GUIManager.start();
 
@@ -16,7 +16,7 @@ public class MainManager
         disconnect();
     }
 
-    public void disconnect()
+    public static void disconnect()
     {
         try {
             Request terminate = new Request.Termination();

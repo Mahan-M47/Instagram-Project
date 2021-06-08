@@ -6,25 +6,24 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainManager
 {
-    public static List<NetworkManager> networkManagerList = new ArrayList<>();
+    public static List<ActiveClient> activeClientList = new ArrayList<>();
 
     public static void addNewClient(NetworkManager networkManager) {
-        networkManagerList.add(networkManager);
+        ActiveClient client = new ActiveClient(networkManager);
+        activeClientList.add(client);
     }
 
     public synchronized static void removeClient(NetworkManager networkManager) {
-        networkManagerList.remove(networkManager);
+        activeClientList.removeIf(client -> client.getNetworkManager().equals(networkManager));
     }
 
 
     public synchronized static Response process(Request req, AtomicBoolean state) {
         {
             switch ( req.getTitle() ) {
+                case "signup":
+                    return null;
                 case "login":
-                    return null;
-                case "follow":
-                    return null;
-                case "setBio":
                     return null;
                 case "terminate":
                     state.set(false);

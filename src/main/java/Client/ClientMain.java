@@ -14,7 +14,7 @@ public class ClientMain
         {
             try {
                 socket = new Socket(Utils.IP_ADDRESS, Utils.PORT);
-                new MainManager(socket);
+                MainManager.startClient(socket);
                 flag = false;
             }
             catch (Exception e) {
