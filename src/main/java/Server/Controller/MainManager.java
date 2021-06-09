@@ -29,12 +29,14 @@ public class MainManager
             switch ( req.getTitle() )
             {
                 case "signup":
-                    flag = DatabaseManager.checkUsername(Utils.LOGIN , dat.clientUsername);
+                    boolean userExists = DatabaseManager.checkIfUserExists(Utils.LOGIN , dat.clientUsername);
 
-                    if (!flag) {
+                    if (!userExists) {
                         user = new User(dat.clientUsername, dat.dataString );
                         DatabaseManager.adduser(user);
+                        flag = true;
                     }
+                    else flag = false;
                     return new Response("signup", new Data.BooleanData(dat.clientUsername, flag) );
 
                 case "login":

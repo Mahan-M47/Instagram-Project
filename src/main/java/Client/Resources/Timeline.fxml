@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.TimelineController">
-   <children>
-      <ScrollBar layoutX="1258.0" layoutY="15.0" orientation="VERTICAL" prefHeight="820.0" prefWidth="25.0" />
-   </children>
-</AnchorPane>
+<ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="6000.0" prefWidth="1285.0">
+         <children>
+            <Label alignment="CENTER" layoutX="504.0" layoutY="309.0" prefHeight="168.0" prefWidth="277.0" text="TIMELINE">
+               <font>
+                  <Font size="60.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+  </content>
+</ScrollPane>

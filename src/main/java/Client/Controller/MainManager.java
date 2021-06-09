@@ -34,20 +34,21 @@ public class MainManager
     {
         Data dat = response.getData();
         User user = null;
-        boolean flag;
 
         switch ( response.getTitle() )
         {
             case "signup":
                 if (dat.flag) {
-
+                    GUIManager.showTimeline();
                 }
+                else System.out.println("sad");
 
             case "login":
                 if (dat.flag) {
-
+                    GUIManager.showTimeline();
                 }
-                else GUIManager.showTimeline();
+                else System.out.println("sad");
+
                 break;
         }
 

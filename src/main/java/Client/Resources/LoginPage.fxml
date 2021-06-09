@@ -34,7 +34,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Hyperlink fx:id="creatNewAccountHL" layoutX="589.0" layoutY="574.0" onAction="#creatNewAccountHLHandler" prefHeight="34.0" prefWidth="141.0" text="Creat new account">
+      <Hyperlink fx:id="createNewAccountHL" layoutX="589.0" layoutY="574.0" onAction="#createNewAccountHLHandler" prefHeight="34.0" prefWidth="141.0" text="Creat new account">
          <font>
             <Font size="16.0" />
          </font>

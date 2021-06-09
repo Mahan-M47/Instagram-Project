@@ -33,7 +33,7 @@ public class DatabaseManager {
 
     public synchronized static User getUser(String collectionName, String username) {
         DBCollection collection = db.getCollection(collectionName);
-        if(checkUsername(collectionName,username)) {
+        if(checkIfUserExists(collectionName,username)) {
             BasicDBObject obj = new BasicDBObject().append("username", username);
             DBObject one = collection.findOne(obj);
             return User.parseUser(one);
@@ -43,14 +43,14 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static boolean checkUsername(String collectionName, String username) {
+    public synchronized static boolean checkIfUserExists(String collectionName, String username) {
         DBCollection collection = db.getCollection(collectionName);
         BasicDBObject obj = new BasicDBObject().append("username", username);
         DBObject one = collection.findOne(obj);
         if(one == null){
             return false ;
         }
-        else{
+        else {
             return true ;
         }
     }

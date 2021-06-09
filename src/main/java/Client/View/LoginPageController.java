@@ -8,16 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +34,7 @@ public class LoginPageController implements Initializable {
     private Button loginButton;
 
     @FXML
-    private Hyperlink creatNewAccountHL;
+    private Hyperlink createNewAccountHL;
 
     @FXML
     void loginButtonClickHandler(ActionEvent event) {
@@ -54,13 +49,8 @@ public class LoginPageController implements Initializable {
     }
 
     @FXML
-    void creatNewAccountHLHandler(ActionEvent event) throws IOException {
-        URL signup = Paths.get("./src/main/java/Client/Resources/SignupPage.fxml").toUri().toURL();
-        Parent signupPage = FXMLLoader.load(signup);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(signupPage);
-        stage.setScene(scene);
-        stage.show();
+    void createNewAccountHLHandler(ActionEvent event) throws IOException {
+        Starter.changeScene("SignupPage");
     }
 
 
