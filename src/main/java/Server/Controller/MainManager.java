@@ -1,5 +1,8 @@
 package Server.Controller;
 
+import Server.Model.User;
+import Server.Utils;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,9 +24,16 @@ public class MainManager
         {
             switch ( req.getTitle() ) {
                 case "signup":
-                    return null;
+                    Data.Basic dat = (Data.Basic)req.getData();
+                    User user = new User(req.getData().clientUsername, dat.dataString );
+                    DatabaseManager.adduser(user);
+                    // set flag with  DatabaseManager.checkuser( Utils.LOGIN ,req.getData().clientUsername)
+                    return null ;
                 case "login":
-                    return null;
+                    Data.Basic dat2 = (Data.Basic)req.getData();
+                    User login2 = new User(req.getData().clientUsername, dat2.dataString );
+                    // set flag with DatabaseManager.checklogin(login2)
+                    return null ;
                 case "terminate":
                     state.set(false);
             }

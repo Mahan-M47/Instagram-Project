@@ -92,6 +92,7 @@ public class Data
         public BooleanData(boolean flag) {
             this.flag = flag;
         }
+
     }
 
     //mostly used by the Heartbeat thread

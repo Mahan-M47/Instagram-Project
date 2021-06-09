@@ -1,6 +1,7 @@
 package Server.Controller;
 
 import Server.Model.User;
+import Server.Utils;
 import com.mongodb.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,11 @@ public class DatabaseManager {
         db = mongoClient.getDB(databaseName);
     }
 
-    public synchronized static void insertToCollection(String collectionName, DBObject data) {
-        DBCollection collection = db.getCollection(collectionName);
-        collection.insert(data);
+    public synchronized static void adduser(User user) {
+        if(!checkuser(Utils.LOGIN,user.getUsername())){
+            DBCollection collection = db.getCollection(Utils.LOGIN);
+            collection.insert(user.getDBObject());
+        }
     }
 
     public synchronized static List<User> getUsers(String collectionName){
@@ -53,4 +56,16 @@ public class DatabaseManager {
             return true ;
         }
     }
+
+    public synchronized static boolean checklogin(User user){
+        DBCollection collection = db.getCollection(Utils.LOGIN);
+        DBObject one = collection.findOne(user.getDBObject());
+        if(one == null){
+            return false ;
+        }
+        else{
+            return true ;
+        }
+    }
+
 }
