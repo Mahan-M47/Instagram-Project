@@ -22,14 +22,13 @@ public class MainManager
 
     public synchronized static Response process(Request req, AtomicBoolean state) {
         {
-            Data dat = null;
+            Data dat = req.getData();
             User user = null;
             boolean flag;
 
             switch ( req.getTitle() )
             {
                 case "signup":
-                    dat = req.getData();
                     flag = DatabaseManager.checkUsername(Utils.LOGIN , dat.clientUsername);
 
                     if (!flag) {
@@ -39,7 +38,6 @@ public class MainManager
                     return new Response("signup", new Data.BooleanData(dat.clientUsername, flag) );
 
                 case "login":
-                    dat = req.getData();
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
                     return new Response("login", new Data.BooleanData(dat.clientUsername, flag) );

@@ -1,7 +1,7 @@
 package Client.Controller;
 
+import Client.Model.User;
 import Client.Utils;
-
 import java.net.Socket;
 
 public class MainManager
@@ -32,10 +32,22 @@ public class MainManager
 
     public static void process(Response response)
     {
-        switch ( response.getTitle() ) {
-            case "basicResponse":
-                break;
-            case "booleanResponse":
+        Data dat = response.getData();
+        User user = null;
+        boolean flag;
+
+        switch ( response.getTitle() )
+        {
+            case "signup":
+                if (dat.flag) {
+
+                }
+
+            case "login":
+                if (dat.flag) {
+
+                }
+
                 break;
         }
 

@@ -3,7 +3,7 @@ package Server.Controller;
 public class Request
 {
     private String title;
-    private Data data;
+    private Data data = null;
 
     public Request (String title) {
         this.title = title;
