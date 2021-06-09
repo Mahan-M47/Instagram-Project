@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.TimelineController">
+   <children>
+      <ScrollBar layoutX="1258.0" layoutY="15.0" orientation="VERTICAL" prefHeight="820.0" prefWidth="25.0" />
+   </children>
+</AnchorPane>

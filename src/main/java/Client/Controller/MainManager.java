@@ -47,7 +47,7 @@ public class MainManager
                 if (dat.flag) {
 
                 }
-
+                else GUIManager.showTimeline();
                 break;
         }
 
