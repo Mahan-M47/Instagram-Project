@@ -21,15 +21,15 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <TextField layoutX="465.0" layoutY="404.0" prefHeight="60.0" prefWidth="370.0" promptText="Username">
+      <TextField fx:id="usernameTF" layoutX="465.0" layoutY="404.0" prefHeight="60.0" prefWidth="370.0" promptText="Username">
          <font>
             <Font size="18.0" />
          </font></TextField>
-      <PasswordField layoutX="465.0" layoutY="491.0" prefHeight="60.0" prefWidth="370.0" promptText="Password">
+      <PasswordField fx:id="passwordTF" layoutX="465.0" layoutY="491.0" prefHeight="60.0" prefWidth="370.0" promptText="Password">
          <font>
             <Font size="18.0" />
          </font></PasswordField>
-      <Button layoutX="465.0" layoutY="626.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="370.0" style="-fx-font-size: 18;" text="Login">
+      <Button fx:id="loginButton" layoutX="465.0" layoutY="626.0" mnemonicParsing="false" onAction="#loginButtonClickHandler" prefHeight="40.0" prefWidth="370.0" style="-fx-font-size: 18;" text="Login">
          <font>
             <Font name="Arial" size="8.0" />
          </font>
