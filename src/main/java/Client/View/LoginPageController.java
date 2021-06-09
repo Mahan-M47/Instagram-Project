@@ -5,12 +5,7 @@ import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import java.io.IOException;
-
+import javafx.scene.control.*;
 
 public class LoginPageController
 {
@@ -27,20 +22,44 @@ public class LoginPageController
     private Hyperlink createNewAccountHL;
 
     @FXML
-    void loginButtonClickHandler(ActionEvent event) {
-        String username = usernameTF.getText();
-        String password = passwordTF.getText();
+    private Label errorLabel;
 
-        if ( !username.equals("") && !password.equals("") ) {
-            Request req = new Request("login", new Data.Basic(username, password));
-            NetworkManager.putRequest(req);
-        }
-
+    @FXML
+    void createNewAccountHLHandler(ActionEvent event) {
+        Starter.changeScene("SignupPage");
     }
 
     @FXML
-    void createNewAccountHLHandler(ActionEvent event) throws IOException {
-        Starter.changeScene("SignupPage");
+    void loginButtonClickHandler(ActionEvent event)
+    {
+        String username = usernameTF.getText();
+        String password = passwordTF.getText();
+
+        if (checkTextFields(username, password) ) {
+            Request req = new Request("login", new Data.Basic(username, password));
+            NetworkManager.putRequest(req);
+        }
+    }
+
+    public boolean checkTextFields (String username, String password)
+    {
+        boolean flag = false;
+
+        if ( username.equals("") && password.equals("") ) {
+            errorLabel.setText("Please Enter Your Username and Password.");
+        }
+        else if (username.equals("")) {
+            errorLabel.setText("Please Enter Your Username.");
+        }
+        else if (password.equals("")) {
+            errorLabel.setText("Please Enter Your Password.");
+        }
+        else {
+            errorLabel.setText("");
+            flag = true;
+        }
+
+        return flag;
     }
 
 }
