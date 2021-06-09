@@ -8,8 +8,7 @@ public class MainManager
 {
     public static List<ActiveClient> activeClientList = new ArrayList<>();
 
-    public static void addNewClient(NetworkManager networkManager) {
-        ActiveClient client = new ActiveClient(networkManager);
+    public static void addNewClient(ActiveClient client) {
         activeClientList.add(client);
     }
 
