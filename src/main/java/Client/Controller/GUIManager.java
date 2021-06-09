@@ -8,6 +8,14 @@ public class GUIManager
         javafx.application.Application.launch(Starter.class);
     }
 
+    public static void showLoginPage() {
+        Starter.changeScene("LoginPage");
+    }
+
+    public static void showSignupPage() {
+        Starter.changeScene("SignupPage");
+    }
+
     public static void showTimeline() {
         Starter.changeScene("Timeline");
     }

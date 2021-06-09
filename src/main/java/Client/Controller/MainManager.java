@@ -6,7 +6,6 @@ import java.net.Socket;
 
 public class MainManager
 {
-    public static String currentUser;
     private static NetworkManager networkManager;
 
     public static void startClient (Socket socket) {
@@ -41,17 +40,26 @@ public class MainManager
         {
             case "signup":
                 if (dat.flag) {
-                    currentUser = dat.clientUsername;
+                    Utils.currentUser = dat.clientUsername;
+                    Utils.SIGNUP_ERROR_TEXT = "";
                     GUIManager.showTimeline();
                 }
-                else System.out.println("sad");
+                else {
+                    Utils.SIGNUP_ERROR_TEXT = "This Username Has Already Been Taken.";
+                    GUIManager.showSignupPage();
+                }
+                break;
 
             case "login":
                 if (dat.flag) {
-                    currentUser = dat.clientUsername;
+                    Utils.currentUser = dat.clientUsername;
+                    Utils.LOGIN_ERROR_TEXT = "";
                     GUIManager.showTimeline();
                 }
-                else System.out.println("sad");
+                else {
+                    Utils.LOGIN_ERROR_TEXT = "The Entered Username or Password Is Incorrect.";
+                    GUIManager.showLoginPage();
+                }
 
                 break;
         }

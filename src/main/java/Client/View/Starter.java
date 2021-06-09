@@ -20,6 +20,7 @@ public class Starter extends Application
         stage = primaryStage;
         URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
         Parent root = FXMLLoader.load(url);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Instagram");
         primaryStage.setScene(new Scene(root, 1300, 850));
         primaryStage.show();

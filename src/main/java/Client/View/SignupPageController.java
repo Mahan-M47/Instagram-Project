@@ -3,28 +3,35 @@ package Client.View;
 import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
+import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SignupPageController {
+public class SignupPageController implements Initializable
+{
     @FXML
     private TextField usernameTF;
-
     @FXML
     private PasswordField passwordTF;
-
     @FXML
     private PasswordField confirmPasswordTF;
-
     @FXML
     private Hyperlink loginInsteadHL;
-
     @FXML
     private Button signupButton;
-
     @FXML
     private Label errorLabel;
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        errorLabel.setText(Utils.SIGNUP_ERROR_TEXT);
+    }
+
 
     @FXML
     void loginInsteadHLHandler(ActionEvent event) {
@@ -34,10 +41,10 @@ public class SignupPageController {
     @FXML
     void signupButtonClickHandler(ActionEvent event)
     {
-        String username = usernameTF.getText();
+        String username = usernameTF.getText().toLowerCase();
         String password = passwordTF.getText();
 
-        if (checkTextFields(username, password) ) {
+        if ( checkTextFields(username, password) ) {
             Request req = new Request("signup", new Data.Basic(username, password));
             NetworkManager.putRequest(req);
         }
