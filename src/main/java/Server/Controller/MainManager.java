@@ -25,6 +25,7 @@ public class MainManager
                     if (!userExists) {
                         user = new User(dat.clientUsername, dat.dataString );
                         DatabaseManager.adduser(user);
+                        System.out.println("User \"" + dat.clientUsername + "\" Logged In.");
                         flag = true;
                     }
                     else flag = false;
@@ -34,12 +35,13 @@ public class MainManager
                 case "login":
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
+                    System.out.println("User \"" + dat.clientUsername + "\" Logged In.");
                     return new Response("login", new Data.BooleanData(dat.clientUsername, flag) );
 
 
                 case "logout":
                     removeClient(dat.clientUsername);
-                    System.out.println("User \"" + dat.clientUsername + "\" Has Logged Out.");
+                    System.out.println("User \"" + dat.clientUsername + "\" Logged Out.");
                     break;
 
 
