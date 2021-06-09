@@ -7,7 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class SignupPageController {
+public class SignupPageController
+{
     @FXML
     private TextField usernameTF;
 
@@ -21,10 +22,10 @@ public class SignupPageController {
     private Hyperlink loginInsteadHL;
 
     @FXML
-    private Button signupBtn;
+    private Button signupButton;
 
     @FXML
-    private Label errorLbl;
+    private Label errorLabel;
 
     @FXML
     void loginInsteadHLHandler(ActionEvent event) {
@@ -32,8 +33,8 @@ public class SignupPageController {
     }
 
     @FXML
-    void signupBtnClickHandler(ActionEvent event) {
-        errorLbl.setText("");
+    void signupButtonClickHandler(ActionEvent event) {
+        errorLabel.setText("");
         if (samePass()) {
             String username = usernameTF.getText();
             String password = passwordTF.getText();
@@ -45,10 +46,10 @@ public class SignupPageController {
         }
         else {
             if (passwordTF.getText().isEmpty()){
-                errorLbl.setText("Enter Password");
+                errorLabel.setText("Enter Password");
             }
             else {
-                errorLbl.setText("Those Passwords Didn't Match. Try Again.");
+                errorLabel.setText("Those Passwords Didn't Match. Try Again.");
             }
         }
     }

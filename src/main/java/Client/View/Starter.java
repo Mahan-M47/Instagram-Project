@@ -18,7 +18,7 @@ public class Starter extends Application
     public void start(Stage primaryStage) throws IOException
     {
         stage = primaryStage;
-        URL url = Paths.get("./src/main/java/Client/Resources/LoginPage.fxml").toUri().toURL();
+        URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Instagram");
         primaryStage.setScene(new Scene(root, 1300, 850));
@@ -37,7 +37,6 @@ public class Starter extends Application
         }
 
     }
-
 
     public static void main(String[] args) {
         launch(args);

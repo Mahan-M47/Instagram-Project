@@ -36,7 +36,7 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <Button fx:id="signupBtn" layoutX="465.0" layoutY="708.0" mnemonicParsing="false" onAction="#signupBtnClickHandler" prefHeight="40.0" prefWidth="370.0" text="Sign Up">
+      <Button fx:id="signupButton" layoutX="465.0" layoutY="708.0" mnemonicParsing="false" onAction="#signupButtonClickHandler" prefHeight="40.0" prefWidth="370.0" text="Sign Up">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
@@ -46,6 +46,6 @@
             <Font size="16.0" />
          </font>
       </Hyperlink>
-      <Label fx:id="errorLbl" alignment="TOP_LEFT" layoutX="476.0" layoutY="624.0" prefHeight="40.0" prefWidth="355.0" textFill="#dc0000" />
+      <Label fx:id="errorLabel" alignment="TOP_LEFT" layoutX="476.0" layoutY="624.0" prefHeight="40.0" prefWidth="355.0" textFill="#dc0000" />
    </children>
 </AnchorPane>

@@ -20,11 +20,17 @@ public class Data
     public Message message;
     public boolean flag;
 
+    public Data() {}
+
+    public Data (String clientUsername) {
+        this.clientUsername = clientUsername;
+    }
+
     //used by all Requests and Responses with just ONE String of data other than the client's username. (e.g. login)
     public static class Basic extends Data
     {
         public Basic(String clientUsername, String dataString) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.dataString = dataString;
         }
     }
@@ -32,8 +38,8 @@ public class Data
     //only used by the server so there's no need to add the client's username. (e.g. returning the list of followers)
     public static class UsernameList extends Data
     {
-        public UsernameList(String username, List<String> usernames) {
-            this.clientUsername = username;
+        public UsernameList(String clientUsername, List<String> usernames) {
+            super(clientUsername);
             this.usernames.addAll(usernames);
         }
     }
@@ -41,7 +47,7 @@ public class Data
     public static class Comment extends Data
     {
         public Comment(String clientUsername, String postID, String text) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.postID = postID;
             this.text = text;
         }
@@ -57,7 +63,7 @@ public class Data
     public static class PostSingle extends Data
     {
         public PostSingle(String clientUsername, Post post) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.post = post;
         }
     }
@@ -72,7 +78,7 @@ public class Data
     public static class ChatData extends Data
     {
         public ChatData(String clientUsername, Chat chat) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.chat = chat;
         }
     }
@@ -80,7 +86,7 @@ public class Data
     public static class MessageData extends Data
     {
         public MessageData(String clientUsername, Message message) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.message = message;
         }
     }
@@ -92,7 +98,7 @@ public class Data
         }
 
         public BooleanData(String clientUsername, boolean flag) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.flag = flag;
         }
     }

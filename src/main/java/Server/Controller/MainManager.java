@@ -2,7 +2,6 @@ package Server.Controller;
 
 import Server.Model.User;
 import Server.Utils;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -43,6 +42,9 @@ public class MainManager
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
                     return new Response("login", new Data.BooleanData(dat.clientUsername, flag) );
+
+                case "logout":
+
 
                 case "terminate":
                     state.set(false);

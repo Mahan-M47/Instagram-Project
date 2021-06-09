@@ -3,8 +3,6 @@ package Server;
 import Server.Controller.ActiveClient;
 import Server.Controller.DatabaseManager;
 import Server.Controller.MainManager;
-import Server.Model.User;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

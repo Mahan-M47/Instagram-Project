@@ -6,6 +6,7 @@ import java.net.Socket;
 
 public class MainManager
 {
+    public static String currentUser;
     private static NetworkManager networkManager;
 
     public static void startClient (Socket socket) {
@@ -39,12 +40,14 @@ public class MainManager
         {
             case "signup":
                 if (dat.flag) {
+                    currentUser = dat.clientUsername;
                     GUIManager.showTimeline();
                 }
                 else System.out.println("sad");
 
             case "login":
                 if (dat.flag) {
+                    currentUser = dat.clientUsername;
                     GUIManager.showTimeline();
                 }
                 else System.out.println("sad");
