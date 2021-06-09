@@ -7,8 +7,8 @@ public class Send implements Runnable
     private BlockingQueue<Request> queue;
     private ClientIO clientIO;
 
-    public Send(ClientIO clientIO) {
-        this.queue = NetworkManager.queueRequest;
+    public Send(BlockingQueue<Request> queue, ClientIO clientIO) {
+        this.queue = queue;
         this.clientIO = clientIO;
     }
 

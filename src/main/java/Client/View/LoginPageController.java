@@ -1,5 +1,8 @@
 package Client.View;
 
+import Client.Controller.Data;
+import Client.Controller.NetworkManager;
+import Client.Controller.Request;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +13,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -34,6 +36,8 @@ public class LoginPageController implements Initializable {
     void loginButtonClickHandler(ActionEvent event) {
         String username = usernameTF.getText();
         String password = passwordTF.getText();
+        Request req = new Request("login", new Data.Basic(username, password));
+        NetworkManager.putRequest(req);
     }
 
     @Override

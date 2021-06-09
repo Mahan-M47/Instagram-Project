@@ -20,7 +20,7 @@ public class MainManager
     {
         try {
             Request terminate = new Request.Termination();
-            NetworkManager.queueRequest.put(terminate);
+            NetworkManager.putRequest(terminate);
             Thread.sleep(Utils.DISCONNECT_SLEEP_TIMER);
         }
         catch (InterruptedException e) {
