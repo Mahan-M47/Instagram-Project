@@ -15,18 +15,20 @@ public class ServerMain
         DatabaseManager.startDatabase(Utils.DATABASE_NAME);
         ServerSocket serverSocket = new ServerSocket(Utils.PORT);
 
-        while (true) {
-            try {
-                Socket socket = serverSocket.accept();
-                ActiveClient client = new ActiveClient(socket);
-                MainManager.addNewClient(client);
-                System.out.println("New Client Accepted.");
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-                break;
-            }
-        }
+//        while (true) {
+//            try {
+//                Socket socket = serverSocket.accept();
+//                ActiveClient client = new ActiveClient(socket);
+//                MainManager.addNewClient(client);
+//                System.out.println("New Client Accepted.");
+//            }
+//            catch (IOException e) {
+//                e.printStackTrace();
+//                break;
+//            }
+//        }
+
+        System.out.println(DatabaseManager.checkuser("login", "mohammad"));
 
     }
 }

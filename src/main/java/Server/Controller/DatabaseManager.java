@@ -32,10 +32,25 @@ public class DatabaseManager {
 
     public synchronized static User getUser(String collectionName, String username) {
         DBCollection collection = db.getCollection(collectionName);
-        BasicDBObject obj = new BasicDBObject().append("username", username);
-        DBObject one = collection.findOne(obj);
-        return User.parseUser(one);
+        if(checkuser(collectionName,username)) {
+            BasicDBObject obj = new BasicDBObject().append("username", username);
+            DBObject one = collection.findOne(obj);
+            return User.parseUser(one);
+        }
+        else{
+            return null ;
+        }
     }
 
-
+    public synchronized static boolean checkuser(String collectionName, String username) {
+        DBCollection collection = db.getCollection(collectionName);
+        BasicDBObject obj = new BasicDBObject().append("username", username);
+        DBObject one = collection.findOne(obj);
+        if(one == null){
+            return false ;
+        }
+        else{
+            return true ;
+        }
+    }
 }
