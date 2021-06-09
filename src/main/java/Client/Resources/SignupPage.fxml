@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SignupPageController">
+   <children>
+      <AnchorPane prefHeight="285.0" prefWidth="1300.0">
+         <children>
+            <ImageView fitHeight="285.0" fitWidth="1300.0" pickOnBounds="true">
+               <image>
+                  <Image url="@loginpage.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <TextField fx:id="usernameTF" layoutX="465.0" layoutY="404.0" prefHeight="60.0" prefWidth="370.0" promptText="Username">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="passwordTF" layoutX="465.0" layoutY="488.0" prefHeight="60.0" prefWidth="370.0" promptText="Password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </PasswordField>
+      <PasswordField fx:id="confirmPasswordTF" layoutX="465.0" layoutY="558.0" prefHeight="60.0" prefWidth="370.0" promptText="Confirm password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="signupBtn" layoutX="465.0" layoutY="708.0" mnemonicParsing="false" onAction="#signupBtnClickHandler" prefHeight="40.0" prefWidth="370.0" text="Sign Up">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Button>
+      <Hyperlink fx:id="loginInsteadHL" layoutX="598.0" layoutY="660.0" onAction="#loginInsteadHLHandler" text="Login instead">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Hyperlink>
+      <Label fx:id="errorLbl" alignment="TOP_LEFT" layoutX="476.0" layoutY="624.0" prefHeight="40.0" prefWidth="355.0" textFill="#dc0000" />
+   </children>
+</AnchorPane>
