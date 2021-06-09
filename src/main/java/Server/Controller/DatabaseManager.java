@@ -17,10 +17,8 @@ public class DatabaseManager {
     }
 
     public synchronized static void adduser(User user) {
-        if(!checkuser(Utils.LOGIN,user.getUsername())){
             DBCollection collection = db.getCollection(Utils.LOGIN);
             collection.insert(user.getDBObject());
-        }
     }
 
     public synchronized static List<User> getUsers(String collectionName){
@@ -35,7 +33,7 @@ public class DatabaseManager {
 
     public synchronized static User getUser(String collectionName, String username) {
         DBCollection collection = db.getCollection(collectionName);
-        if(checkuser(collectionName,username)) {
+        if(checkUsername(collectionName,username)) {
             BasicDBObject obj = new BasicDBObject().append("username", username);
             DBObject one = collection.findOne(obj);
             return User.parseUser(one);
@@ -45,7 +43,7 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static boolean checkuser(String collectionName, String username) {
+    public synchronized static boolean checkUsername(String collectionName, String username) {
         DBCollection collection = db.getCollection(collectionName);
         BasicDBObject obj = new BasicDBObject().append("username", username);
         DBObject one = collection.findOne(obj);
@@ -57,7 +55,7 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static boolean checklogin(User user){
+    public synchronized static boolean checkLogin(User user) {
         DBCollection collection = db.getCollection(Utils.LOGIN);
         DBObject one = collection.findOne(user.getDBObject());
         if(one == null){

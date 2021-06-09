@@ -22,18 +22,28 @@ public class MainManager
 
     public synchronized static Response process(Request req, AtomicBoolean state) {
         {
-            switch ( req.getTitle() ) {
+            Data dat = null;
+            User user = null;
+            boolean flag;
+
+            switch ( req.getTitle() )
+            {
                 case "signup":
-                    Data.Basic dat = (Data.Basic)req.getData();
-                    User user = new User(req.getData().clientUsername, dat.dataString );
-                    DatabaseManager.adduser(user);
-                    // set flag with  DatabaseManager.checkuser( Utils.LOGIN ,req.getData().clientUsername)
-                    return null ;
+                    dat = req.getData();
+                    flag = DatabaseManager.checkUsername(Utils.LOGIN , dat.clientUsername);
+
+                    if (!flag) {
+                        user = new User(dat.clientUsername, dat.dataString );
+                        DatabaseManager.adduser(user);
+                    }
+                    return new Response("signup", new Data.BooleanData(dat.clientUsername, flag) );
+
                 case "login":
-                    Data.Basic dat2 = (Data.Basic)req.getData();
-                    User login2 = new User(req.getData().clientUsername, dat2.dataString );
-                    // set flag with DatabaseManager.checklogin(login2)
-                    return null ;
+                    dat = req.getData();
+                    user = new User(dat.clientUsername, dat.dataString );
+                    flag = DatabaseManager.checkLogin(user);
+                    return new Response("login", new Data.BooleanData(dat.clientUsername, flag) );
+
                 case "terminate":
                     state.set(false);
             }

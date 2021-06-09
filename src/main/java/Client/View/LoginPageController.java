@@ -36,8 +36,12 @@ public class LoginPageController implements Initializable {
     void loginButtonClickHandler(ActionEvent event) {
         String username = usernameTF.getText();
         String password = passwordTF.getText();
-        Request req = new Request("login", new Data.Basic(username, password));
-        NetworkManager.putRequest(req);
+
+        if ( !username.equals("") && !password.equals("") ) {
+            Request req = new Request("login", new Data.Basic(username, password));
+            NetworkManager.putRequest(req);
+        }
+
     }
 
     @Override
