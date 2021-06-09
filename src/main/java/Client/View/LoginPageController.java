@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class LoginPageController implements Initializable {
 
     @FXML
-    private AnchorPane mainanch;
+    private AnchorPane mainAnch;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -31,7 +31,7 @@ public class LoginPageController implements Initializable {
         Starter.isSplashLoaded = true;
         URL splash = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
         AnchorPane splashScreen = FXMLLoader.load(splash);
-        mainanch.getChildren().setAll(splashScreen);
+        mainAnch.getChildren().setAll(splashScreen);
 
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1),splashScreen);
         fadeIn.setFromValue(0);
@@ -49,7 +49,7 @@ public class LoginPageController implements Initializable {
             try {
                 URL login = Paths.get("./src/main/java/Client/Resources/LoginPage.fxml").toUri().toURL();
                 AnchorPane mainPage = FXMLLoader.load(login);
-                mainanch.getChildren().setAll(mainPage);
+                mainAnch.getChildren().setAll(mainPage);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
