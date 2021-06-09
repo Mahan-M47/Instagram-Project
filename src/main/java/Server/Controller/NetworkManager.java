@@ -60,7 +60,7 @@ public class NetworkManager implements Runnable
         sendThread.interrupt();
 
         serverIO.close();
-        MainManager.removeClient(this);
+        MainManager.removeClient(queueResponse);
 
         System.out.println("A Client Disconnected From Server.");
     }

@@ -6,5 +6,5 @@ public class Utils
     public static final String IP_ADDRESS = "localhost";
     public static final int BLOCKING_QUEUE_CAPACITY = 20;
     public static final long MAIN_SLEEP_TIMER = 100;
-    public static final long DISCONNECT_SLEEP_TIMER = 2000;
+    public static final long DISCONNECT_SLEEP_TIMER = 1000;
 }

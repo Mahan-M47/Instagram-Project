@@ -18,11 +18,23 @@ public class Send implements Runnable
         {
             try {
                 Response response = queue.take();
+                submitActiveClient(response);
                 serverIO.sendToClient(response);
                 System.out.println("Sent a Response to Client.");
             }
             catch (InterruptedException | NullPointerException e) {
                 break;
+            }
+        }
+    }
+
+    public void submitActiveClient(Response response)
+    {
+        if ( response.getTitle().equals("login") || response.getTitle().equals("signup") )
+        {
+            if (response.getData().flag) {
+                ActiveClient client = new ActiveClient(response.getData().clientUsername, queue);
+                MainManager.addClient(client);
             }
         }
     }

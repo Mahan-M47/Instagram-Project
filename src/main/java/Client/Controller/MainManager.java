@@ -27,6 +27,7 @@ public class MainManager
         catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         networkManager.stopClient();
     }
 

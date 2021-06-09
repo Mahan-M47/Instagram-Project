@@ -1,27 +1,24 @@
 package Server.Controller;
 
-import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
 
 public class ActiveClient
 {
-    private NetworkManager networkManager;
     private String username;
+    private BlockingQueue<Response> queue;
 
-    public ActiveClient(Socket socket) {
-        this.networkManager = new NetworkManager(socket);
-        Thread thread = new Thread(networkManager);
-        thread.start();
-    }
 
-    public void setUsername(String username) {
+    public ActiveClient(String username, BlockingQueue<Response> queue) {
         this.username = username;
+        this.queue = queue;
     }
 
-    public NetworkManager getNetworkManager() {
-        return networkManager;
+    public BlockingQueue<Response> getQueue() {
+        return queue;
     }
 
     public String getUsername() {
         return username;
     }
+
 }

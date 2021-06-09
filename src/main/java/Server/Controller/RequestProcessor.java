@@ -23,7 +23,10 @@ public class RequestProcessor implements Runnable
             try {
                 Request req = queueRequest.take();
                 Response response = MainManager.process(req, state);
-                queueResponse.put(response);
+                if (response != null) {
+                    queueResponse.put(response);
+                }
+                else System.out.println("Response Was null For A Request.");
             }
             catch (InterruptedException | NullPointerException e) {
                 break;
