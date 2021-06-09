@@ -1,9 +1,13 @@
 package Client.View;
 
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -16,6 +20,21 @@ public class LoginPageController implements Initializable {
 
     @FXML
     private AnchorPane mainAnch;
+
+    @FXML
+    private TextField usernameTF;
+
+    @FXML
+    private PasswordField passwordTF;
+
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    void loginButtonClickHandler(ActionEvent event) {
+        String username = usernameTF.getText();
+        String password = passwordTF.getText();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
