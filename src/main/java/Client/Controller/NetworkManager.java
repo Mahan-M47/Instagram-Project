@@ -7,31 +7,41 @@ import java.util.concurrent.BlockingQueue;
 
 public class NetworkManager
 {
-    public static ClientJsonHandler CJH;
+    public static BlockingQueue<Request> queueRequest;
 
-    private BlockingQueue<Response> queue;
-    private Thread getThread, processThread;
+    private ClientIO clientIO;
+    private BlockingQueue<Response> queueResponse;
+    private Thread getThread, processThread, sendThread;
+
 
     public NetworkManager(Socket socket) {
-        queue = new ArrayBlockingQueue<>(Utils.BLOCKING_QUEUE_CAPACITY);
-        CJH = new ClientJsonHandler(socket);
+        queueResponse = new ArrayBlockingQueue<>(Utils.BLOCKING_QUEUE_CAPACITY);
+        queueRequest  = new ArrayBlockingQueue<>(Utils.BLOCKING_QUEUE_CAPACITY);
+        clientIO = new ClientIO(socket);
+
+        startClient();
     }
 
     public void startClient()
     {
-        Get get = new Get(queue);
+        Get get = new Get(queueResponse, clientIO);
         getThread = new Thread(get);
 
-        ResponseProcessor reqProcessor = new ResponseProcessor(queue);
+        ResponseProcessor reqProcessor = new ResponseProcessor(queueResponse);
         processThread = new Thread(reqProcessor);
+
+        Send send = new Send(clientIO);
+        sendThread = new Thread(send);
 
         getThread.start();
         processThread.start();
+        sendThread.start();
     }
 
     public void stopClient() {
-        CJH.close();
         getThread.interrupt();
         processThread.interrupt();
+        sendThread.interrupt();
+        clientIO.close();
     }
 }

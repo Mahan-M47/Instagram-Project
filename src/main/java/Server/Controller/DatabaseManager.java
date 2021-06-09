@@ -10,9 +10,9 @@ public class DatabaseManager {
     private static MongoClient mongoClient;
     private static DB db;
 
-    public DatabaseManager(String database) {
+    public static void startDatabase(String databaseName) {
         mongoClient = new MongoClient();
-        db = mongoClient.getDB(database);
+        db = mongoClient.getDB(databaseName);
     }
 
     public synchronized static void insertToCollection(String collectionName, DBObject data) {

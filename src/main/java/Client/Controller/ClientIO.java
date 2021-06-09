@@ -1,24 +1,20 @@
-package Server.Controller;
+package Client.Controller;
 
-import Server.Utils;
 import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerJsonHandler
+public class ClientIO
 {
-    private ServerSocket serverSocket;
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
     private Gson gson;
 
-    public ServerJsonHandler(ServerSocket serverSocket, Socket socket) {
+    public ClientIO(Socket socket) {
         try {
-            this.serverSocket = serverSocket;
             this.socket = socket;
             in  = new DataInputStream( socket.getInputStream() );
             out = new DataOutputStream( socket.getOutputStream() );
@@ -29,7 +25,19 @@ public class ServerJsonHandler
         gson = new Gson();
     }
 
-    public Request receiveFromClient() {
+    public void sendToServer(Request req) {
+        String json = gson.toJson(req);
+        byte[] bytes = json.getBytes();
+        try {
+            out.writeInt(bytes.length);
+            out.write(bytes);
+        }
+        catch (IOException e) {
+            close();
+        }
+    }
+
+    public Response receiveFromServer() {
         String json = "";
 
         try {
@@ -41,31 +49,17 @@ public class ServerJsonHandler
             close();
         }
 
-        return gson.fromJson(json, Request.class);
-    }
-
-    public void sendToClient (Response response)
-    {
-        String json = gson.toJson(response);
-        byte[] bytes = json.getBytes();
-        try {
-            out.writeInt(bytes.length);
-            out.write(bytes);
-        }
-        catch (IOException e) {
-            close();
-        }
+        return gson.fromJson(json, Response.class);
     }
 
     public void close() {
         try {
+            socket.close();
             in.close();
             out.close();
-            socket.close();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
