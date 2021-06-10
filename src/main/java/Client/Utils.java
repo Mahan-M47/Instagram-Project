@@ -17,4 +17,9 @@ public class Utils
     //GUI stuff
     public static String SIGNUP_ERROR_TEXT = "";
     public static String LOGIN_ERROR_TEXT = "";
+
+    public static void resetErrorTexts() {
+        SIGNUP_ERROR_TEXT = "";
+        LOGIN_ERROR_TEXT = "";
+    }
 }

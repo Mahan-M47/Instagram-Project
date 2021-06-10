@@ -34,6 +34,7 @@ public class LoginPageController implements Initializable
     @FXML
     void createNewAccountHLHandler(ActionEvent event) {
         Starter.changeScene("SignupPage");
+        Utils.resetErrorTexts();
     }
 
     @FXML

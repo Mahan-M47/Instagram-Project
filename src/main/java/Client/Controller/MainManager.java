@@ -41,7 +41,7 @@ public class MainManager
             case "signup":
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
-                    Utils.SIGNUP_ERROR_TEXT = "";
+                    Utils.resetErrorTexts();
                     GUIManager.showTimeline();
                 }
                 else {
@@ -53,14 +53,13 @@ public class MainManager
             case "login":
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
-                    Utils.LOGIN_ERROR_TEXT = "";
+                    Utils.resetErrorTexts();
                     GUIManager.showTimeline();
                 }
                 else {
                     Utils.LOGIN_ERROR_TEXT = "The Entered Username or Password Is Incorrect.";
                     GUIManager.showLoginPage();
                 }
-
                 break;
         }
 

@@ -9,8 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainManager
 {
-    public static List<ActiveClient> activeClientList = new ArrayList<>();
-
     public synchronized static Response process(Request req, AtomicBoolean state) {
         {
             Data dat = req.getData();
@@ -25,7 +23,6 @@ public class MainManager
                     if (!userExists) {
                         user = new User(dat.clientUsername, dat.dataString );
                         DatabaseManager.adduser(user);
-                        System.out.println("User \"" + dat.clientUsername + "\" Logged In.");
                         flag = true;
                     }
                     else flag = false;
@@ -35,13 +32,11 @@ public class MainManager
                 case "login":
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
-                    System.out.println("User \"" + dat.clientUsername + "\" Logged In.");
                     return new Response("login", new Data.BooleanData(dat.clientUsername, flag) );
 
 
                 case "logout":
                     removeClient(dat.clientUsername);
-                    System.out.println("User \"" + dat.clientUsername + "\" Logged Out.");
                     break;
 
 
@@ -59,8 +54,11 @@ public class MainManager
 
 
     //methods for adding and removing ActiveClients
+    public static List<ActiveClient> activeClientList = new ArrayList<>();
+
     public static void addClient(ActiveClient client) {
         activeClientList.add(client);
+        System.out.println("User \"" + client.getUsername() + "\" Logged In.");
     }
 
     public static void removeClient(String username)
@@ -68,6 +66,7 @@ public class MainManager
         for (ActiveClient client : activeClientList)
         {
             if ( client.getUsername().equals(username) ) {
+                System.out.println("User \"" + client.getUsername() + "\" Logged Out.");
                 activeClientList.remove(client);
                 break;
             }
@@ -79,6 +78,7 @@ public class MainManager
         for (ActiveClient client : activeClientList)
         {
             if ( client.getQueue().equals(queue) ) {
+                System.out.println("User \"" + client.getUsername() + "\" Logged Out.");
                 activeClientList.remove(client);
                 break;
             }
