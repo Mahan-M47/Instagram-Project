@@ -1,7 +1,7 @@
 package Client.Controller;
 
+import Client.Model.User;
 import Client.Utils;
-
 import java.net.Socket;
 
 public class MainManager
@@ -20,22 +20,46 @@ public class MainManager
     {
         try {
             Request terminate = new Request.Termination();
-            NetworkManager.queueRequest.put(terminate);
+            NetworkManager.putRequest(terminate);
             Thread.sleep(Utils.DISCONNECT_SLEEP_TIMER);
         }
         catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         networkManager.stopClient();
     }
 
 
     public static void process(Response response)
     {
-        switch ( response.getTitle() ) {
-            case "basicResponse":
+        Data dat = response.getData();
+        User user = null;
+
+        switch ( response.getTitle() )
+        {
+            case "signup":
+                if (dat.flag) {
+                    Utils.currentUser = dat.clientUsername;
+                    Utils.resetErrorTexts();
+                    GUIManager.showTimeline();
+                }
+                else {
+                    Utils.SIGNUP_ERROR_TEXT = "This Username Has Already Been Taken.";
+                    GUIManager.showSignupPage();
+                }
                 break;
-            case "booleanResponse":
+
+            case "login":
+                if (dat.flag) {
+                    Utils.currentUser = dat.clientUsername;
+                    Utils.resetErrorTexts();
+                    GUIManager.showTimeline();
+                }
+                else {
+                    Utils.LOGIN_ERROR_TEXT = "The Entered Username or Password Is Incorrect.";
+                    GUIManager.showLoginPage();
+                }
                 break;
         }
 

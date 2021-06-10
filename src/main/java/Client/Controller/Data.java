@@ -4,19 +4,33 @@ import Client.Model.Chat;
 import Client.Model.Message;
 import Client.Model.Post;
 import Client.Model.User;
-
 import java.util.List;
 
 public class Data
 {
     public String clientUsername;
+    public List<String> usernames;
+    public String dataString;
+    public String postID;
+    public String text;
+    public User user;
+    public Post post;
+    public List<Post> posts;
+    public Chat chat;
+    public Message message;
+    public boolean flag;
+
+    public Data() {}
+
+    public Data (String clientUsername) {
+        this.clientUsername = clientUsername;
+    }
 
     //used by all Requests and Responses with just ONE String of data other than the client's username. (e.g. login)
     public static class Basic extends Data
     {
-        public String dataString;
         public Basic(String clientUsername, String dataString) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.dataString = dataString;
         }
     }
@@ -24,18 +38,16 @@ public class Data
     //only used by the server so there's no need to add the client's username. (e.g. returning the list of followers)
     public static class UsernameList extends Data
     {
-        public List<String> usernames;
-        public UsernameList(List<String> usernames) {
+        public UsernameList(String clientUsername, List<String> usernames) {
+            super(clientUsername);
             this.usernames.addAll(usernames);
         }
     }
 
     public static class Comment extends Data
     {
-        public String postID;
-        public String text;
         public Comment(String clientUsername, String postID, String text) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.postID = postID;
             this.text = text;
         }
@@ -43,26 +55,21 @@ public class Data
 
     public static class UserData extends Data
     {
-        public User user;
-        public UserData(String clientUsername, User user) {
-            this.clientUsername = clientUsername;
+        public UserData(User user) {
             this.user = user;
         }
     }
 
     public static class PostSingle extends Data
     {
-        public Post post;
         public PostSingle(String clientUsername, Post post) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.post = post;
         }
     }
 
-    //only used by the server so there's no need to add the client's username. (e.g. returning all posts made by your following)
     public static class PostList extends Data
     {
-        public List<Post> posts;
         public PostList(List<Post> posts) {
             this.posts.addAll(posts);
         }
@@ -70,27 +77,28 @@ public class Data
 
     public static class ChatData extends Data
     {
-        public Chat chat;
         public ChatData(String clientUsername, Chat chat) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.chat = chat;
         }
     }
 
     public static class MessageData extends Data
     {
-        public Message message;
         public MessageData(String clientUsername, Message message) {
-            this.clientUsername = clientUsername;
+            super(clientUsername);
             this.message = message;
         }
     }
 
-    //only used by the server so there's no need to add the client's username
     public static class BooleanData extends Data
     {
-        public boolean flag;
-        public BooleanData(boolean flag) {
+        public BooleanData (boolean flag) {
+            this.flag = flag;
+        }
+
+        public BooleanData(String clientUsername, boolean flag) {
+            super(clientUsername);
             this.flag = flag;
         }
     }

@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnch" prefHeight="850.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.LoginPageController">
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SignupPageController">
    <children>
       <AnchorPane prefHeight="285.0" prefWidth="1300.0">
          <children>
-            <ImageView fitHeight="285.0" fitWidth="1300.0">
+            <ImageView fitHeight="285.0" fitWidth="1300.0" pickOnBounds="true">
                <image>
                   <Image url="@loginpage.png" />
                </image>
@@ -24,29 +24,32 @@
       <TextField fx:id="usernameTF" layoutX="465.0" layoutY="404.0" prefHeight="60.0" prefWidth="370.0" promptText="Username">
          <font>
             <Font size="18.0" />
-         </font></TextField>
-      <PasswordField fx:id="passwordTF" layoutX="465.0" layoutY="491.0" prefHeight="60.0" prefWidth="370.0" promptText="Password">
+         </font>
+      </TextField>
+      <PasswordField fx:id="passwordTF" layoutX="465.0" layoutY="488.0" prefHeight="60.0" prefWidth="370.0" promptText="Password">
          <font>
             <Font size="18.0" />
-         </font></PasswordField>
-      <Button fx:id="loginButton" layoutX="465.0" layoutY="626.0" mnemonicParsing="false" onAction="#loginButtonClickHandler" prefHeight="40.0" prefWidth="370.0" style="-fx-font-size: 18;" text="Login">
+         </font>
+      </PasswordField>
+      <PasswordField fx:id="confirmPasswordTF" layoutX="465.0" layoutY="558.0" prefHeight="60.0" prefWidth="370.0" promptText="Confirm Password">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font size="18.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="signupButton" layoutX="465.0" layoutY="708.0" mnemonicParsing="false" onAction="#signupButtonClickHandler" prefHeight="40.0" prefWidth="370.0" text="Sign Up">
+         <font>
+            <Font name="Arial" size="18.0" />
          </font>
       </Button>
-      <Hyperlink fx:id="createNewAccountHL" layoutX="589.0" layoutY="574.0" onAction="#createNewAccountHLHandler" prefHeight="34.0" prefWidth="141.0" text="Creat new account">
+      <Hyperlink fx:id="loginInsteadHL" layoutX="598.0" layoutY="660.0" onAction="#loginInsteadHLHandler" text="Login instead">
          <font>
             <Font size="16.0" />
          </font>
       </Hyperlink>
-      <Label alignment="CENTER" layoutX="570.0" layoutY="578.0" prefHeight="26.0" prefWidth="18.0" text="or">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="460.0" layoutY="330.0" prefHeight="40.0" prefWidth="380.0" textFill="#dc0000">
          <font>
             <Font name="System Italic" size="18.0" />
-         </font></Label>
+         </font>
+      </Label>
    </children>
 </AnchorPane>

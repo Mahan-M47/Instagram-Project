@@ -7,8 +7,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class NetworkManager
 {
-    public static BlockingQueue<Request> queueRequest;
-
+    private static BlockingQueue<Request> queueRequest;
     private ClientIO clientIO;
     private BlockingQueue<Response> queueResponse;
     private Thread getThread, processThread, sendThread;
@@ -30,12 +29,22 @@ public class NetworkManager
         ResponseProcessor reqProcessor = new ResponseProcessor(queueResponse);
         processThread = new Thread(reqProcessor);
 
-        Send send = new Send(clientIO);
+        Send send = new Send(queueRequest, clientIO);
         sendThread = new Thread(send);
 
         getThread.start();
         processThread.start();
         sendThread.start();
+    }
+
+    public static void putRequest(Request req) {
+        try {
+            queueRequest.put(req);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void stopClient() {

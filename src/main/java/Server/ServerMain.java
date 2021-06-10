@@ -1,8 +1,7 @@
 package Server;
 
-import Server.Controller.ActiveClient;
 import Server.Controller.DatabaseManager;
-import Server.Controller.MainManager;
+import Server.Controller.NetworkManager;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,8 +17,9 @@ public class ServerMain
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                ActiveClient client = new ActiveClient(socket);
-                MainManager.addNewClient(client);
+                NetworkManager networkManager = new NetworkManager(socket);
+                Thread thread = new Thread(networkManager);
+                thread.start();
                 System.out.println("New Client Accepted.");
             }
             catch (IOException e) {
