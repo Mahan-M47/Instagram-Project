@@ -46,7 +46,7 @@ public class SignupPageController implements Initializable
         String password = passwordTF.getText();
 
         if ( checkTextFields(username, password) ) {
-            Request req = new Request("signup", new Data.Basic(username, password));
+            Request req = new Request("signup", new Data(username, password));
             NetworkManager.putRequest(req);
         }
     }

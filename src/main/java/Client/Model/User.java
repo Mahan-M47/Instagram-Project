@@ -2,17 +2,17 @@ package Client.Model;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class User
 {
-    private String username;
-    private String password;
-    private List<String> followers;
-    private List<String> following;
+    private String username, password, bioText;
+    private List<String> followers, following;;
     private List<Post> posts;
     private List<Chat> chats;
+    private File profilePicture;
 
     public User() {
     }

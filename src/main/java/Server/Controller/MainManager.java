@@ -26,13 +26,13 @@ public class MainManager
                         flag = true;
                     }
                     else flag = false;
-                    return new Response("signup", new Data.BooleanData(dat.clientUsername, flag) );
+                    return new Response("signup", new Data(dat.clientUsername, flag) );
 
 
                 case "login":
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
-                    return new Response("login", new Data.BooleanData(dat.clientUsername, flag) );
+                    return new Response("login", new Data(dat.clientUsername, flag) );
 
 
                 case "logout":

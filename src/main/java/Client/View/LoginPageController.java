@@ -44,7 +44,7 @@ public class LoginPageController implements Initializable
         String password = passwordTF.getText();
 
         if ( checkTextFields(username, password) ) {
-            Request req = new Request("login", new Data.Basic(username, password));
+            Request req = new Request("login", new Data(username, password));
             NetworkManager.putRequest(req);
         }
     }
