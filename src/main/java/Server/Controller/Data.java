@@ -10,7 +10,7 @@ import java.util.List;
 public class Data
 {
     public String clientUsername = null;
-    public List<String> usernames = null;
+    public List<String> usernameList = null;
     public String dataString = null;
     public String postID = null;
     public String text = null;
@@ -34,9 +34,9 @@ public class Data
     }
 
     //only used by the server so there's no need to add the client's username. (e.g. returning search results)
-    public Data(ArrayList<String> usernames) {
-        for (String username : usernames) {
-            this.usernames.add(username);
+    public Data(ArrayList<String> usernameList) {
+        for (String username : usernameList) {
+            this.usernameList.add(username);
         }
     }
 

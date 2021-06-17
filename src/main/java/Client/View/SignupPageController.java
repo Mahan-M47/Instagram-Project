@@ -16,9 +16,7 @@ public class SignupPageController implements Initializable
     @FXML
     private TextField usernameTF;
     @FXML
-    private PasswordField passwordTF;
-    @FXML
-    private PasswordField confirmPasswordTF;
+    private PasswordField passwordTF, confirmPasswordTF;
     @FXML
     private Hyperlink loginInsteadHL;
     @FXML

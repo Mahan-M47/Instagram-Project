@@ -1,8 +1,6 @@
 package Client.View;
 
-import Client.Controller.Data;
-import Client.Controller.NetworkManager;
-import Client.Controller.Request;
+import Client.Controller.MainManager;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,24 +10,46 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TimelineController implements Initializable {
-
+public class TimelineController implements Initializable
+{
     @FXML
-    private Label TimelineLabel;
-
+    private Label timelineLabel;
     @FXML
-    private Button logoutButton;
+    private Button logoutButton, searchButton, homeButton, postButton, profileButton;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TimelineLabel.setText("Hello " + Utils.currentUser + "!");
+        timelineLabel.setText("Logged in as: " + Utils.currentUser);
+    }
+
+
+    @FXML
+    void homeButtonClickHandler(ActionEvent event) {
+
     }
 
     @FXML
     void logoutButtonClickHandler(ActionEvent event) {
-        Request req = new Request("logout",new Data(Utils.currentUser) );
-        NetworkManager.putRequest(req);
-        Utils.currentUser = "";
+        MainManager.logout();
         Starter.changeScene("LoginPage");
     }
+
+    @FXML
+    void postButtonClickHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void profileButtonClickHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void searchButtonClickHandler(ActionEvent event) {
+        Starter.changeScene("SearchPage");
+    }
+
+
+
 }

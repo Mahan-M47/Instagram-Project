@@ -30,6 +30,13 @@ public class MainManager
         networkManager.stopClient();
     }
 
+    public static void logout()
+    {
+        Request req = new Request("logout",new Data(Utils.currentUser) );
+        NetworkManager.putRequest(req);
+        Utils.currentUser = "";
+    }
+
 
     public static void process(Response response)
     {
@@ -50,6 +57,7 @@ public class MainManager
                 }
                 break;
 
+
             case "login":
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
@@ -60,6 +68,11 @@ public class MainManager
                     Utils.LOGIN_ERROR_TEXT = "The Entered Username or Password Is Incorrect.";
                     GUIManager.showLoginPage();
                 }
+                break;
+
+
+            case "search":
+                Utils.searchResults = dat.usernameList;
                 break;
         }
 

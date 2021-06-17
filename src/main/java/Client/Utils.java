@@ -1,5 +1,8 @@
 package Client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utils
 {
     //the currently logged in user
@@ -22,4 +25,6 @@ public class Utils
         SIGNUP_ERROR_TEXT = "";
         LOGIN_ERROR_TEXT = "";
     }
+
+    public static List<String> searchResults = new ArrayList<>();
 }
