@@ -9,62 +9,46 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SearchPageController implements Initializable {
-
-    @FXML
-    private TextField searchTF;
+public class FollowingPageController implements Initializable
+{
     @FXML
     private Hyperlink link1, link2, link3, link4, link5, link6, link7, link8;
     @FXML
-    private ProgressIndicator progressIndicator;
-    @FXML
-    private Button chatsButton, searchButton, homeButton, postButton, profileButton;
-    @FXML
-    private Button startSearchButton;
+    private Button chatsButton, searchButton, homeButton, postButton, profileButton, backButton;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        List<String> searchResults = Utils.searchResults;
+        List<String> following = Utils.receivedUser.getFollowing();
 
-        if (searchResults.size() > 0) {
-            link1.setText( searchResults.get(0) );
-        if (searchResults.size() > 1) {
-            link2.setText( searchResults.get(1) );
-        if (searchResults.size() > 2) {
-            link3.setText( searchResults.get(2) );
-        if (searchResults.size() > 3) {
-            link4.setText( searchResults.get(3) );
-        if (searchResults.size() > 4) {
-            link5.setText( searchResults.get(4) );
-        if (searchResults.size() > 5) {
-            link6.setText( searchResults.get(5) );
-        if (searchResults.size() > 6) {
-            link7.setText( searchResults.get(6) );
-        if (searchResults.size() > 7) {
-            link8.setText( searchResults.get(7) );
+        if (following.size() > 0) {
+            link1.setText( following.get(0) );
+        if (following.size() > 1) {
+            link2.setText( following.get(1) );
+        if (following.size() > 2) {
+            link3.setText( following.get(2) );
+        if (following.size() > 3) {
+            link4.setText( following.get(3) );
+        if (following.size() > 4) {
+            link5.setText( following.get(4) );
+        if (following.size() > 5) {
+            link6.setText( following.get(5) );
+        if (following.size() > 6) {
+            link7.setText( following.get(6) );
+        if (following.size() > 7) {
+            link8.setText( following.get(7) );
         }}}}}}}}
-
-        Utils.searchResults = new ArrayList<>();
     }
 
 
     @FXML
-    void startSearchClickListener(ActionEvent event) {
-        String searchText = searchTF.getText();
-
-        if (!searchText.equals("")) {
-            Request req = new Request("search", new Data(searchText));
-            NetworkManager.putRequest(req);
-        }
+    void backButtonClickHandler(ActionEvent event) {
+        Starter.changeScene("ProfilePage");
     }
 
     @FXML
@@ -113,3 +97,4 @@ public class SearchPageController implements Initializable {
     }
 
 }
+

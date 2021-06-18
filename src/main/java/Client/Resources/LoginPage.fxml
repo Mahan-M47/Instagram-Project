@@ -16,7 +16,7 @@
          <children>
             <ImageView fitHeight="285.0" fitWidth="1300.0">
                <image>
-                  <Image url="@loginpage.png" />
+                  <Image url="@GUI_Images/loginpage.png" />
                </image>
             </ImageView>
          </children>

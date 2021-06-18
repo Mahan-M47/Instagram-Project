@@ -8,7 +8,7 @@
    <children>
       <ImageView fitHeight="470.0" fitWidth="635.0" layoutX="333.0" layoutY="190.0">
          <image>
-            <Image url="@splash.png" />
+            <Image url="@GUI_Images/splash.png" />
          </image>
       </ImageView>
    </children>

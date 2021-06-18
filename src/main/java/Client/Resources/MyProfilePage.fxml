@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.MyProfilePageController">
+    <children>
+        <Separator layoutY="249.0" prefHeight="0.0" prefWidth="1300.0" />
+        <AnchorPane prefHeight="250.0" prefWidth="1300.0">
+            <children>
+                <AnchorPane layoutX="80.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="profilePicture" fitHeight="198.0" fitWidth="198.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@GUI_Images/TEST_IMG.jpg" />
+                            </image>
+                        </ImageView>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="200.0" smooth="false" stroke="#f4f4f400" strokeType="INSIDE" strokeWidth="0.0" width="200.0">
+                            <fill>
+                                <RadialGradient centerX="0.5" centerY="0.5047619047619047" radius="0.4883720930232558">
+                                    <stops>
+                                        <Stop color="#ffffff00" />
+                                        <Stop color="#ffffff00" offset="0.9885057471264367" />
+                                        <Stop color="#f4f4f4" offset="1.0" />
+                                    </stops>
+                                </RadialGradient>
+                            </fill>
+                        </Rectangle>
+                    </children>
+                </AnchorPane>
+                <Button fx:id="editButton" layoutX="725.0" layoutY="140.0" mnemonicParsing="false" onAction="#editButtonClickHandler" prefHeight="65.0" prefWidth="450.0" style="-fx-background-color: #80cadd;" text="Edit Profile" textAlignment="CENTER">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Button>
+                <Label layoutX="780.0" layoutY="70.0" text="Posts">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="910.0" layoutY="70.0" text="Followers">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Hyperlink fx:id="followingLink" layoutX="1073.0" layoutY="24.0" onAction="#followingLinkClickHandler" text="0">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Hyperlink>
+                <Hyperlink fx:id="followersLink" layoutX="932.0" layoutY="24.0" onAction="#followersLinkClickHandler" text="0">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Hyperlink>
+                <Label layoutX="794.0" layoutY="30.0" text="0">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <Label layoutX="1050.0" layoutY="70.0" text="Following">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="usernameLabel" layoutX="330.0" layoutY="50.0" text="username">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                </Label>
+                <Label fx:id="bioLabel" layoutX="330.0" layoutY="105.0" prefHeight="125.0" prefWidth="350.0" text="bio" wrapText="true">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <ScrollPane fitToWidth="true" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="3000.0" prefWidth="1300.0" />
+            </content>
+        </ScrollPane>
+        <AnchorPane layoutY="735.0" prefHeight="125.0" prefWidth="1285.0" style="-fx-background-color: #e6e6e6;">
+            <children>
+                <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">
+                    <children>
+                  <Button fx:id="chatsButton" alignment="CENTER" mnemonicParsing="false" onAction="#chatsButtonClickHandler" prefHeight="75.0" prefWidth="120.0" text="Chats">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Button>
+                        <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#searchButtonClickHandler" prefHeight="75.0" prefWidth="120.0" text="Search">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="homeButton" alignment="CENTER" mnemonicParsing="false" onAction="#homeButtonClickHandler" prefHeight="75.0" prefWidth="120.0" text="Home">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="postButton" alignment="CENTER" mnemonicParsing="false" onAction="#postButtonClickHandler" prefHeight="75.0" prefWidth="120.0" text="Post">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="profileButton" alignment="CENTER" mnemonicParsing="false" onAction="#profileButtonClickHandler" prefHeight="75.0" prefWidth="120.0" text="Profile">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

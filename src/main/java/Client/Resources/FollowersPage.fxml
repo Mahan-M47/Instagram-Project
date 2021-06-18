@@ -2,26 +2,25 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SearchPageController">
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.FollowersPageController">
    <children>
-      <Button fx:id="startSearchButton" layoutX="1020.0" layoutY="46.0" mnemonicParsing="false" onAction="#startSearchClickListener" prefHeight="59.0" prefWidth="87.0" text="Search">
+      <Button fx:id="backButton" layoutX="70.0" layoutY="35.0" mnemonicParsing="false" onAction="#backButtonClickHandler" prefHeight="50.0" prefWidth="80.0" text="Back">
          <font>
-            <Font size="20.0" />
+            <Font size="21.0" />
          </font>
       </Button>
-      <TextField fx:id="searchTF" layoutX="250.0" layoutY="45.0" prefHeight="45.0" prefWidth="750.0" promptText="Enter Username">
+      <Label layoutX="556.0" layoutY="25.0" text="Followers">
          <font>
-            <Font size="28.0" />
+            <Font size="50.0" />
          </font>
-      </TextField>
-      <VBox layoutX="450.0" layoutY="125.0" prefHeight="600.0" prefWidth="400.0" spacing="15.0">
+      </Label>
+      <VBox layoutX="460.0" layoutY="110.0" prefHeight="600.0" prefWidth="400.0" spacing="15.0">
          <children>
             <Hyperlink fx:id="link1" onAction="#link1ClickHandler">
                <font>
@@ -65,7 +64,7 @@
             </Hyperlink>
          </children>
       </VBox>
-      <AnchorPane layoutY="735.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
+      <AnchorPane layoutY="745.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
          <children>
             <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">
                <children>
@@ -98,6 +97,5 @@
             </HBox>
          </children>
       </AnchorPane>
-      <ProgressIndicator fx:id="progressIndicator" layoutX="590.0" layoutY="365.0" prefHeight="120.0" prefWidth="120.0" visible="false" />
    </children>
 </AnchorPane>
