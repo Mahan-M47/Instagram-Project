@@ -1,9 +1,7 @@
 package Client.View;
 
-import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -14,25 +12,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class EditProfilePageController implements Initializable
+public class CreatePostPageController
 {
     @FXML
-    private ImageView profilePicture;
+    private TextArea captionTF;
     @FXML
-    private TextArea BioTF;
+    private ImageView postImage;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
-    private Button backButton, applyButton;
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        BioTF.setText(Utils.currentUserObj.getBioText());
-    }
+    private Button chooseFileButton, createPostButton;
 
 
     @FXML
@@ -46,21 +36,18 @@ public class EditProfilePageController implements Initializable
             try {
                 InputStream in = new FileInputStream(file);
                 Image img = new Image(in);
-                profilePicture.setImage(img);
-            } catch (IOException e) {
+                postImage.setImage(img);
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
     @FXML
-    void applyButtonClickHandler(ActionEvent event) {
-        Utils.currentUserObj.setBioText(BioTF.getText());
-    }
-
-    @FXML
-    void backButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("MyProfilePage");
+    void createPostButtonClickHandler(ActionEvent event) {
+        //create post object and send it to server
     }
 
     @FXML
@@ -76,6 +63,7 @@ public class EditProfilePageController implements Initializable
 
     @FXML
     void postButtonClickHandler(ActionEvent event) { Starter.changeScene("CreatePostPage"); }
+
     @FXML
     void chatsButtonClickHandler(ActionEvent event) {
     }

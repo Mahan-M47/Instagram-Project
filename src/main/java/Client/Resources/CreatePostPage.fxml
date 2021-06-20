@@ -1,69 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.FollowersPageController">
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.CreatePostPageController">
    <children>
-      <Button fx:id="backButton" layoutX="70.0" layoutY="35.0" mnemonicParsing="false" onAction="#backButtonClickHandler" prefHeight="50.0" prefWidth="80.0" text="Back">
+      <TextArea fx:id="captionTF" layoutX="100.0" layoutY="284.0" prefHeight="150.0" prefWidth="430.0" promptText="caption text" wrapText="true">
          <font>
-            <Font size="21.0" />
-         </font>
-      </Button>
-      <Label layoutX="556.0" layoutY="25.0" text="Followers">
+            <Font size="18.0" />
+         </font></TextArea>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="600.0" layoutX="650.0" layoutY="60.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="600.0" />
+      <ImageView fx:id="postImage" fitHeight="600.0" fitWidth="600.0" layoutX="650.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="chooseFileButton" layoutX="205.0" layoutY="160.0" mnemonicParsing="false" onAction="#chooseFileButtonClickHandler" prefHeight="45.0" prefWidth="220.0" text="Choose File">
          <font>
-            <Font size="50.0" />
-         </font>
-      </Label>
-      <VBox layoutX="460.0" layoutY="110.0" prefHeight="600.0" prefWidth="400.0" spacing="15.0">
-         <children>
-            <Hyperlink fx:id="link1" onAction="#link1ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link2" onAction="#link2ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link3" onAction="#link3ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link4" onAction="#link4ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link5" onAction="#link5ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link6" onAction="#link6ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link7" onAction="#link7ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link8" onAction="#link8ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-         </children>
-      </VBox>
+            <Font size="22.0" />
+         </font></Button>
+      <Button fx:id="createPostButton" layoutX="240.0" layoutY="510.0" mnemonicParsing="false" onAction="#createPostButtonClickHandler" prefHeight="75.0" prefWidth="150.0" text="Create Post">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font></Button>
       <AnchorPane layoutY="735.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
          <children>
             <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">

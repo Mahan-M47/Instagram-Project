@@ -14,14 +14,14 @@
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.EditProfilePageController">
    <children>
-      <AnchorPane layoutX="645.0" layoutY="380.0" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane layoutX="620.0" layoutY="370.0" prefHeight="250.0" prefWidth="250.0">
          <children>
-            <ImageView fx:id="profilePicture" fitHeight="198.0" fitWidth="198.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profilePicture" fitHeight="248.0" fitWidth="248.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@GUI_Images/TEST_IMG.jpg" />
                </image>
             </ImageView>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="200.0" smooth="false" stroke="#f4f4f400" strokeType="INSIDE" strokeWidth="0.0" width="200.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="250.0" smooth="false" stroke="#f4f4f400" strokeType="INSIDE" strokeWidth="0.0" width="250.0">
                <fill>
                   <RadialGradient centerX="0.5" centerY="0.5047619047619047" radius="0.4883720930232558">
                      <stops>
@@ -43,17 +43,22 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="238.0" layoutY="462.0" prefHeight="36.0" prefWidth="248.0" text="Change Profile Picture">
+      <Label layoutX="238.0" layoutY="430.0" prefHeight="36.0" prefWidth="248.0" text="Change Profile Picture">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
+      <Button fx:id="chooseFileButton" layoutX="297.0" layoutY="495.0" mnemonicParsing="false" onAction="#chooseFileButtonClickHandler" prefHeight="50.0" prefWidth="130.0" text="Choose File">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
       <Button fx:id="backButton" layoutX="80.0" layoutY="45.0" mnemonicParsing="false" onAction="#backButtonClickHandler" prefHeight="50.0" prefWidth="80.0" text="Back">
          <font>
             <Font size="21.0" />
          </font>
       </Button>
-      <Button fx:id="applyButton" layoutX="950.0" layoutY="600.0" mnemonicParsing="false" onAction="#applyButtonClickHandler" prefHeight="50.0" prefWidth="100.0" text="Apply" textFill="#259444">
+      <Button fx:id="applyButton" layoutX="960.0" layoutY="600.0" mnemonicParsing="false" onAction="#applyButtonClickHandler" prefHeight="50.0" prefWidth="100.0" text="Apply" textFill="#259444">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>

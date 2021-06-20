@@ -82,8 +82,7 @@ public class MyFollowersPageController implements Initializable
     }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) {
-    }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene("CreatePostPage"); }
 
     @FXML
     void chatsButtonClickHandler(ActionEvent event) {

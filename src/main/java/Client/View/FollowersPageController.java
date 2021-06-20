@@ -59,8 +59,7 @@ public class FollowersPageController implements Initializable
     void searchButtonClickHandler(ActionEvent event) { Starter.changeScene("SearchPage"); }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) {
-    }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene("CreatePostPage"); }
 
     @FXML
     void chatsButtonClickHandler(ActionEvent event) {
