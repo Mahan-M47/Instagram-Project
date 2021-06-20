@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.MyFollowingPageController">
@@ -20,94 +20,21 @@
                 <Font size="50.0" />
             </font>
         </Label>
-        <VBox layoutX="460.0" layoutY="110.0" prefHeight="600.0" prefWidth="400.0" spacing="15.0">
-            <children>
-                <Hyperlink fx:id="link1" onAction="#link1ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-                <Hyperlink fx:id="link2" onAction="#link2ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-                <Hyperlink fx:id="link3" onAction="#link3ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-                <Hyperlink fx:id="link4" onAction="#link4ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-                <Hyperlink fx:id="link5" onAction="#link5ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-                <Hyperlink fx:id="link6" onAction="#link6ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-                <Hyperlink fx:id="link7" onAction="#link7ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-                <Hyperlink fx:id="link8" onAction="#link8ClickHandler">
-                    <font>
-                        <Font size="32.0" />
-                    </font>
-                </Hyperlink>
-            </children>
-        </VBox>
-        <VBox alignment="CENTER_RIGHT" layoutX="350.0" layoutY="98.0" prefHeight="620.0" prefWidth="100.0" spacing="39.0">
-            <children>
-                <Button fx:id="removeButton1" mnemonicParsing="false" onAction="#removeButton1ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="removeButton2" mnemonicParsing="false" onAction="#removeButton2ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="removeButton3" mnemonicParsing="false" onAction="#removeButton3ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="removeButton4" mnemonicParsing="false" onAction="#removeButton4ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="removeButton5" mnemonicParsing="false" onAction="#removeButton5ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="removeButton6" mnemonicParsing="false" onAction="#removeButton6ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="removeButton7" mnemonicParsing="false" onAction="#removeButton7ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="removeButton8" disable="true" focusTraversable="false" mnemonicParsing="false" onAction="#removeButton8ClickHandler" text="Remove" visible="false">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-            </children>
-        </VBox>
+      <ListView fx:id="listView" layoutX="280.0" layoutY="140.0" prefHeight="550.0" prefWidth="450.0" stylesheets="@ListViewStyle.css">
+         <opaqueInsets>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </opaqueInsets>
+      </ListView>
+      <Button fx:id="unfollowButton" layoutX="770.0" layoutY="470.0" mnemonicParsing="false" onAction="#unfollowButtonClickHandler" prefHeight="45.0" prefWidth="145.0" text="Unfollow User" textFill="#b90909">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="showProfileButton" layoutX="770.0" layoutY="380.0" mnemonicParsing="false" onAction="#showProfileButtonClickHandler" prefHeight="60.0" prefWidth="145.0" text="Show Profile">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
         <AnchorPane layoutY="735.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
             <children>
                 <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">

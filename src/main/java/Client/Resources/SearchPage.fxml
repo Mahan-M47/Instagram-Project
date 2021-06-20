@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SearchPageController">
@@ -21,50 +21,16 @@
             <Font size="28.0" />
          </font>
       </TextField>
-      <VBox layoutX="450.0" layoutY="125.0" prefHeight="600.0" prefWidth="400.0" spacing="15.0">
-         <children>
-            <Hyperlink fx:id="link1" onAction="#link1ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link2" onAction="#link2ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link3" onAction="#link3ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link4" onAction="#link4ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link5" onAction="#link5ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link6" onAction="#link6ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link7" onAction="#link7ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="link8" onAction="#link8ClickHandler">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Hyperlink>
-         </children>
-      </VBox>
+      <ListView fx:id="listView" layoutX="310.0" layoutY="150.0" prefHeight="550.0" prefWidth="450.0" stylesheets="@ListViewStyle.css" visible="false">
+         <opaqueInsets>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </opaqueInsets>
+      </ListView>
+      <Button fx:id="showProfileButton" layoutX="810.0" layoutY="393.0" mnemonicParsing="false" onAction="#showProfileButtonClickHandler" prefHeight="75.0" prefWidth="165.0" text="Show Profile" visible="false">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
       <AnchorPane layoutY="735.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
          <children>
             <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">
