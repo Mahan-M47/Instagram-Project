@@ -8,5 +8,5 @@ public class Utils
     public static final String DATABASE_NAME = "instagram";
     public static final String LOGIN = "login";
     public static final String FOLLOW = "follow";
-
+    public static final String BIO = "bio";
 }

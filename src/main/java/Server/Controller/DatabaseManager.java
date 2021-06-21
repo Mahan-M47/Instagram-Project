@@ -22,7 +22,8 @@ public class DatabaseManager {
         login.insert(user.getLoginDBObject());
         DBCollection follow = db.getCollection(Utils.FOLLOW);
         follow.insert(user.getFollowDBObject());
-
+        DBCollection Bio = db.getCollection(Utils.BIO);
+        Bio.insert(user.getBioDBObject());
     }
 
     public synchronized static ArrayList<String> getUsers(String collectionName){
@@ -100,4 +101,18 @@ public class DatabaseManager {
             return null ;
         }
     }
+
+    public synchronized static User getbio(String username){
+        DBCollection collection = db.getCollection(Utils.BIO);
+        if(checkIfUserExists(Utils.BIO,username)) {
+            BasicDBObject obj = new BasicDBObject().append("username", username);
+            DBObject one = collection.findOne(obj);
+            return User.parseBio(one);
+        }
+        else{
+            return null ;
+        }
+    }
+
+
 }

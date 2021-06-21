@@ -28,12 +28,24 @@ public class MainManager
                     else flag = false;
                     return new Response("signup", new Data(dat.clientUsername, flag) );
 
-
                 case "login":
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
                     return new Response("login", new Data(dat.clientUsername, flag) );
 
+                case "Bio" :
+                    user = new User();
+                    user.setUsername(dat.clientUsername);
+                    user.setBio(dat.dataString);
+
+                case "showprofile" :
+                    user = new User();
+                    user.setUsername(dat.clientUsername);
+                    user.setPassword(DatabaseManager.getUser(Utils.LOGIN,dat.clientUsername).getPassword());
+                    user.setBio(DatabaseManager.getbio(dat.clientUsername).getBio());
+                    user.setFollowers(DatabaseManager.getfollowing(dat.clientUsername).getFollowers());
+                    user.setFollowing(DatabaseManager.getfollowing(dat.clientUsername).getFollowing());
+                    
 
                 case "logout":
                     removeClient(dat.clientUsername);

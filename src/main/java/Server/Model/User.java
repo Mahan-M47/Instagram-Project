@@ -13,6 +13,7 @@ public class User
     private ArrayList<Post> posts;
     private ArrayList<Chat> chats;
     private File profilePicture;
+    private String Bio;
 
     public User() {
     }
@@ -43,7 +44,7 @@ public class User
         this.password = password;
     }
 
-    public List<String> getFollowers() {
+    public ArrayList<String> getFollowers() {
         return followers;
     }
 
@@ -75,6 +76,14 @@ public class User
         this.following = following;
     }
 
+    public String getBio() {
+        return Bio;
+    }
+
+    public void setBio(String bio) {
+        Bio = bio;
+    }
+
     public DBObject getLoginDBObject() {
         return new BasicDBObject()
                 .append("username", getUsername())
@@ -86,6 +95,12 @@ public class User
                 .append("username", getUsername())
                 .append("Following", following)
                 .append("Followers",followers);
+    }
+
+    public DBObject getBioDBObject() {
+        return new BasicDBObject()
+                .append("username", getUsername())
+                .append("Bio", Bio);
     }
 
     public static User parseUser(DBObject object) {
@@ -103,5 +118,11 @@ public class User
         return user;
     }
 
+    public static User parseBio(DBObject object) {
+        User user = new User();
+        user.setUsername((String) object.get("username"));
+        user.setBio((String) object.get("Bio"));
+        return user;
+    }
 
     }
