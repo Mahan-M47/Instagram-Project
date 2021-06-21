@@ -36,13 +36,13 @@ public class MainManager
                 case "Bio" :
                     user = new User();
                     user.setUsername(dat.clientUsername);
-                    user.setBio(dat.dataString);
+                    user.setBioText(dat.dataString);
 
                 case "showprofile" :
                     user = new User();
                     user.setUsername(dat.clientUsername);
                     user.setPassword(DatabaseManager.getUser(Utils.LOGIN,dat.clientUsername).getPassword());
-                    user.setBio(DatabaseManager.getbio(dat.clientUsername).getBio());
+                    user.setBioText(DatabaseManager.getbio(dat.clientUsername).getBioText());
                     user.setFollowers(DatabaseManager.getfollowing(dat.clientUsername).getFollowers());
                     user.setFollowing(DatabaseManager.getfollowing(dat.clientUsername).getFollowing());
                     

@@ -4,18 +4,18 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class User
 {
     private String username, password, bioText;
-    private List<String> followers, following;;
-    private List<Post> posts;
-    private List<Chat> chats;
+    private ArrayList<String> followers, following;
+    private ArrayList<Post> posts;
+    private ArrayList<Chat> chats;
     private File profilePicture;
 
     public User() {
     }
+
 
     public User(String username, String password) {
         this.username = username;
@@ -42,24 +42,85 @@ public class User
         this.password = password;
     }
 
-    public List<String> getFollowers() {
+    public ArrayList<String> getFollowers() {
         return followers;
     }
 
-    public List<String> getFollowing() {
+    public ArrayList<String> getFollowing() {
         return following;
     }
 
-    public DBObject getDBObject() {
+    public void addFollowing(String username) {
+        following.add(username);
+    }
+
+    public void addFollowers(String username) {
+        followers.add(username);
+    }
+
+    public void removeFollowing(String username) {
+        following.remove(username);
+    }
+
+    public void removeFollowers(String username) {
+        followers.remove(username);
+    }
+
+    public void setFollowers(ArrayList<String> followers) {
+        this.followers = followers;
+    }
+
+    public void setFollowing(ArrayList<String> following) {
+        this.following = following;
+    }
+
+    public String getBioText() {
+        return bioText;
+    }
+
+    public void setBioText(String bioText) {
+        this.bioText = bioText;
+    }
+
+    public DBObject getLoginDBObject() {
         return new BasicDBObject()
                 .append("username", getUsername())
                 .append("password", getPassword());
     }
 
-    public static User parseUser(DBObject object) {
-        User user = new User();
+    public DBObject getFollowDBObject() {
+        return new BasicDBObject()
+                .append("username", getUsername())
+                .append("Following", following)
+                .append("Followers",followers);
+    }
+
+    public DBObject getBioDBObject() {
+        return new BasicDBObject()
+                .append("username", getUsername())
+                .append("Bio", bioText);
+    }
+
+    public static Server.Model.User parseUser(DBObject object) {
+        Server.Model.User user = new Server.Model.User();
         user.setUsername((String) object.get("username"));
         user.setPassword((String) object.get("password"));
         return user;
     }
+
+    public static Server.Model.User parseFollow(DBObject object) {
+        Server.Model.User user = new Server.Model.User();
+        user.setUsername((String) object.get("username"));
+        user.setFollowing((ArrayList<String>)object.get("Following"));
+        user.setFollowers((ArrayList<String>)object.get("Followers"));
+        return user;
+    }
+
+    public static Server.Model.User parseBio(DBObject object) {
+        Server.Model.User user = new Server.Model.User();
+        user.setUsername((String) object.get("username"));
+        user.setBioText((String) object.get("Bio"));
+        return user;
+    }
+
 }

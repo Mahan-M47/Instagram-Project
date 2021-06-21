@@ -11,9 +11,7 @@ public class GUIManager
 
     public static void showLoginPage() { Starter.changeScene(Utils.GUI_LOGIN); }
 
-    public static void showSignupPage() {
-        Starter.changeScene(Utils.GUI_SIGN_UP);
-    }
+    public static void showSignupPage() { Starter.changeScene(Utils.GUI_SIGN_UP); }
 
     public static void showTimeline() { Starter.changeScene(Utils.GUI_TIMELINE); }
 

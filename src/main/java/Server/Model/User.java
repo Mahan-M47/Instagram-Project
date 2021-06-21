@@ -4,7 +4,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class User
 {
@@ -13,7 +12,6 @@ public class User
     private ArrayList<Post> posts;
     private ArrayList<Chat> chats;
     private File profilePicture;
-    private String Bio;
 
     public User() {
     }
@@ -76,12 +74,12 @@ public class User
         this.following = following;
     }
 
-    public String getBio() {
-        return Bio;
+    public String getBioText() {
+        return bioText;
     }
 
-    public void setBio(String bio) {
-        Bio = bio;
+    public void setBioText(String bioText) {
+        this.bioText = bioText;
     }
 
     public DBObject getLoginDBObject() {
@@ -100,7 +98,7 @@ public class User
     public DBObject getBioDBObject() {
         return new BasicDBObject()
                 .append("username", getUsername())
-                .append("Bio", Bio);
+                .append("Bio", bioText);
     }
 
     public static User parseUser(DBObject object) {
@@ -121,8 +119,8 @@ public class User
     public static User parseBio(DBObject object) {
         User user = new User();
         user.setUsername((String) object.get("username"));
-        user.setBio((String) object.get("Bio"));
+        user.setBioText((String) object.get("Bio"));
         return user;
     }
 
-    }
+}
