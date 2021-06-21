@@ -30,13 +30,6 @@ public class MainManager
         networkManager.stopClient();
     }
 
-    public static void logout()
-    {
-        Request req = new Request("logout",new Data(Utils.currentUser) );
-        NetworkManager.putRequest(req);
-        Utils.currentUser = "";
-    }
-
 
     public static void process(Response response)
     {

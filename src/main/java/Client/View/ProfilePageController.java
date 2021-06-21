@@ -1,5 +1,8 @@
 package Client.View;
 
+import Client.Controller.Data;
+import Client.Controller.NetworkManager;
+import Client.Controller.Request;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,16 +29,34 @@ public class ProfilePageController implements Initializable {
 
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        usernameLabel.setText(Utils.receivedUser.getUsername());
-        bioLabel.setText(Utils.receivedUser.getBioText());
-        followersLink.setText("" + Utils.receivedUser.getFollowers().size());
-        followingLink.setText("" + Utils.receivedUser.getFollowing().size());
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        usernameLabel.setText(Utils.receivedUserObj.getUsername());
+//        bioLabel.setText(Utils.receivedUser.getBioText());
+        followersLink.setText("" + Utils.receivedUserObj.getFollowers().size());
+        followingLink.setText("" + Utils.receivedUserObj.getFollowing().size());
+
+        if ( Utils.receivedUserObj.getFollowers().contains(Utils.currentUser) ) {
+            followButton.setText("Unfollow");
+        }
+
     }
 
 
     @FXML
-    void followButtonClickHandler(ActionEvent event) {
+    void followButtonClickHandler(ActionEvent event)
+    {
+        Data data = new Data( Utils.currentUser, Utils.receivedUserObj.getUsername() );
+        Request req;
+
+        if ( followButton.getText().equals("follow") ) {
+            req = new Request("follow", data);
+        }
+        else {
+            req = new Request("unfollow", data);
+        }
+
+        NetworkManager.putRequest(req);
     }
 
     @FXML
@@ -43,31 +64,32 @@ public class ProfilePageController implements Initializable {
     }
 
     @FXML
-    void followersLinkClickHandler(ActionEvent event) {
-        Starter.changeScene("FollowersPage");
+    void followersLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_FOLLOWERS); }
+
+    @FXML
+    void followingLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_FOLLOWING); }
+
+    @FXML
+    void homeButtonClickHandler(ActionEvent event) {
+        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
+        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
-    void followingLinkClickHandler(ActionEvent event) {
-        Starter.changeScene("FollowingPage");
+    void profileButtonClickHandler(ActionEvent event) {
+        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
+        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { Starter.changeScene("Timeline"); }
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
 
     @FXML
-    void profileButtonClickHandler(ActionEvent event) { Starter.changeScene("MyProfilePage"); }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
 
     @FXML
-    void searchButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("SearchPage");
-    }
-
-    @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene("CreatePostPage"); }
-
-    @FXML
-    void chatsButtonClickHandler(ActionEvent event) {
-    }
+    void chatsButtonClickHandler(ActionEvent event) { }
 
 }

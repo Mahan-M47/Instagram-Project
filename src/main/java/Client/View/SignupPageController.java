@@ -33,7 +33,7 @@ public class SignupPageController implements Initializable
 
     @FXML
     void loginInsteadHLHandler(ActionEvent event) {
-        Starter.changeScene("LoginPage");
+        Starter.changeScene(Utils.GUI_LOGIN);
         Utils.resetErrorTexts();
     }
 
@@ -69,6 +69,12 @@ public class SignupPageController implements Initializable
         }
         else if (!password.equals(confirmPassword)) {
             errorLabel.setText("The Passwords Didn't Match. Please Try Again.");
+        }
+        else if (username.contains(" ")) {
+            errorLabel.setText("Username Cannot Contain White Space");
+        }
+        else if (password.contains(" ")) {
+            errorLabel.setText("Password Cannot Contain White Space.");
         }
         else {
             errorLabel.setText("");

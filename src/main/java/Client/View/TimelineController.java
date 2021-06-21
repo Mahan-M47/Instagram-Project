@@ -1,6 +1,8 @@
 package Client.View;
 
-import Client.Controller.MainManager;
+import Client.Controller.Data;
+import Client.Controller.NetworkManager;
+import Client.Controller.Request;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,27 +27,35 @@ public class TimelineController implements Initializable
 
 
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { Starter.changeScene("Timeline"); }
-
-    @FXML
-    void profileButtonClickHandler(ActionEvent event) { Starter.changeScene("MyProfilePage"); }
-
-    @FXML
-    void searchButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("SearchPage");
+    void homeButtonClickHandler(ActionEvent event) {
+        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
+        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene("CreatePostPage"); }
-
-    @FXML
-    void chatsButtonClickHandler(ActionEvent event) {
+    void profileButtonClickHandler(ActionEvent event) {
+        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
+        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
-    void logoutButtonClickHandler(ActionEvent event) {
-        MainManager.logout();
-        Starter.changeScene("LoginPage");
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
+
+    @FXML
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
+
+    @FXML
+    void chatsButtonClickHandler(ActionEvent event) { }
+
+    @FXML
+    void logoutButtonClickHandler(ActionEvent event)
+    {
+        Request req = new Request("logout",new Data(Utils.currentUser) );
+        NetworkManager.putRequest(req);
+        Utils.currentUser = "";
+        Starter.changeScene(Utils.GUI_LOGIN);
     }
 
 }

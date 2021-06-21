@@ -1,5 +1,9 @@
 package Client.View;
 
+import Client.Controller.Data;
+import Client.Controller.NetworkManager;
+import Client.Controller.Request;
+import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,22 +55,26 @@ public class CreatePostPageController
     }
 
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { Starter.changeScene("Timeline"); }
-
-    @FXML
-    void profileButtonClickHandler(ActionEvent event) { Starter.changeScene("MyProfilePage"); }
-
-    @FXML
-    void searchButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("SearchPage");
+    void homeButtonClickHandler(ActionEvent event) {
+        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
+        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene("CreatePostPage"); }
-
-    @FXML
-    void chatsButtonClickHandler(ActionEvent event) {
+    void profileButtonClickHandler(ActionEvent event) {
+        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
+        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
+    @FXML
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
+
+    @FXML
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
+
+    @FXML
+    void chatsButtonClickHandler(ActionEvent event) { }
 
 }

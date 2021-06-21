@@ -17,22 +17,13 @@ public class User
     public User() {
     }
 
-    public User(String username, String password, String bioText) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         followers = new ArrayList<>();
         following = new ArrayList<>();
         posts = new ArrayList<>();
         chats = new ArrayList<>();
-
-        this.bioText = bioText;
-
-        following.add("Taylor");
-        following.add("j");
-        followers.add("Taylor");
-        followers.add("j");
-        followers.add("x");
-        followers.add("v");
     }
 
     public String getUsername() {
@@ -58,10 +49,6 @@ public class User
     public List<String> getFollowing() {
         return following;
     }
-
-    public String getBioText() { return bioText; }
-
-    public void setBioText(String bioText) { this.bioText = bioText; }
 
     public DBObject getDBObject() {
         return new BasicDBObject()

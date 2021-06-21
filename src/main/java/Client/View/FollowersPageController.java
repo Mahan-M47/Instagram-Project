@@ -26,7 +26,7 @@ public class FollowersPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> followers = FXCollections.observableList(Utils.receivedUser.getFollowers());
+        ObservableList<String> followers = FXCollections.observableList(Utils.receivedUserObj.getFollowers());
         listView.setItems(followers);
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
@@ -34,11 +34,12 @@ public class FollowersPageController implements Initializable {
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("ProfilePage");
+        Starter.changeScene(Utils.GUI_PROFILE);
     }
 
     @FXML
-    void showProfileButtonClickHandler(ActionEvent event) {
+    void showProfileButtonClickHandler(ActionEvent event)
+    {
         String username = listView.getSelectionModel().getSelectedItem();
 
         if (username != null) {
@@ -49,26 +50,25 @@ public class FollowersPageController implements Initializable {
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("Timeline");
+        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
+        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("MyProfilePage");
+        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
+        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
-    void searchButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("SearchPage");
-    }
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) {
-        Starter.changeScene("CreatePostPage");
-    }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
 
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) {
-    }
+    void chatsButtonClickHandler(ActionEvent event) { }
 
 }

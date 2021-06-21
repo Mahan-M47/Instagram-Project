@@ -17,11 +17,11 @@ public class Starter extends Application
     @Override
     public void start(Stage primaryStage) throws IOException
     {
+        primaryStage.setTitle("Instagram");
+        primaryStage.setResizable(false);
         stage = primaryStage;
         URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
         Parent root = FXMLLoader.load(url);
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Instagram");
         primaryStage.setScene(new Scene(root, 1300, 850));
         primaryStage.show();
     }
@@ -30,8 +30,8 @@ public class Starter extends Application
     {
         try {
             URL url = Paths.get("./src/main/java/Client/Resources/" + fxmlFileName + ".fxml").toUri().toURL();
-            Parent pane = FXMLLoader.load(url);
-            stage.getScene().setRoot(pane);
+            Parent root = FXMLLoader.load(url);
+            stage.getScene().setRoot(root);
         }
         catch (Exception e) {
             e.printStackTrace();
