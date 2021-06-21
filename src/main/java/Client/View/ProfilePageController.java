@@ -49,7 +49,7 @@ public class ProfilePageController implements Initializable {
         Data data = new Data( Utils.currentUser, Utils.receivedUserObj.getUsername() );
         Request req;
 
-        if ( followButton.getText().equals("follow") ) {
+        if ( followButton.getText().equals("Follow") ) {
             req = new Request("follow", data);
         }
         else {

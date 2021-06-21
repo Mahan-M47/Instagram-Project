@@ -81,13 +81,14 @@ public class DatabaseManager {
         return results;
     }
 
-    public synchronized static void follow(User following , User follower){
+    public synchronized static void follow(String befollowing , String befollower){
+        User following = getFollowing(befollowing);
+        User follower = getFollowing(befollower);
         DBCollection follow2 = db.getCollection(Utils.DB_FOLLOW);
         DBObject user = new BasicDBObject().append("username",following.getUsername());
         follow2.update(user,following.getFollowDBObject());
         DBObject user2 = new BasicDBObject().append("username",follower.getUsername());
         follow2.update(user2,follower.getFollowDBObject());
-
     }
 
     public synchronized static User assembleUser(String username) {
@@ -99,7 +100,7 @@ public class DatabaseManager {
         return user;
     }
 
-    public synchronized static User getFollowing(String username){
+    public synchronized static User getFollowing(String username) {
         DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
         if(checkIfUserExists(Utils.DB_FOLLOW,username)) {
             BasicDBObject obj = new BasicDBObject().append("username", username);
@@ -111,7 +112,7 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static User getBio(String username){
+    public synchronized static User getBio(String username) {
         DBCollection collection = db.getCollection(Utils.DB_BIO);
         if(checkIfUserExists(Utils.DB_BIO,username)) {
             BasicDBObject obj = new BasicDBObject().append("username", username);
@@ -123,5 +124,12 @@ public class DatabaseManager {
         }
     }
 
+    public synchronized static void setBio(String username , String BIO) {
+        DBCollection collection = db.getCollection(Utils.DB_BIO);
+        BasicDBObject obj = new BasicDBObject().append("username", username);
+        collection.update(obj,new BasicDBObject().append("Bio",BIO));
+    }
+
 
 }
+

@@ -50,14 +50,16 @@ public class MainManager
                     return new Response("showMyProfile", new Data(user) );
 
 
-//                case "follow":
-//                    DatabaseManager.follow(dat.clientUsername, dat.dataString);
+                case "follow":
+                    DatabaseManager.follow(dat.dataString, dat.clientUsername);
+                    user = DatabaseManager.assembleUser(dat.dataString);
+                    return new Response("follow", new Data(user));
 
 
                 case "setBio":
-                    user = new User();
-                    user.setUsername(dat.clientUsername);
-                    user.setBioText(dat.dataString);
+                    DatabaseManager.setBio(dat.clientUsername, dat.dataString);
+                    user = DatabaseManager.assembleUser(dat.clientUsername);
+                    return new Response("setBio", new Data(user) );
 
 
                 case "logout":

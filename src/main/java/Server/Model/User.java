@@ -93,7 +93,7 @@ public class User
         return new BasicDBObject()
                 .append("username", getUsername())
                 .append("Following", following)
-                .append("Followers",followers);
+                .append("Followers", followers);
     }
 
     public DBObject getBioDBObject() {

@@ -81,6 +81,23 @@ public class MainManager
                 Utils.currentUserObj = dat.user;
                 GUIManager.showMyProfilePage();
                 break;
+
+
+            case "follow":
+                Utils.receivedUserObj  = dat.user;
+
+                for (String str : Utils.receivedUserObj.getFollowers() ) {
+                    System.out.println(str);
+                }
+
+                GUIManager.showProfilePage();
+                break;
+
+
+            case "setBio":
+                Utils.currentUserObj = dat.user;
+                GUIManager.showEditProfilePage();
+                break;
         }
 
         //each case in switch statement calls a method from GUIManager.

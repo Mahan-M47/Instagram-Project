@@ -59,7 +59,8 @@ public class EditProfilePageController implements Initializable
 
     @FXML
     void applyButtonClickHandler(ActionEvent event) {
-//        Utils.currentUserObj.setBioText(BioTF.getText());
+        Request req = new Request ("setBio", new Data( Utils.currentUser, BioTF.getText()) );
+        NetworkManager.putRequest(req);
     }
 
     @FXML
