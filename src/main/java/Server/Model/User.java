@@ -59,6 +59,14 @@ public class User
         followers.add(username);
     }
 
+    public void removeFollowing(String username) {
+        following.remove(username);
+    }
+
+    public void removeFollowers(String username) {
+        followers.remove(username);
+    }
+
     public void setFollowers(ArrayList<String> followers) {
         this.followers = followers;
     }
