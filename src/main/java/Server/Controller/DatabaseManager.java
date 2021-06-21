@@ -10,6 +10,8 @@ public class DatabaseManager {
 
     private static MongoClient mongoClient;
     private static DB db;
+    private static ArrayList<String> Alluser = new ArrayList<>();
+    private static ArrayList<String> Searchuser = new ArrayList<>();
 
     public static void startDatabase(String databaseName) {
         mongoClient = new MongoClient();
@@ -21,12 +23,12 @@ public class DatabaseManager {
             collection.insert(user.getDBObject());
     }
 
-    public synchronized static List<User> getUsers(String collectionName){
+    public synchronized static ArrayList<String> getUsers(String collectionName){
             DBCollection collection = db.getCollection(collectionName);
             DBCursor dbObjects = collection.find();
-            List<User> Users = new ArrayList<>();
+            ArrayList<String> Users = new ArrayList<>();
             for (DBObject dbObject : dbObjects) {
-                Users.add(User.parseUser(dbObject));
+                Users.add(User.parseUser(dbObject).getUsername());
             }
             return Users;
     }
@@ -65,5 +67,17 @@ public class DatabaseManager {
             return true ;
         }
     }
+
+    public synchronized static ArrayList<String> searchuser(String username){
+        Alluser = getUsers(Utils.LOGIN);
+        for(int i = 0 ; i < Alluser.size() ; i++){
+            if(Alluser.get(i).contains(username)){
+                Searchuser.add(Alluser.get(i));
+            }
+        }
+        return Searchuser ;
+    }
+
+    
 
 }
