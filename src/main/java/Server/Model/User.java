@@ -9,13 +9,14 @@ import java.util.List;
 public class User
 {
     private String username, password, bioText;
-    private List<String> followers, following;
-    private List<Post> posts;
-    private List<Chat> chats;
+    private ArrayList<String> followers, following;
+    private ArrayList<Post> posts;
+    private ArrayList<Chat> chats;
     private File profilePicture;
 
     public User() {
     }
+
 
     public User(String username, String password) {
         this.username = username;
@@ -46,20 +47,51 @@ public class User
         return followers;
     }
 
-    public List<String> getFollowing() {
+    public ArrayList<String> getFollowing() {
         return following;
     }
 
-    public DBObject getDBObject() {
+    public void addFollowing(String username) {
+        following.add(username);
+    }
+
+    public void addFollowers(String username) {
+        followers.add(username);
+    }
+
+    public void setFollowers(ArrayList<String> followers) {
+        this.followers = followers;
+    }
+
+    public void setFollowing(ArrayList<String> following) {
+        this.following = following;
+    }
+
+    public DBObject getLoginDBObject() {
         return new BasicDBObject()
                 .append("username", getUsername())
                 .append("password", getPassword());
+    }
+
+    public DBObject getFollowDBObject() {
+        return new BasicDBObject()
+                .append("username", getUsername())
+                .append("Following", following)
+                .append("Followers",followers);
     }
 
     public static User parseUser(DBObject object) {
         User user = new User();
         user.setUsername((String) object.get("username"));
         user.setPassword((String) object.get("password"));
+        return user;
+    }
+
+    public static User parseFollow(DBObject object) {
+        User user = new User();
+        user.setUsername((String) object.get("username"));
+        user.setFollowing((ArrayList<String>)object.get("Following"));
+        user.setFollowers((ArrayList<String>)object.get("Followers"));
         return user;
     }
 

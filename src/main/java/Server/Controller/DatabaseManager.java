@@ -4,7 +4,6 @@ import Server.Model.User;
 import Server.Utils;
 import com.mongodb.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseManager {
 
@@ -19,8 +18,11 @@ public class DatabaseManager {
     }
 
     public synchronized static void adduser(User user) {
-            DBCollection collection = db.getCollection(Utils.LOGIN);
-            collection.insert(user.getDBObject());
+        DBCollection login = db.getCollection(Utils.LOGIN);
+        login.insert(user.getLoginDBObject());
+        DBCollection follow = db.getCollection(Utils.FOLLOW);
+        follow.insert(user.getFollowDBObject());
+
     }
 
     public synchronized static ArrayList<String> getUsers(String collectionName){
@@ -59,7 +61,7 @@ public class DatabaseManager {
 
     public synchronized static boolean checkLogin(User user) {
         DBCollection collection = db.getCollection(Utils.LOGIN);
-        DBObject one = collection.findOne(user.getDBObject());
+        DBObject one = collection.findOne(user.getLoginDBObject());
         if(one == null){
             return false ;
         }
@@ -78,6 +80,24 @@ public class DatabaseManager {
         return Searchuser ;
     }
 
-    
+    public synchronized static void follow(User following , User follower){
+        DBCollection follow2 = db.getCollection(Utils.FOLLOW);
+        DBObject user = new BasicDBObject().append("username",following.getUsername());
+        follow2.update(user,following.getFollowDBObject());
+        DBObject user2 = new BasicDBObject().append("username",follower.getUsername());
+        follow2.update(user2,follower.getFollowDBObject());
 
+    }
+
+    public synchronized static User getfollowing(String username){
+        DBCollection collection = db.getCollection(Utils.FOLLOW);
+        if(checkIfUserExists(Utils.FOLLOW,username)) {
+            BasicDBObject obj = new BasicDBObject().append("username", username);
+            DBObject one = collection.findOne(obj);
+            return User.parseFollow(one);
+        }
+        else{
+            return null ;
+        }
+    }
 }

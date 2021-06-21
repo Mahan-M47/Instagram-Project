@@ -7,4 +7,6 @@ public class Utils
     public static final long MONITOR_SLEEP_TIMER = 1000;
     public static final String DATABASE_NAME = "instagram";
     public static final String LOGIN = "login";
+    public static final String FOLLOW = "follow";
+
 }
