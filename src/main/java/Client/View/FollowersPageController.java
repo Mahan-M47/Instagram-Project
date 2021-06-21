@@ -34,7 +34,8 @@ public class FollowersPageController implements Initializable {
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_PROFILE);
+        Request req = new Request("showProfile", new Data(Utils.receivedUserObj.getUsername()) );
+        NetworkManager.putRequest(req);
     }
 
     @FXML
@@ -57,7 +58,6 @@ public class FollowersPageController implements Initializable {
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
         Request req = new Request("showMyProfile", new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }

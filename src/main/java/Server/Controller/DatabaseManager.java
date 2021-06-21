@@ -9,8 +9,6 @@ public class DatabaseManager {
 
     private static MongoClient mongoClient;
     private static DB db;
-    private static ArrayList<String> Alluser = new ArrayList<>();
-    private static ArrayList<String> Searchuser = new ArrayList<>();
 
     public static void startDatabase(String databaseName) {
         mongoClient = new MongoClient();
@@ -18,15 +16,15 @@ public class DatabaseManager {
     }
 
     public synchronized static void adduser(User user) {
-        DBCollection login = db.getCollection(Utils.LOGIN);
+        DBCollection login = db.getCollection(Utils.DB_LOGIN);
         login.insert(user.getLoginDBObject());
-        DBCollection follow = db.getCollection(Utils.FOLLOW);
+        DBCollection follow = db.getCollection(Utils.DB_FOLLOW);
         follow.insert(user.getFollowDBObject());
-        DBCollection Bio = db.getCollection(Utils.BIO);
+        DBCollection Bio = db.getCollection(Utils.DB_BIO);
         Bio.insert(user.getBioDBObject());
     }
 
-    public synchronized static ArrayList<String> getUsers(String collectionName){
+    public synchronized static ArrayList<String> getUsers(String collectionName) {
             DBCollection collection = db.getCollection(collectionName);
             DBCursor dbObjects = collection.find();
             ArrayList<String> Users = new ArrayList<>();
@@ -61,7 +59,7 @@ public class DatabaseManager {
     }
 
     public synchronized static boolean checkLogin(User user) {
-        DBCollection collection = db.getCollection(Utils.LOGIN);
+        DBCollection collection = db.getCollection(Utils.DB_LOGIN);
         DBObject one = collection.findOne(user.getLoginDBObject());
         if(one == null){
             return false ;
@@ -71,18 +69,20 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static ArrayList<String> searchuser(String username){
-        Alluser = getUsers(Utils.LOGIN);
-        for(int i = 0 ; i < Alluser.size() ; i++){
-            if(Alluser.get(i).contains(username)){
-                Searchuser.add(Alluser.get(i));
+    public synchronized static ArrayList<String> searchUser(String username) {
+        ArrayList<String> allUsers = getUsers(Utils.DB_LOGIN);
+        ArrayList<String> results = new ArrayList<>();
+
+        for (String str : allUsers) {
+            if (str.contains(username)) {
+                results.add(str);
             }
         }
-        return Searchuser ;
+        return results;
     }
 
     public synchronized static void follow(User following , User follower){
-        DBCollection follow2 = db.getCollection(Utils.FOLLOW);
+        DBCollection follow2 = db.getCollection(Utils.DB_FOLLOW);
         DBObject user = new BasicDBObject().append("username",following.getUsername());
         follow2.update(user,following.getFollowDBObject());
         DBObject user2 = new BasicDBObject().append("username",follower.getUsername());
@@ -90,9 +90,18 @@ public class DatabaseManager {
 
     }
 
-    public synchronized static User getfollowing(String username){
-        DBCollection collection = db.getCollection(Utils.FOLLOW);
-        if(checkIfUserExists(Utils.FOLLOW,username)) {
+    public synchronized static User assembleUser(String username) {
+        User user = new User();
+        user.setUsername(username);
+        user.setBioText  ( getBio(username).getBioText() );
+        user.setFollowers( getFollowing(username).getFollowers() );
+        user.setFollowing( getFollowing(username).getFollowing() );
+        return user;
+    }
+
+    public synchronized static User getFollowing(String username){
+        DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
+        if(checkIfUserExists(Utils.DB_FOLLOW,username)) {
             BasicDBObject obj = new BasicDBObject().append("username", username);
             DBObject one = collection.findOne(obj);
             return User.parseFollow(one);
@@ -102,9 +111,9 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static User getbio(String username){
-        DBCollection collection = db.getCollection(Utils.BIO);
-        if(checkIfUserExists(Utils.BIO,username)) {
+    public synchronized static User getBio(String username){
+        DBCollection collection = db.getCollection(Utils.DB_BIO);
+        if(checkIfUserExists(Utils.DB_BIO,username)) {
             BasicDBObject obj = new BasicDBObject().append("username", username);
             DBObject one = collection.findOne(obj);
             return User.parseBio(one);

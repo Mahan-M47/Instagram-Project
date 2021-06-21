@@ -63,7 +63,6 @@ public class CreatePostPageController
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
         Request req = new Request("showMyProfile", new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }

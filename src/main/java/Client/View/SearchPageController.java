@@ -50,7 +50,7 @@ public class SearchPageController implements Initializable {
         String searchText = searchTF.getText().toLowerCase();
 
         if (!searchText.equals("")) {
-            Request req = new Request("search", new Data(searchText));
+            Request req = new Request("search", new Data(Utils.currentUser, searchText));
             NetworkManager.putRequest(req);
         }
     }
@@ -75,7 +75,6 @@ public class SearchPageController implements Initializable {
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
         Request req = new Request("showMyProfile", new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }

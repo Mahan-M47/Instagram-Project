@@ -1,6 +1,8 @@
 package Client;
 
 import Client.Model.User;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Utils
@@ -43,5 +45,5 @@ public class Utils
     }
 
     public static User receivedUserObj = null;
-    public static List<String> searchResults = null;
+    public static List<String> searchResults = new ArrayList<>();
 }

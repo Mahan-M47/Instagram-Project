@@ -32,7 +32,7 @@ public class ProfilePageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources)
     {
         usernameLabel.setText(Utils.receivedUserObj.getUsername());
-//        bioLabel.setText(Utils.receivedUser.getBioText());
+        bioLabel.setText(Utils.receivedUserObj.getBioText());
         followersLink.setText("" + Utils.receivedUserObj.getFollowers().size());
         followingLink.setText("" + Utils.receivedUserObj.getFollowing().size());
 
@@ -78,7 +78,6 @@ public class ProfilePageController implements Initializable {
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
         Request req = new Request("showMyProfile", new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }

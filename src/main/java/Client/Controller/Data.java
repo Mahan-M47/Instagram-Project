@@ -35,9 +35,7 @@ public class Data
 
     //only used by the server so there's no need to add the client's username. (e.g. returning search results)
     public Data(ArrayList<String> usernameList) {
-        for (String username : usernameList) {
-            this.usernameList.add(username);
-        }
+        this.usernameList = new ArrayList<>(usernameList);
     }
 
     public Data(String clientUsername, String postID, String text) {
@@ -58,9 +56,7 @@ public class Data
 
     //only used by the server so there's no need to add the client's username. (e.g. posts in the Timeline)
     public Data(List<Post> posts) {
-        for (Post post: posts) {
-            this.posts.add(post);
-        }
+        this.posts = new ArrayList<>(posts);
     }
 
     public Data(String clientUsername, Chat chat) {

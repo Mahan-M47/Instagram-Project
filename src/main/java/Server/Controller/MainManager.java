@@ -18,7 +18,7 @@ public class MainManager
             switch ( req.getTitle() )
             {
                 case "signup":
-                    boolean userExists = DatabaseManager.checkIfUserExists(Utils.LOGIN , dat.clientUsername);
+                    boolean userExists = DatabaseManager.checkIfUserExists(Utils.DB_LOGIN, dat.clientUsername);
 
                     if (!userExists) {
                         user = new User(dat.clientUsername, dat.dataString );
@@ -28,24 +28,37 @@ public class MainManager
                     else flag = false;
                     return new Response("signup", new Data(dat.clientUsername, flag) );
 
+
                 case "login":
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
                     return new Response("login", new Data(dat.clientUsername, flag) );
 
-                case "Bio" :
+
+                case "search":
+                    ArrayList<String> results = DatabaseManager.searchUser( dat.dataString );
+                    return new Response("search", new Data(results) );
+
+
+                case "showProfile" :
+                    user = DatabaseManager.assembleUser(dat.clientUsername);
+                    return new Response("showProfile", new Data(user) );
+
+
+                case "showMyProfile" :
+                    user = DatabaseManager.assembleUser(dat.clientUsername);
+                    return new Response("showMyProfile", new Data(user) );
+
+
+//                case "follow":
+//                    DatabaseManager.follow(dat.clientUsername, dat.dataString);
+
+
+                case "setBio":
                     user = new User();
                     user.setUsername(dat.clientUsername);
                     user.setBioText(dat.dataString);
 
-                case "showprofile" :
-                    user = new User();
-                    user.setUsername(dat.clientUsername);
-                    user.setPassword(DatabaseManager.getUser(Utils.LOGIN,dat.clientUsername).getPassword());
-                    user.setBioText(DatabaseManager.getbio(dat.clientUsername).getBioText());
-                    user.setFollowers(DatabaseManager.getfollowing(dat.clientUsername).getFollowers());
-                    user.setFollowing(DatabaseManager.getfollowing(dat.clientUsername).getFollowing());
-                    
 
                 case "logout":
                     removeClient(dat.clientUsername);

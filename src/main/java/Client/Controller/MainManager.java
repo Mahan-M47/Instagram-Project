@@ -3,6 +3,7 @@ package Client.Controller;
 import Client.Model.User;
 import Client.Utils;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class MainManager
 {
@@ -65,7 +66,20 @@ public class MainManager
 
 
             case "search":
-                Utils.searchResults = dat.usernameList;
+                Utils.searchResults = new ArrayList<>(dat.usernameList);
+                GUIManager.showSearchPage();
+                break;
+
+
+            case "showProfile":
+                Utils.receivedUserObj = dat.user;
+                GUIManager.showProfilePage();
+                break;
+
+
+            case "showMyProfile":
+                Utils.currentUserObj = dat.user;
+                GUIManager.showMyProfilePage();
                 break;
         }
 

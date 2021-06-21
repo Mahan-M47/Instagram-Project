@@ -29,10 +29,10 @@ public class MyProfilePageController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-//        usernameLabel.setText(Utils.currentUserObj.getUsername());
-//        bioLabel.setText(Utils.currentUserObj.getBioText());
-//        followersLink.setText("" + Utils.currentUserObj.getFollowers().size());
-//        followingLink.setText("" + Utils.currentUserObj.getFollowing().size());
+        usernameLabel.setText(Utils.currentUserObj.getUsername());
+        bioLabel.setText(Utils.currentUserObj.getBioText());
+        followersLink.setText("" + Utils.currentUserObj.getFollowers().size());
+        followingLink.setText("" + Utils.currentUserObj.getFollowing().size());
     }
 
 
@@ -58,7 +58,6 @@ public class MyProfilePageController implements Initializable
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
         Request req = new Request("showMyProfile", new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }

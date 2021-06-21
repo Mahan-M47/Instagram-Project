@@ -24,6 +24,7 @@ public class User
         following = new ArrayList<>();
         posts = new ArrayList<>();
         chats = new ArrayList<>();
+        bioText = "";
     }
 
     public String getUsername() {

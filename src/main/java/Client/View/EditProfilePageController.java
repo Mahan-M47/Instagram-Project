@@ -34,7 +34,7 @@ public class EditProfilePageController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        BioTF.setText(Utils.currentUserObj.getBioText());
+        BioTF.setText(Utils.currentUserObj.getBioText());
     }
 
 
@@ -64,7 +64,8 @@ public class EditProfilePageController implements Initializable
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_MY_PROFILE);
+        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     @FXML
@@ -76,7 +77,6 @@ public class EditProfilePageController implements Initializable
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_MY_PROFILE);  //should be removed
         Request req = new Request("showMyProfile", new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
