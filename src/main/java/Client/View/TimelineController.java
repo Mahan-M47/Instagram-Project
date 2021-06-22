@@ -65,11 +65,12 @@ public class TimelineController implements Initializable
             Hyperlink usernameLink = new Hyperlink("username");
             Label likeLabel = new Label("0");
             Label commentsLabel = new Label("0");
+            Label captionLabel = new Label("");
 
-            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel);
+            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel);
 
             AnchorPane pane = new AnchorPane();
-            pane.setPrefSize(800, 200);
+            pane.setPrefSize(900, 500);
 
             pane.getChildren().add(imageView);
             pane.getChildren().add(usernameLink);
@@ -77,44 +78,51 @@ public class TimelineController implements Initializable
             pane.getChildren().add(likeLabel);
             pane.getChildren().add(commentsButton);
             pane.getChildren().add(commentsLabel);
+            pane.getChildren().add(captionLabel);
 
             scrollVBox.getChildren().add(pane);
         }
     }
 
     public void createButtons(Button likeButton, Button commentsButton, Hyperlink usernameLink,
-                              Label likeLabel, Label commentsLabel)
+                              Label likeLabel, Label commentsLabel, Label captionLabel)
     {
         likeButton.setPrefSize(130,50);
         commentsButton.setPrefSize(130,50);
-        usernameLink.setPrefSize(270,65);
+        usernameLink.setPrefSize(300,65);
         likeLabel.setPrefSize(50,50);
         commentsLabel.setPrefSize(50,50);
+        captionLabel.setPrefSize(300,290);
 
         likeButton.setFont( new Font("System",20) );
         commentsButton.setFont( new Font("System",20) );
         usernameLink.setFont( new Font("System",30) );
         likeLabel.setFont( new Font("System",25) );
         commentsLabel.setFont( new Font("System",25) );
+        captionLabel.setFont( new Font("Calibri Light", 24));
 
-        likeButton.setLayoutX(585);
-        likeButton.setLayoutY(150);
+        likeButton.setLayoutX(550);
+        likeButton.setLayoutY(100);
 
-        commentsButton.setLayoutX(585);
-        commentsButton.setLayoutY(300);
+        commentsButton.setLayoutX(720);
+        commentsButton.setLayoutY(100);
 
-        usernameLink.setLayoutX(515);
-        usernameLink.setLayoutY(25);
+        usernameLink.setLayoutX(550);
+        usernameLink.setLayoutY(10);
 
-        likeLabel.setLayoutX(625);
-        likeLabel.setLayoutY(200);
+        likeLabel.setLayoutX(590);
+        likeLabel.setLayoutY(150);
 
-        commentsLabel.setLayoutX(625);
-        commentsLabel.setLayoutY(350);
+        commentsLabel.setLayoutX(760);
+        commentsLabel.setLayoutY(150);
+
+        captionLabel.setLayoutX(550);
+        captionLabel.setLayoutY(210);
 
         usernameLink.setAlignment(Pos.CENTER);
         likeLabel.setAlignment(Pos.CENTER);
         commentsLabel.setAlignment(Pos.CENTER);
+        captionLabel.setAlignment(Pos.TOP_LEFT);
 
         likeButton.setOnAction(new EventHandler() {
             @Override
@@ -133,7 +141,7 @@ public class TimelineController implements Initializable
         usernameLink.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                Request req = new Request(Utils.REQ.PROFILE, new Data(usernameLink.getText()) );
+                CommonClickHandlers.showProfileButton(usernameLink.getText());
             }
         });
     }
@@ -141,29 +149,19 @@ public class TimelineController implements Initializable
 
     @FXML
     void loadMoreButtonClickHandler(ActionEvent event) {
+        //reload page with another set of pictures
     }
 
     @FXML
-    void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
-        Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
-        NetworkManager.putRequest(req);
-    }
-
+    void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }
     @FXML
-    void profileButtonClickHandler(ActionEvent event) {
-        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
-        NetworkManager.putRequest(req);
-    }
-
+    void profileButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.SEARCH); }
-
+    void searchButtonClickHandler(ActionEvent event) { CommonClickHandlers.searchButton(); }
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.CREATE_POST); }
-
+    void postButtonClickHandler(ActionEvent event) { CommonClickHandlers.postButton(); }
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) { }
+    void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
 
     @FXML
     void logoutButtonClickHandler(ActionEvent event)

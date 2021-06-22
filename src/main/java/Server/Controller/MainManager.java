@@ -30,8 +30,7 @@ public class MainManager
 
 
                 case Utils.REQ.LOGIN:
-                    user = new User(dat.clientUsername, dat.dataString );
-                    flag = DatabaseManager.checkLogin(user);
+                    flag = DatabaseManager.checkLogin(dat.clientUsername, dat.dataString);
                     return new Response(Utils.REQ.LOGIN, new Data(dat.clientUsername, flag) );
 
 
@@ -51,7 +50,13 @@ public class MainManager
 
 
                 case Utils.REQ.FOLLOW:
-                    DatabaseManager.follow(dat.dataString, dat.clientUsername);
+                    DatabaseManager.follow(dat.clientUsername, dat.dataString);
+                    user = DatabaseManager.assembleUser(dat.dataString);
+                    return new Response(Utils.REQ.FOLLOW, new Data(user));
+
+
+                case Utils.REQ.UNFOLLOW:
+                    DatabaseManager.unfollow(dat.clientUsername, dat.dataString);
                     user = DatabaseManager.assembleUser(dat.dataString);
                     return new Response(Utils.REQ.FOLLOW, new Data(user));
 

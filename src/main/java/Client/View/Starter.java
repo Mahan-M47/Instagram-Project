@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 public class Starter extends Application
 {
     public static Stage stage;
+    public static String currentScene;
     public static boolean isSplashLoaded = false;
 
     @Override
@@ -28,15 +29,19 @@ public class Starter extends Application
 
     public static void changeScene(String fxmlFileName)
     {
+        currentScene = fxmlFileName;
         try {
-            URL url = Paths.get("./src/main/java/Client/Resources/" + fxmlFileName + ".fxml").toUri().toURL();
+            URL url = Paths.get("./src/main/java/Client/Resources/" + currentScene + ".fxml").toUri().toURL();
             Parent root = FXMLLoader.load(url);
             stage.getScene().setRoot(root);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public static void reloadScene() {
+        changeScene(currentScene);
     }
 
     public static void main(String[] args) {

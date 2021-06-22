@@ -85,23 +85,19 @@ public class MainManager
 
             case Utils.REQ.FOLLOW:
                 Utils.receivedUserObj  = dat.user;
-
-                for (String str : Utils.receivedUserObj.getFollowers() ) {
-                    System.out.println(str);
-                }
-
-                GUIManager.showProfilePage();
+                GUIManager.reload();
                 break;
 
 
             case Utils.REQ.UNFOLLOW:
-                //add code
+                Utils.receivedUserObj  = dat.user;
+                GUIManager.reload();
                 break;
 
 
             case Utils.REQ.BIO:
                 Utils.currentUserObj = dat.user;
-                GUIManager.showEditProfilePage();
+                GUIManager.reload();
                 break;
         }
 

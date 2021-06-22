@@ -70,25 +70,15 @@ public class ProfilePageController implements Initializable {
     void followingLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.FOLLOWING); }
 
     @FXML
-    void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
-        Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
-        NetworkManager.putRequest(req);
-    }
-
+    void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }
     @FXML
-    void profileButtonClickHandler(ActionEvent event) {
-        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
-        NetworkManager.putRequest(req);
-    }
-
+    void profileButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.SEARCH); }
-
+    void searchButtonClickHandler(ActionEvent event) { CommonClickHandlers.searchButton(); }
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.CREATE_POST); }
-
+    void postButtonClickHandler(ActionEvent event) { CommonClickHandlers.postButton(); }
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) { }
+    void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
+
 
 }

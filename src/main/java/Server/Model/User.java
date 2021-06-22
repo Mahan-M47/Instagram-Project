@@ -16,7 +16,6 @@ public class User
     public User() {
     }
 
-
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -43,27 +42,17 @@ public class User
         this.password = password;
     }
 
-    public ArrayList<String> getFollowers() {
-        return followers;
-    }
+    public ArrayList<String> getFollowers() { return followers; }
 
     public ArrayList<String> getFollowing() {
         return following;
-    }
-
-    public boolean checkexistinfollowing(String username){
-        return following.contains(username);
-    }
-
-    public boolean checkexistinfollowers(String username){
-        return followers.contains(username);
     }
 
     public void addFollowing(String username) {
         following.add(username);
     }
 
-    public void addFollowers(String username) {
+    public void addFollower(String username) {
         followers.add(username);
     }
 
@@ -91,33 +80,30 @@ public class User
         this.bioText = bioText;
     }
 
-    public DBObject getLoginDBObject() {
-        return new BasicDBObject()
-                .append("username", getUsername())
+    public DBObject createLoginDBObject() {
+        return new BasicDBObject("username", getUsername())
                 .append("password", getPassword());
     }
 
-    public DBObject getFollowDBObject() {
-        return new BasicDBObject()
-                .append("username", getUsername())
+    public DBObject createFollowDBObject() {
+        return new BasicDBObject("username", getUsername())
                 .append("Following", following)
                 .append("Followers", followers);
     }
 
-    public DBObject getBioDBObject() {
-        return new BasicDBObject()
-                .append("username", getUsername())
+    public DBObject createBioDBObject() {
+        return new BasicDBObject("username", getUsername())
                 .append("Bio", bioText);
     }
 
-    public static User parseUser(DBObject object) {
+    public static User parseLoginDBObject(DBObject object) {
         User user = new User();
         user.setUsername((String) object.get("username"));
         user.setPassword((String) object.get("password"));
         return user;
     }
 
-    public static User parseFollow(DBObject object) {
+    public static User parseFollowDBObject(DBObject object) {
         User user = new User();
         user.setUsername((String) object.get("username"));
         user.setFollowing((ArrayList<String>)object.get("Following"));
@@ -125,7 +111,7 @@ public class User
         return user;
     }
 
-    public static User parseBio(DBObject object) {
+    public static User parseBioDBObject(DBObject object) {
         User user = new User();
         user.setUsername((String) object.get("username"));
         user.setBioText((String) object.get("Bio"));

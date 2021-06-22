@@ -28,7 +28,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="6150.0" prefWidth="1300.0">
                <children>
-                  <VBox fx:id="scrollVBox" alignment="TOP_CENTER" layoutX="250.0" layoutY="50.0" prefHeight="6150.0" prefWidth="800.0" spacing="100.0" />
+                  <VBox fx:id="scrollVBox" alignment="TOP_CENTER" layoutX="200.0" layoutY="50.0" prefHeight="6150.0" prefWidth="900.0" spacing="100.0" />
                   <Separator layoutX="150.0" layoutY="600.0" prefWidth="1000.0" />
                   <Separator layoutX="150.0" layoutY="1200.0" prefWidth="1000.0" />
                   <Separator layoutX="150.0" layoutY="1800.0" prefWidth="1000.0" />

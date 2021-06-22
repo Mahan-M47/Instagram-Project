@@ -23,4 +23,5 @@ public class GUIManager
 
     public static void showEditProfilePage() { Starter.changeScene(Utils.GUI.EDIT_PROFILE); }
 
+    public static void reload() { Starter.reloadScene(); }
 }

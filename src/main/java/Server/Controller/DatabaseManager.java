@@ -15,23 +15,28 @@ public class DatabaseManager {
         db = mongoClient.getDB(databaseName);
     }
 
-    public synchronized static void adduser(User user) {
+    public synchronized static void adduser(User user)
+    {
         DBCollection login = db.getCollection(Utils.DB_LOGIN);
-        login.insert(user.getLoginDBObject());
+        login.insert(user.createLoginDBObject());
+
         DBCollection follow = db.getCollection(Utils.DB_FOLLOW);
-        follow.insert(user.getFollowDBObject());
+        follow.insert(user.createFollowDBObject());
+
         DBCollection Bio = db.getCollection(Utils.DB_BIO);
-        Bio.insert(user.getBioDBObject());
+        Bio.insert(user.createBioDBObject());
     }
 
-    public synchronized static ArrayList<String> getUsers(String collectionName) {
-            DBCollection collection = db.getCollection(collectionName);
-            DBCursor dbObjects = collection.find();
-            ArrayList<String> Users = new ArrayList<>();
-            for (DBObject dbObject : dbObjects) {
-                Users.add(User.parseUser(dbObject).getUsername());
-            }
-            return Users;
+    public synchronized static ArrayList<String> getUsers(String collectionName)
+    {
+        DBCollection collection = db.getCollection(collectionName);
+        DBCursor cursor = collection.find();
+        ArrayList<String> Users = new ArrayList<>();
+
+        for (DBObject query : cursor) {
+            Users.add( User.parseLoginDBObject(query).getUsername() );
+        }
+        return Users;
     }
 
     public synchronized static User getUser(String collectionName, String username) {
@@ -39,18 +44,34 @@ public class DatabaseManager {
         if(checkIfUserExists(collectionName,username)) {
             BasicDBObject obj = new BasicDBObject().append("username", username);
             DBObject one = collection.findOne(obj);
-            return User.parseUser(one);
+            return User.parseLoginDBObject(one);
         }
         else{
             return null ;
         }
     }
 
-    public synchronized static boolean checkIfUserExists(String collectionName, String username) {
+    public synchronized static boolean checkIfUserExists(String collectionName, String username)
+    {
         DBCollection collection = db.getCollection(collectionName);
-        BasicDBObject obj = new BasicDBObject().append("username", username);
-        DBObject one = collection.findOne(obj);
-        if(one == null){
+        DBObject query = new BasicDBObject("username", username);
+        DBObject existingQuery = collection.findOne(query);
+
+        if (existingQuery == null){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public synchronized static boolean checkLogin(String username, String password)
+    {
+        DBCollection collection = db.getCollection(Utils.DB_LOGIN);
+        User user = new User(username, password);
+
+        DBObject query = collection.findOne( user.createLoginDBObject() );
+        if (query == null){
             return false ;
         }
         else {
@@ -58,18 +79,8 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static boolean checkLogin(User user) {
-        DBCollection collection = db.getCollection(Utils.DB_LOGIN);
-        DBObject one = collection.findOne(user.getLoginDBObject());
-        if(one == null){
-            return false ;
-        }
-        else{
-            return true ;
-        }
-    }
-
-    public synchronized static ArrayList<String> searchUser(String username) {
+    public synchronized static ArrayList<String> searchUser(String username)
+    {
         ArrayList<String> allUsers = getUsers(Utils.DB_LOGIN);
         ArrayList<String> results = new ArrayList<>();
 
@@ -81,75 +92,69 @@ public class DatabaseManager {
         return results;
     }
 
-    public synchronized static void follow(String befollowing , String befollower){
-        User following = getFollowing(befollowing);
-        User follower = getFollowing(befollower);
-        if(!(following.checkexistinfollowers(befollower) && follower.checkexistinfollowing(befollowing))) {
-            following.addFollowers(befollower);
-            follower.addFollowing(befollowing);
-            DBCollection follow2 = db.getCollection(Utils.DB_FOLLOW);
-            DBObject user = new BasicDBObject().append("username", following.getUsername());
-            follow2.update(user, following.getFollowDBObject());
-            DBObject user2 = new BasicDBObject().append("username", follower.getUsername());
-            follow2.update(user2, follower.getFollowDBObject());
-        }
+    public synchronized static void follow(String followerUsername, String followingUsername)
+    {
+        DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
+        User followerUser  = getFollowData(followerUsername);
+        User followingUser = getFollowData(followingUsername);
+
+        followerUser.addFollowing(followingUsername);
+        followingUser.addFollower(followerUsername);
+
+        DBObject followingUserQuery = new BasicDBObject("username", followingUser.getUsername());
+        collection.update(followingUserQuery, followingUser.createFollowDBObject());
+
+        DBObject followerUserQuery = new BasicDBObject("username", followerUser.getUsername());
+        collection.update(followerUserQuery, followerUser.createFollowDBObject());
     }
 
-    public synchronized static void unfollow(String befollowing , String befollower){
-        User following = getFollowing(befollowing);
-        User follower = getFollowing(befollower);
-        if(!(following.checkexistinfollowers(befollower) && follower.checkexistinfollowing(befollowing))) {
-            following.removeFollowers(befollower);
-            follower.removeFollowing(befollowing);
-            DBCollection follow2 = db.getCollection(Utils.DB_FOLLOW);
-            DBObject user = new BasicDBObject().append("username", following.getUsername());
-            follow2.update(user, following.getFollowDBObject());
-            DBObject user2 = new BasicDBObject().append("username", follower.getUsername());
-            follow2.update(user2, follower.getFollowDBObject());
-        }
+    public synchronized static void unfollow(String followerUsername, String followingUsername)
+    {
+        DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
+        User followerUser  = getFollowData(followerUsername);
+        User followingUser = getFollowData(followingUsername);
+
+        followerUser.removeFollowing(followingUsername);
+        followingUser.removeFollowers(followerUsername);
+
+        DBObject followingUserQuery = new BasicDBObject("username", followingUser.getUsername());
+        collection.update(followingUserQuery, followingUser.createFollowDBObject());
+
+        DBObject followerUserQuery = new BasicDBObject("username", followerUser.getUsername());
+        collection.update(followerUserQuery, followerUser.createFollowDBObject());
     }
 
     public synchronized static User assembleUser(String username) {
         User user = new User();
         user.setUsername(username);
-        user.setBioText  ( getBio(username).getBioText() );
-        user.setFollowers( getFollowing(username).getFollowers() );
-        user.setFollowing( getFollowing(username).getFollowing() );
+        user.setBioText  ( getBioData(username).getBioText() );
+        user.setFollowers( getFollowData(username).getFollowers() );
+        user.setFollowing( getFollowData(username).getFollowing() );
         return user;
     }
 
-    public synchronized static User getFollowing(String username) {
+    public synchronized static User getFollowData(String username) {
         DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
-        if(checkIfUserExists(Utils.DB_FOLLOW,username)) {
-            BasicDBObject obj = new BasicDBObject().append("username", username);
-            DBObject one = collection.findOne(obj);
-            return User.parseFollow(one);
-        }
-        else{
-            return null ;
-        }
+        DBObject query = new BasicDBObject("username", username);
+        query = collection.findOne(query);
+        return User.parseFollowDBObject(query);
     }
 
-    public synchronized static User getBio (String username)
-    {
+    public synchronized static User getBioData(String username) {
         DBCollection collection = db.getCollection(Utils.DB_BIO);
         DBObject query = new BasicDBObject("username", username);
         query = collection.findOne(query);
-        return User.parseBio(query);
-
+        return User.parseBioDBObject(query);
     }
 
     public synchronized static void setBio(String username , String bioText)
     {
         DBCollection collection = db.getCollection(Utils.DB_BIO);
-        DBObject query = new BasicDBObject("username", username);
-        query = collection.findOne(query);
-
-        User user = User.parseBio(query);
+        User user = getBioData(username);
         user.setBioText(bioText);
 
-        DBObject updatedQuery = user.getBioDBObject();
-        collection.findAndModify(query, updatedQuery);
+        DBObject query = new BasicDBObject("username", username);
+        collection.update(query, user.createBioDBObject());
     }
 }
 
