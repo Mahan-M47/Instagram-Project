@@ -3,16 +3,17 @@ package Client.Model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Post
 {
     private String username, ID;
-    private int likes;
+    private AtomicInteger likes;
     private Date date;
     private List<String> likedBy;
     private ArrayList<String> comments;
 
-    public Post(String username , Date date , int likes, String ID, ArrayList<String> comments, ArrayList<String> likedBy) {
+    public Post(String username , Date date , AtomicInteger likes, String ID, ArrayList<String> comments, ArrayList<String> likedBy) {
         this.ID = ID;
         this.date = date ;
         this.username = username ;
@@ -25,7 +26,7 @@ public abstract class Post
         ID = IDBuilder(username);
         date = new Date() ;
         this.username = username ;
-        likes = 0 ;
+        likes.set(0);
         comments = new ArrayList<>() ;
         likedBy = new ArrayList<>();
     }
@@ -38,7 +39,7 @@ public abstract class Post
         return ID;
     }
 
-    public int getLikes() {
+    public AtomicInteger getLikes() {
         return likes;
     }
 
