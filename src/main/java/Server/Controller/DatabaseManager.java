@@ -84,11 +84,29 @@ public class DatabaseManager {
     public synchronized static void follow(String befollowing , String befollower){
         User following = getFollowing(befollowing);
         User follower = getFollowing(befollower);
-        DBCollection follow2 = db.getCollection(Utils.DB_FOLLOW);
-        DBObject user = new BasicDBObject().append("username",following.getUsername());
-        follow2.update(user,following.getFollowDBObject());
-        DBObject user2 = new BasicDBObject().append("username",follower.getUsername());
-        follow2.update(user2,follower.getFollowDBObject());
+        if(!(following.checkexistinfollowers(befollower) && follower.checkexistinfollowing(befollowing))) {
+            following.addFollowers(befollower);
+            follower.addFollowing(befollowing);
+            DBCollection follow2 = db.getCollection(Utils.DB_FOLLOW);
+            DBObject user = new BasicDBObject().append("username", following.getUsername());
+            follow2.update(user, following.getFollowDBObject());
+            DBObject user2 = new BasicDBObject().append("username", follower.getUsername());
+            follow2.update(user2, follower.getFollowDBObject());
+        }
+    }
+
+    public synchronized static void unfollow(String befollowing , String befollower){
+        User following = getFollowing(befollowing);
+        User follower = getFollowing(befollower);
+        if(!(following.checkexistinfollowers(befollower) && follower.checkexistinfollowing(befollowing))) {
+            following.removeFollowers(befollower);
+            follower.removeFollowing(befollowing);
+            DBCollection follow2 = db.getCollection(Utils.DB_FOLLOW);
+            DBObject user = new BasicDBObject().append("username", following.getUsername());
+            follow2.update(user, following.getFollowDBObject());
+            DBObject user2 = new BasicDBObject().append("username", follower.getUsername());
+            follow2.update(user2, follower.getFollowDBObject());
+        }
     }
 
     public synchronized static User assembleUser(String username) {

@@ -16,7 +16,7 @@ public class ServerMain
     {
         DatabaseManager.startDatabase(Utils.DATABASE_NAME);
         ServerSocket serverSocket = new ServerSocket(Utils.PORT);
-        while (true) {
+        /*while (true) {
             try {
                 Socket socket = serverSocket.accept();
                 NetworkManager networkManager = new NetworkManager(socket);
@@ -28,6 +28,7 @@ public class ServerMain
                 e.printStackTrace();
                 break;
             }
-        }
+        }*/
+        DatabaseManager.unfollow("alirez","mohammadreza");
     }
 }

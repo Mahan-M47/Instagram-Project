@@ -51,6 +51,14 @@ public class User
         return following;
     }
 
+    public boolean checkexistinfollowing(String username){
+        return following.contains(username);
+    }
+
+    public boolean checkexistinfollowers(String username){
+        return followers.contains(username);
+    }
+
     public void addFollowing(String username) {
         following.add(username);
     }
