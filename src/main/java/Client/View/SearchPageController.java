@@ -21,6 +21,8 @@ public class SearchPageController implements Initializable {
     @FXML
     private TextField searchTF;
     @FXML
+    private Label errorLabel;
+    @FXML
     private ProgressIndicator progressIndicator;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
@@ -31,6 +33,7 @@ public class SearchPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        errorLabel.setText(Utils.SEARCH_ERROR_TEXT);
         ObservableList<String> searchResults = FXCollections.observableList(Utils.searchResults);
 
         if (searchResults.size() > 0) {
@@ -41,6 +44,7 @@ public class SearchPageController implements Initializable {
         }
 
         Utils.searchResults = new ArrayList<>();
+        Utils.SEARCH_ERROR_TEXT = "";
     }
 
 

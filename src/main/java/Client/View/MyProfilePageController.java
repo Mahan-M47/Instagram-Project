@@ -1,5 +1,7 @@
 package Client.View;
 
+import Client.Model.Post;
+import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -18,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MyProfilePageController implements Initializable
@@ -41,12 +45,16 @@ public class MyProfilePageController implements Initializable
         bioLabel.setText(Utils.currentUserObj.getBioText());
         followersLink.setText("" + Utils.currentUserObj.getFollowers().size());
         followingLink.setText("" + Utils.currentUserObj.getFollowing().size());
+
         addPosts();
     }
 
     public void addPosts()
     {
-        for (int i = 0; i < 7; i++)
+        List<Post> posts = Utils.currentUserObj.getPosts();
+        Post post = new PostImage("temp username", "temp caption"); // temp
+
+        for (int i = 0; i < 7; i++)  // changes to enhanced for loop over the posts List
         {
             HBox hBox = new HBox(10);
             hBox.setPrefSize(770,250);
@@ -59,13 +67,13 @@ public class MyProfilePageController implements Initializable
                     InputStream in = new FileInputStream(file);
                     Image img = new Image(in);
                     ImageView imageView = new ImageView(img);
-
                     imageView.setFitHeight(250);
                     imageView.setFitWidth(250);
 
                     imageView.setOnMouseClicked(new EventHandler() {
                         @Override
                         public void handle(Event event) {
+                            ViewMyPostController.setPost(post);
                             Starter.changeScene(Utils.GUI.MY_POST);
                         }
                     });

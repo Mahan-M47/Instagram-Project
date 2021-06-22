@@ -1,5 +1,6 @@
 package Client;
 
+import Client.Model.Post;
 import Client.Model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +23,17 @@ public class Utils
     //GUI stuff
     public static String SIGNUP_ERROR_TEXT = "";
     public static String LOGIN_ERROR_TEXT = "";
+    public static String SEARCH_ERROR_TEXT = "";
 
     public static void resetErrorTexts() {
         SIGNUP_ERROR_TEXT = "";
         LOGIN_ERROR_TEXT = "";
+        SEARCH_ERROR_TEXT = "";
     }
 
     public static User receivedUserObj = null;
     public static List<String> searchResults = new ArrayList<>();
+    public static List<Post> timelinePosts = new ArrayList<>();
 
 
     //GUI page titles
@@ -62,10 +66,11 @@ public class Utils
         public static final String UNFOLLOW = "unfollow";
         public static final String BIO = "setBio";
         public static final String LOGOUT = "logout";
-        public static final String TIMELINE = "getTimeline";
         public static final String LIKE = "like";
+        public static final String UNLIKE = "unlike";
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
+        public static final String TIMELINE = "getTimeline";
         public static final String TERMINATE = "terminate";
     }
 

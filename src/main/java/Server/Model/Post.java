@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Post
 {
-    private String username, ID;
+    private String username, ID, caption;
     private AtomicInteger likes;
     private Date date;
     private List<String> likedBy;
@@ -22,11 +22,12 @@ public abstract class Post
         this.likedBy = likedBy;
     }
 
-    public Post(String username){
+    public Post(String username, String caption) {
         ID = IDBuilder(username);
         date = new Date() ;
-        this.username = username ;
-        likes.set(0);
+        this.username = username;
+        this.caption = caption;
+        likes = new AtomicInteger(0);
         comments = new ArrayList<>() ;
         likedBy = new ArrayList<>();
     }
@@ -38,6 +39,8 @@ public abstract class Post
     public String getID() {
         return ID;
     }
+
+    public String getCaption() { return caption; }
 
     public AtomicInteger getLikes() {
         return likes;

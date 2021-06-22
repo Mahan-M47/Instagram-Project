@@ -3,6 +3,8 @@ package Client.View;
 import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
+import Client.Model.Post;
+import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -23,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TimelineController implements Initializable
@@ -43,7 +46,10 @@ public class TimelineController implements Initializable
 
     void addPosts()
     {
-        for (int i = 0; i < 10; i++)
+        List<Post> posts = Utils.timelinePosts;
+        Post post = new PostImage("temp username", "temp caption"); // temp
+
+        for (int i = 0; i < 10; i++)  // changes to enhanced for loop over the posts List.
         {
             File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
             ImageView imageView = null;
@@ -63,12 +69,16 @@ public class TimelineController implements Initializable
 
             Button likeButton = new Button("Like");
             Button commentsButton = new Button("Comments");
-            Hyperlink usernameLink = new Hyperlink("username");
-            Label likeLabel = new Label("0");
-            Label commentsLabel = new Label("0");
-            Label captionLabel = new Label("");
+            Hyperlink usernameLink = new Hyperlink(post.getUsername());
+            Label likeLabel = new Label(post.getLikes().toString());
+            Label commentsLabel = new Label("" + post.getComments().size());
+            Label captionLabel = new Label(post.getCaption());
 
-            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel);
+            if (post.getLikedBy().contains(Utils.currentUser)) {
+                likeButton.setText("Unlike");
+            }
+
+            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel, post);
 
             AnchorPane pane = new AnchorPane();
             pane.setPrefSize(900, 500);
@@ -86,7 +96,7 @@ public class TimelineController implements Initializable
     }
 
     public void createButtons(Button likeButton, Button commentsButton, Hyperlink usernameLink,
-                              Label likeLabel, Label commentsLabel, Label captionLabel)
+                              Label likeLabel, Label commentsLabel, Label captionLabel, Post post)
     {
         likeButton.setPrefSize(130,50);
         commentsButton.setPrefSize(130,50);
@@ -127,8 +137,22 @@ public class TimelineController implements Initializable
 
         likeButton.setOnAction(new EventHandler() {
             @Override
-            public void handle(Event event) {
-                //send like request
+            public void handle(Event event)
+            {
+                Request req;
+                if (! post.getLikedBy().contains(Utils.currentUser) ) {
+                    req = new Request(Utils.REQ.LIKE, new Data(Utils.currentUser, post.getID()));
+                    post.addLike(Utils.currentUser);
+                    likeButton.setText("Liked!");
+                }
+                else {
+                    req = new Request(Utils.REQ.UNLIKE, new Data(Utils.currentUser, post.getID()));
+                    post.removeLike(Utils.currentUser);
+                    likeButton.setText("Like");
+                }
+
+                likeLabel.setText(post.getLikes().toString());
+                NetworkManager.putRequest(req);
             }
         });
 

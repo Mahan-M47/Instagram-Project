@@ -3,6 +3,8 @@ package Client.View;
 import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
+import Client.Model.Post;
+import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +30,6 @@ public class CreatePostPageController
     @FXML
     private Button chooseFileButton, createPostButton;
 
-
     @FXML
     void chooseFileButtonClickHandler(ActionEvent event)
     {
@@ -51,7 +52,9 @@ public class CreatePostPageController
 
     @FXML
     void createPostButtonClickHandler(ActionEvent event) {
-        //create post object and send it to server
+        Post post = new PostImage(Utils.currentUser, captionTF.getText());
+        Request req = new Request( Utils.REQ.CREATE_POST, new Data(Utils.currentUser, post) );
+        NetworkManager.putRequest(req);
     }
 
     @FXML

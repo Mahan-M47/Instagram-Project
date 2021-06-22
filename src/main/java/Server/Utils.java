@@ -25,10 +25,11 @@ public class Utils
         public static final String UNFOLLOW = "unfollow";
         public static final String BIO = "setBio";
         public static final String LOGOUT = "logout";
-        public static final String TIMELINE = "getTimeline";
         public static final String LIKE = "like";
+        public static final String UNLIKE = "unlike";
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
+        public static final String TIMELINE = "getTimeline";
         public static final String TERMINATE = "terminate";
     }
 }

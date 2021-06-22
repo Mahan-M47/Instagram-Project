@@ -66,7 +66,12 @@ public class MainManager
 
 
             case Utils.REQ.SEARCH:
-                Utils.searchResults = new ArrayList<>(dat.usernameList);
+                if (dat.usernameList.size() == 0) {
+                    Utils.SEARCH_ERROR_TEXT = "No Results";
+                }
+                else {
+                    Utils.searchResults = new ArrayList<>(dat.usernameList);
+                }
                 GUIManager.showSearchPage();
                 break;
 

@@ -3,6 +3,8 @@ package Client.View;
 import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
+import Client.Model.Post;
+import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -21,6 +23,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProfilePageController implements Initializable {
@@ -56,7 +60,10 @@ public class ProfilePageController implements Initializable {
 
     public void addPosts()
     {
-        for (int i = 0; i < 7; i++)
+        List<Post> posts = Utils.receivedUserObj.getPosts();
+        Post post = new PostImage("temp username", "temp caption"); // temp
+
+        for (int i = 0; i < 7; i++)  // changes to enhanced for loop over the posts List
         {
             HBox hBox = new HBox(10);
             hBox.setPrefSize(770,250);
@@ -69,13 +76,14 @@ public class ProfilePageController implements Initializable {
                     InputStream in = new FileInputStream(file);
                     Image img = new Image(in);
                     ImageView imageView = new ImageView(img);
-
                     imageView.setFitHeight(250);
                     imageView.setFitWidth(250);
 
                     imageView.setOnMouseClicked(new EventHandler() {
                         @Override
-                        public void handle(Event event) { Starter.changeScene(Utils.GUI.POST); }
+                        public void handle(Event event) {
+                            ViewPostController.setPost(post);
+                            Starter.changeScene(Utils.GUI.POST); }
                     });
 
                     hBox.getChildren().add(imageView);

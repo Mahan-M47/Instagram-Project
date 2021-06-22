@@ -3,6 +3,7 @@ package Client.View;
 import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
+import Client.Model.Post;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +28,11 @@ public class ViewPostController implements Initializable
     @FXML
     private Button backButton, messageButton, followButton, commentsButton, likeButton;
 
+    private static Post post;
+    public static void setPost(Post chosenPost) {
+        post = chosenPost;
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -40,9 +46,14 @@ public class ViewPostController implements Initializable
             followButton.setText("Unfollow");
         }
 
-        likeLabel.setText("0");
-        commentsLabel.setText("0");
+        loadPost();
+    }
+
+    public void loadPost() {
+        likeLabel.setText(post.getLikes().toString());
+        commentsLabel.setText("" + post.getComments().size());
         captionLabel.setText("");
+        // add imageview here
     }
 
 
@@ -51,7 +62,22 @@ public class ViewPostController implements Initializable
     }
 
     @FXML
-    void likeButtonClickHandler(ActionEvent event) {
+    void likeButtonClickHandler(ActionEvent event)
+    {
+        Request req;
+        if (! post.getLikedBy().contains(Utils.currentUser) ) {
+            req = new Request(Utils.REQ.LIKE, new Data(Utils.currentUser, post.getID()));
+            post.addLike(Utils.currentUser);
+            likeButton.setText("Liked!");
+        }
+        else {
+            req = new Request(Utils.REQ.UNLIKE, new Data(Utils.currentUser, post.getID()));
+            post.removeLike(Utils.currentUser);
+            likeButton.setText("Like");
+        }
+
+        likeLabel.setText(post.getLikes().toString());
+        NetworkManager.putRequest(req);
     }
 
     @FXML
