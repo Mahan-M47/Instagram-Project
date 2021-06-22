@@ -16,20 +16,27 @@ public class Starter extends Application
     public static boolean isSplashLoaded = false;
 
     @Override
-    public void start(Stage primaryStage) throws IOException
+    public void start(Stage primaryStage)
     {
         primaryStage.setTitle("Instagram");
         primaryStage.setResizable(false);
-        stage = primaryStage;
-        URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
-        Parent root = FXMLLoader.load(url);
-        primaryStage.setScene(new Scene(root, 1300, 850));
-        primaryStage.show();
+        stage = primaryStage
+        ;
+        try {
+            URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
+            Parent root = FXMLLoader.load(url);
+            primaryStage.setScene(new Scene(root, 1300, 850));
+            primaryStage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void changeScene(String fxmlFileName)
     {
         currentScene = fxmlFileName;
+
         try {
             URL url = Paths.get("./src/main/java/Client/Resources/" + currentScene + ".fxml").toUri().toURL();
             Parent root = FXMLLoader.load(url);

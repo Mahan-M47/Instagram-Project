@@ -24,7 +24,7 @@
          <font>
             <Font name="System Bold" size="22.0" />
          </font></Button>
-      <AnchorPane layoutY="735.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
+      <AnchorPane layoutY="725.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
          <children>
             <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">
                <children>

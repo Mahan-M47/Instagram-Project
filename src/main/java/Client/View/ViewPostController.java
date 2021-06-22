@@ -5,38 +5,27 @@ import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Utils;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfilePageController implements Initializable {
-
+public class ViewPostController implements Initializable
+{
     @FXML
-    private ImageView profilePicture;
-    @FXML
-    private VBox scrollVBox;
+    private ImageView profilePicture, postImage;
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel;
+    private Label usernameLabel, bioLabel, likeLabel, commentsLabel, captionLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
-    private Button messageButton, followButton;
+    private Button backButton, messageButton, followButton, commentsButton, likeButton;
 
 
     @Override
@@ -51,43 +40,25 @@ public class ProfilePageController implements Initializable {
             followButton.setText("Unfollow");
         }
 
-        addPosts();
+        likeLabel.setText("0");
+        commentsLabel.setText("0");
+        captionLabel.setText("");
     }
 
-    public void addPosts()
-    {
-        for (int i = 0; i < 7; i++)
-        {
-            HBox hBox = new HBox(10);
-            hBox.setPrefSize(770,250);
 
-            for (int j = 0; j < 3; j++)
-            {
-                File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
-
-                try {
-                    InputStream in = new FileInputStream(file);
-                    Image img = new Image(in);
-                    ImageView imageView = new ImageView(img);
-
-                    imageView.setFitHeight(250);
-                    imageView.setFitWidth(250);
-
-                    imageView.setOnMouseClicked(new EventHandler() {
-                        @Override
-                        public void handle(Event event) { Starter.changeScene(Utils.GUI.POST); }
-                    });
-
-                    hBox.getChildren().add(imageView);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            scrollVBox.getChildren().add(hBox);
-        }
+    @FXML
+    void commentsButtonClickHandler(ActionEvent event) {
     }
 
+    @FXML
+    void likeButtonClickHandler(ActionEvent event) {
+    }
+
+    @FXML
+    void backButtonClickHandler(ActionEvent event) {
+        Request req = new Request(Utils.REQ.PROFILE, new Data(Utils.receivedUserObj.getUsername()) );
+        NetworkManager.putRequest(req);
+    }
 
     @FXML
     void followButtonClickHandler(ActionEvent event)
@@ -126,5 +97,5 @@ public class ProfilePageController implements Initializable {
     @FXML
     void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
 
-
 }
+

@@ -39,4 +39,8 @@ public class CommonClickHandlers
             NetworkManager.putRequest(req);
         }
     }
+
+    public static void editProfileButton() {
+        Starter.changeScene(Utils.GUI.EDIT_PROFILE);
+    }
 }

@@ -36,9 +36,9 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <Button fx:id="signupButton" layoutX="465.0" layoutY="708.0" mnemonicParsing="false" onAction="#signupButtonClickHandler" prefHeight="40.0" prefWidth="370.0" text="Sign Up">
+      <Button fx:id="signupButton" defaultButton="true" layoutX="465.0" layoutY="708.0" mnemonicParsing="false" onAction="#signupButtonClickHandler" prefHeight="40.0" prefWidth="370.0" style="-fx-background-color: #d4d4d4;" text="Sign Up">
          <font>
-            <Font name="Arial" size="18.0" />
+            <Font size="20.0" />
          </font>
       </Button>
       <Hyperlink fx:id="loginInsteadHL" layoutX="598.0" layoutY="660.0" onAction="#loginInsteadHLHandler" text="Login instead">

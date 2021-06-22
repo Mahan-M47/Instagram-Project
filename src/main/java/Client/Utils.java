@@ -46,6 +46,8 @@ public class Utils
         public static final String SEARCH = "SearchPage";
         public static final String SIGNUP = "SignUpPage";
         public static final String TIMELINE = "Timeline";
+        public static final String MY_POST = "ViewMyPost";
+        public static final String POST = "ViewPost";
     }
 
 

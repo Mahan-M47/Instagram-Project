@@ -56,7 +56,8 @@ public class TimelineController implements Initializable
                 imageView.setFitWidth(500);
                 imageView.setLayoutX(0);
                 imageView.setLayoutX(0);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
 

@@ -29,9 +29,9 @@
          <font>
             <Font size="18.0" />
          </font></PasswordField>
-      <Button fx:id="loginButton" layoutX="465.0" layoutY="626.0" mnemonicParsing="false" onAction="#loginButtonClickHandler" prefHeight="40.0" prefWidth="370.0" style="-fx-font-size: 18;" text="Login">
+      <Button fx:id="loginButton" defaultButton="true" layoutX="465.0" layoutY="625.0" mnemonicParsing="false" onAction="#loginButtonClickHandler" prefHeight="40.0" prefWidth="370.0" style="-fx-background-color: #d4d4d4;" text="Login">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font size="20.0" />
          </font>
       </Button>
       <Hyperlink fx:id="createNewAccountHL" layoutX="586.0" layoutY="574.0" onAction="#createNewAccountHLHandler" prefHeight="34.0" prefWidth="157.0" text="Create New Account">

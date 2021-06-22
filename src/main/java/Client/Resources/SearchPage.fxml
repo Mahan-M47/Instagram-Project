@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -11,12 +12,12 @@
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SearchPageController">
    <children>
-      <Button fx:id="startSearchButton" layoutX="1020.0" layoutY="46.0" mnemonicParsing="false" onAction="#startSearchClickListener" prefHeight="59.0" prefWidth="87.0" text="Search">
+      <Button fx:id="startSearchButton" layoutX="990.0" layoutY="46.0" mnemonicParsing="false" onAction="#startSearchClickListener" prefHeight="59.0" prefWidth="90.0" text="Search">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <TextField fx:id="searchTF" layoutX="250.0" layoutY="45.0" prefHeight="45.0" prefWidth="750.0" promptText="Enter Username">
+      <TextField fx:id="searchTF" layoutX="220.0" layoutY="45.0" prefHeight="45.0" prefWidth="750.0" promptText="Enter Username">
          <font>
             <Font size="28.0" />
          </font>
@@ -31,7 +32,8 @@
             <Font size="22.0" />
          </font>
       </Button>
-      <AnchorPane layoutY="735.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
+      <Separator layoutX="150.0" layoutY="125.0" prefWidth="1000.0" />
+      <AnchorPane layoutY="725.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
          <children>
             <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">
                <children>
