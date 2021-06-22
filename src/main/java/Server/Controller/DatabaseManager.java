@@ -112,24 +112,26 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static User getBio(String username) {
+    public synchronized static User getBio (String username)
+    {
         DBCollection collection = db.getCollection(Utils.DB_BIO);
-        if(checkIfUserExists(Utils.DB_BIO,username)) {
-            BasicDBObject obj = new BasicDBObject().append("username", username);
-            DBObject one = collection.findOne(obj);
-            return User.parseBio(one);
-        }
-        else{
-            return null ;
-        }
+        DBObject query = new BasicDBObject("username", username);
+        query = collection.findOne(query);
+        return User.parseBio(query);
+
     }
 
-    public synchronized static void setBio(String username , String BIO) {
+    public synchronized static void setBio(String username , String bioText)
+    {
         DBCollection collection = db.getCollection(Utils.DB_BIO);
-        BasicDBObject obj = new BasicDBObject().append("username", username);
-        collection.update(obj,new BasicDBObject().append("Bio",BIO));
+        DBObject query = new BasicDBObject("username", username);
+        query = collection.findOne(query);
+
+        User user = User.parseBio(query);
+        user.setBioText(bioText);
+
+        DBObject updatedQuery = user.getBioDBObject();
+        collection.findAndModify(query, updatedQuery);
     }
-
-
 }
 
