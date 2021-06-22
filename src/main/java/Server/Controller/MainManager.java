@@ -17,7 +17,7 @@ public class MainManager
 
             switch ( req.getTitle() )
             {
-                case "signup":
+                case Utils.REQ.SIGNUP:
                     boolean userExists = DatabaseManager.checkIfUserExists(Utils.DB_LOGIN, dat.clientUsername);
 
                     if (!userExists) {
@@ -26,48 +26,48 @@ public class MainManager
                         flag = true;
                     }
                     else flag = false;
-                    return new Response("signup", new Data(dat.clientUsername, flag) );
+                    return new Response(Utils.REQ.SIGNUP, new Data(dat.clientUsername, flag) );
 
 
-                case "login":
+                case Utils.REQ.LOGIN:
                     user = new User(dat.clientUsername, dat.dataString );
                     flag = DatabaseManager.checkLogin(user);
-                    return new Response("login", new Data(dat.clientUsername, flag) );
+                    return new Response(Utils.REQ.LOGIN, new Data(dat.clientUsername, flag) );
 
 
-                case "search":
+                case Utils.REQ.SEARCH:
                     ArrayList<String> results = DatabaseManager.searchUser( dat.dataString );
-                    return new Response("search", new Data(results) );
+                    return new Response(Utils.REQ.SEARCH, new Data(results) );
 
 
-                case "showProfile" :
+                case Utils.REQ.PROFILE:
                     user = DatabaseManager.assembleUser(dat.clientUsername);
-                    return new Response("showProfile", new Data(user) );
+                    return new Response(Utils.REQ.PROFILE, new Data(user) );
 
 
-                case "showMyProfile" :
+                case Utils.REQ.MY_PROFILE:
                     user = DatabaseManager.assembleUser(dat.clientUsername);
-                    return new Response("showMyProfile", new Data(user) );
+                    return new Response(Utils.REQ.MY_PROFILE, new Data(user) );
 
 
-                case "follow":
+                case Utils.REQ.FOLLOW:
                     DatabaseManager.follow(dat.dataString, dat.clientUsername);
                     user = DatabaseManager.assembleUser(dat.dataString);
-                    return new Response("follow", new Data(user));
+                    return new Response(Utils.REQ.FOLLOW, new Data(user));
 
 
-                case "setBio":
+                case Utils.REQ.BIO:
                     DatabaseManager.setBio(dat.clientUsername, dat.dataString);
                     user = DatabaseManager.assembleUser(dat.clientUsername);
-                    return new Response("setBio", new Data(user) );
+                    return new Response(Utils.REQ.BIO, new Data(user) );
 
 
-                case "logout":
+                case Utils.REQ.LOGOUT:
                     removeClient(dat.clientUsername);
                     break;
 
 
-                case "terminate":
+                case Utils.REQ.TERMINATE:
                     state.set(false);
                     break;
             }

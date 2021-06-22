@@ -50,7 +50,7 @@ public class SearchPageController implements Initializable {
         String searchText = searchTF.getText().toLowerCase();
 
         if (!searchText.equals("")) {
-            Request req = new Request("search", new Data(Utils.currentUser, searchText));
+            Request req = new Request(Utils.REQ.SEARCH, new Data(Utils.currentUser, searchText));
             NetworkManager.putRequest(req);
         }
     }
@@ -61,29 +61,29 @@ public class SearchPageController implements Initializable {
         String username = listView.getSelectionModel().getSelectedItem();
 
         if (username != null) {
-            Request req = new Request("showProfile", new Data(username) );
+            Request req = new Request(Utils.REQ.PROFILE, new Data(username) );
             NetworkManager.putRequest(req);
         }
     }
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
-        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
+        Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.SEARCH); }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.CREATE_POST); }
 
     @FXML
     void chatsButtonClickHandler(ActionEvent event) { }

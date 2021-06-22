@@ -33,7 +33,7 @@ public class SignupPageController implements Initializable
 
     @FXML
     void loginInsteadHLHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_LOGIN);
+        Starter.changeScene(Utils.GUI.LOGIN);
         Utils.resetErrorTexts();
     }
 
@@ -44,7 +44,7 @@ public class SignupPageController implements Initializable
         String password = passwordTF.getText();
 
         if ( checkTextFields(username, password) ) {
-            Request req = new Request("signup", new Data(username, password));
+            Request req = new Request(Utils.REQ.SIGNUP, new Data(username, password));
             NetworkManager.putRequest(req);
         }
     }

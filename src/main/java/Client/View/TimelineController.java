@@ -35,7 +35,6 @@ public class TimelineController implements Initializable
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, logoutButton, loadMoreButton;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         timelineLabel.setText("Logged in as: " + Utils.currentUser);
@@ -131,10 +130,10 @@ public class TimelineController implements Initializable
             }
         });
 
-        likeButton.setOnAction(new EventHandler() {
+        usernameLink.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                Request req = new Request("showProfile", new Data(usernameLink.getText()) );
+                Request req = new Request(Utils.REQ.PROFILE, new Data(usernameLink.getText()) );
             }
         });
     }
@@ -146,22 +145,22 @@ public class TimelineController implements Initializable
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
-        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
+        Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.SEARCH); }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.CREATE_POST); }
 
     @FXML
     void chatsButtonClickHandler(ActionEvent event) { }
@@ -169,10 +168,10 @@ public class TimelineController implements Initializable
     @FXML
     void logoutButtonClickHandler(ActionEvent event)
     {
-        Request req = new Request("logout",new Data(Utils.currentUser) );
+        Request req = new Request(Utils.REQ.LOGOUT,new Data(Utils.currentUser) );
         NetworkManager.putRequest(req);
         Utils.currentUser = "";
-        Starter.changeScene(Utils.GUI_LOGIN);
+        Starter.changeScene(Utils.GUI.LOGIN);
     }
 
 }

@@ -50,10 +50,10 @@ public class ProfilePageController implements Initializable {
         Request req;
 
         if ( followButton.getText().equals("Follow") ) {
-            req = new Request("follow", data);
+            req = new Request(Utils.REQ.FOLLOW, data);
         }
         else {
-            req = new Request("unfollow", data);
+            req = new Request(Utils.REQ.UNFOLLOW, data);
         }
 
         NetworkManager.putRequest(req);
@@ -64,29 +64,29 @@ public class ProfilePageController implements Initializable {
     }
 
     @FXML
-    void followersLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_FOLLOWERS); }
+    void followersLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.FOLLOWERS); }
 
     @FXML
-    void followingLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_FOLLOWING); }
+    void followingLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.FOLLOWING); }
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
-        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
+        Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.SEARCH); }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.CREATE_POST); }
 
     @FXML
     void chatsButtonClickHandler(ActionEvent event) { }

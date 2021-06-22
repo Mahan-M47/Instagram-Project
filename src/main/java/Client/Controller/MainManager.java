@@ -39,7 +39,7 @@ public class MainManager
 
         switch ( response.getTitle() )
         {
-            case "signup":
+            case Utils.REQ.SIGNUP:
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
@@ -52,7 +52,7 @@ public class MainManager
                 break;
 
 
-            case "login":
+            case Utils.REQ.LOGIN:
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
@@ -65,25 +65,25 @@ public class MainManager
                 break;
 
 
-            case "search":
+            case Utils.REQ.SEARCH:
                 Utils.searchResults = new ArrayList<>(dat.usernameList);
                 GUIManager.showSearchPage();
                 break;
 
 
-            case "showProfile":
+            case Utils.REQ.PROFILE:
                 Utils.receivedUserObj = dat.user;
                 GUIManager.showProfilePage();
                 break;
 
 
-            case "showMyProfile":
+            case Utils.REQ.MY_PROFILE:
                 Utils.currentUserObj = dat.user;
                 GUIManager.showMyProfilePage();
                 break;
 
 
-            case "follow":
+            case Utils.REQ.FOLLOW:
                 Utils.receivedUserObj  = dat.user;
 
                 for (String str : Utils.receivedUserObj.getFollowers() ) {
@@ -94,7 +94,12 @@ public class MainManager
                 break;
 
 
-            case "setBio":
+            case Utils.REQ.UNFOLLOW:
+                //add code
+                break;
+
+
+            case Utils.REQ.BIO:
                 Utils.currentUserObj = dat.user;
                 GUIManager.showEditProfilePage();
                 break;

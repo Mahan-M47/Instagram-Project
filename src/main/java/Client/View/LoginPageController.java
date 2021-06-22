@@ -33,7 +33,7 @@ public class LoginPageController implements Initializable
 
     @FXML
     void createNewAccountHLHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_SIGN_UP);
+        Starter.changeScene(Utils.GUI.SIGNUP);
         Utils.resetErrorTexts();
     }
 
@@ -44,7 +44,7 @@ public class LoginPageController implements Initializable
         String password = passwordTF.getText();
 
         if ( checkTextFields(username, password) ) {
-            Request req = new Request("login", new Data(username, password));
+            Request req = new Request(Utils.REQ.LOGIN, new Data(username, password));
             NetworkManager.putRequest(req);
         }
     }

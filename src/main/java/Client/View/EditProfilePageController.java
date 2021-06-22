@@ -59,37 +59,36 @@ public class EditProfilePageController implements Initializable
 
     @FXML
     void applyButtonClickHandler(ActionEvent event) {
-        Request req = new Request ("setBio", new Data( Utils.currentUser, BioTF.getText()) );
+        Request req = new Request (Utils.REQ.BIO, new Data( Utils.currentUser, BioTF.getText()) );
         NetworkManager.putRequest(req);
     }
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
-        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
-        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
+        Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.SEARCH); }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.CREATE_POST); }
 
     @FXML
     void chatsButtonClickHandler(ActionEvent event) { }
-
 
 }

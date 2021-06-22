@@ -36,7 +36,7 @@ public class MyFollowingPageController implements Initializable
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
-        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
@@ -46,7 +46,7 @@ public class MyFollowingPageController implements Initializable
         String username = listView.getSelectionModel().getSelectedItem();
 
         if (username != null) {
-            Request req = new Request("showProfile", new Data(username) );
+            Request req = new Request(Utils.REQ.PROFILE, new Data(username) );
             NetworkManager.putRequest(req);
         }
     }
@@ -58,32 +58,32 @@ public class MyFollowingPageController implements Initializable
 
         if (username != null)
         {
-            Request req = new Request("unfollow", new Data(Utils.currentUser, username) );
+            Request req = new Request(Utils.REQ.UNFOLLOW, new Data(Utils.currentUser, username) );
             NetworkManager.putRequest(req);
 
             Utils.currentUserObj.getFollowing().remove(username);
-            Starter.changeScene(Utils.GUI_MY_FOLLOWING);
+            Starter.changeScene(Utils.GUI.MY_FOLLOWING);
         }
     }
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI_TIMELINE);  //should be removed
-        Request req = new Request("getTimeline", new Data(Utils.currentUser));
+        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
+        Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
     void profileButtonClickHandler(ActionEvent event) {
-        Request req = new Request("showMyProfile", new Data(Utils.currentUser));
+        Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_SEARCH); }
+    void searchButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.SEARCH); }
 
     @FXML
-    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI_CREATE_POST); }
+    void postButtonClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.CREATE_POST); }
 
     @FXML
     void chatsButtonClickHandler(ActionEvent event) { }
