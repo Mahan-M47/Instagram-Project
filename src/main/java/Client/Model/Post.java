@@ -55,6 +55,20 @@ public abstract class Post
         return likedBy;
     }
 
+    public void addLike(String username) {
+        likes.incrementAndGet();
+        likedBy.add(username);
+    }
+
+    public void removeLike(String username) {
+        likes.decrementAndGet();
+        likedBy.remove(username);
+    }
+
+    public void addComment(String comment) {
+        this.comments.add(comment);
+    }
+
     public String IDBuilder(String username){
         return null ;
     }

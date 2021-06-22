@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class User
 {
@@ -79,6 +80,10 @@ public class User
     public void setBioText(String bioText) {
         this.bioText = bioText;
     }
+
+    public List<Post> getPosts() { return posts; }
+
+    public void addPost(Post post) { this.posts.add(post); }
 
     public DBObject createLoginDBObject() {
         return new BasicDBObject("username", getUsername())
