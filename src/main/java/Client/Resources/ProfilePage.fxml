@@ -90,7 +90,7 @@
             </Button>
          </children>
       </AnchorPane>
-        <ScrollPane fitToWidth="true" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="1300.0">
+        <ScrollPane fitToWidth="true" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="475.0" prefWidth="1300.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="1300.0">
                <children>

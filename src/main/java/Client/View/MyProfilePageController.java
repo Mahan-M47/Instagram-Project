@@ -41,10 +41,10 @@ public class MyProfilePageController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        usernameLabel.setText(Utils.currentUserObj.getUsername());
-        bioLabel.setText(Utils.currentUserObj.getBioText());
         followersLink.setText("" + Utils.currentUserObj.getFollowers().size());
         followingLink.setText("" + Utils.currentUserObj.getFollowing().size());
+        usernameLabel.setText(Utils.currentUserObj.getUsername());
+        bioLabel.setText(Utils.currentUserObj.getBioText());
 
         addPosts();
     }

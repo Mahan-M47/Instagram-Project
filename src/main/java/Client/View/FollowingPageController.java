@@ -1,8 +1,6 @@
 package Client.View;
 
-import Client.Controller.Data;
 import Client.Controller.NetworkManager;
-import Client.Controller.Request;
 import Client.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,13 +34,11 @@ public class FollowingPageController implements Initializable
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
-        Request req = new Request(Utils.REQ.PROFILE, new Data(Utils.receivedUserObj.getUsername()) );
-        NetworkManager.putRequest(req);
+        CommonClickHandlers.showProfileButton(Utils.receivedUserObj.getUsername());
     }
 
     @FXML
-    public void showProfileButtonClickHandler(ActionEvent event)
-    {
+    public void showProfileButtonClickHandler(ActionEvent event) {
         String username = listView.getSelectionModel().getSelectedItem();
         CommonClickHandlers.showProfileButton(username);
     }

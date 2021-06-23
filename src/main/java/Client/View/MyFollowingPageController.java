@@ -40,8 +40,7 @@ public class MyFollowingPageController implements Initializable
     }
 
     @FXML
-    public void showProfileButtonClickHandler(ActionEvent event)
-    {
+    public void showProfileButtonClickHandler(ActionEvent event) {
         String username = listView.getSelectionModel().getSelectedItem();
         CommonClickHandlers.showProfileButton(username);
     }
@@ -50,7 +49,6 @@ public class MyFollowingPageController implements Initializable
     void unfollowButtonClickHandler(ActionEvent event)
     {
         String username = listView.getSelectionModel().getSelectedItem();
-
         if (username != null)
         {
             Utils.currentUserObj.getFollowing().remove(username);

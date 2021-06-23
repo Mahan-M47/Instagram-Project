@@ -14,7 +14,7 @@
          <font>
             <Font size="18.0" />
          </font></TextArea>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="600.0" layoutX="650.0" layoutY="60.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="600.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="600.0" layoutX="650.0" layoutY="60.0" stroke="#d4d4d4" strokeType="OUTSIDE" strokeWidth="2.0" width="600.0" />
       <ImageView fx:id="postImage" fitHeight="600.0" fitWidth="600.0" layoutX="650.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="chooseFileButton" layoutX="205.0" layoutY="160.0" mnemonicParsing="false" onAction="#chooseFileButtonClickHandler" prefHeight="45.0" prefWidth="220.0" text="Choose File">
          <font>

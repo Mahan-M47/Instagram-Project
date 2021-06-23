@@ -38,8 +38,7 @@ public class MyFollowersPageController implements Initializable
     }
 
     @FXML
-    public void showProfileButtonClickHandler(ActionEvent event)
-    {
+    public void showProfileButtonClickHandler(ActionEvent event) {
         String username = listView.getSelectionModel().getSelectedItem();
         CommonClickHandlers.showProfileButton(username);
     }

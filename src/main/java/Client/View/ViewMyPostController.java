@@ -1,17 +1,14 @@
 package Client.View;
 
-import Client.Controller.Data;
-import Client.Controller.NetworkManager;
-import Client.Controller.Request;
 import Client.Model.Post;
+import Client.Model.User;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,13 +17,19 @@ public class ViewMyPostController implements Initializable
     @FXML
     private ImageView profilePicture, postImage;
     @FXML
+    private VBox commentsVBox;
+    @FXML
+    private ScrollPane commentsScrollPane;
+    @FXML
+    private TextField commentsTF;
+    @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
     private Label usernameLabel, bioLabel, likeLabel, commentsLabel, captionLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, editButton;
     @FXML
-    private Button backButton, commentsButton, likeButton;
+    private Button backButton, commentsButton, likeButton, sendButton;
 
     private static Post post;
     public static void setPost(Post chosenPost) {
@@ -37,47 +40,40 @@ public class ViewMyPostController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        usernameLabel.setText(Utils.currentUserObj.getUsername());
-        bioLabel.setText(Utils.currentUserObj.getBioText());
         followersLink.setText("" + Utils.currentUserObj.getFollowers().size());
         followingLink.setText("" + Utils.currentUserObj.getFollowing().size());
-
-        likeLabel.setText("0");
-        commentsLabel.setText("0");
-        captionLabel.setText("");
+        usernameLabel.setText(Utils.currentUserObj.getUsername());
+        bioLabel.setText(Utils.currentUserObj.getBioText());
 
         loadPost();
     }
 
-    public void loadPost() {
-        likeLabel.setText(post.getLikes().toString());
+    public void loadPost()
+    {
         commentsLabel.setText("" + post.getComments().size());
+        likeLabel.setText(post.getLikes().toString());
         captionLabel.setText("");
+
+        commentsScrollPane.setVisible(false);
+        commentsTF.setVisible(false);
+        sendButton.setVisible(false);
+
         // add imageview here
     }
 
-
     @FXML
-    void commentsButtonClickHandler(ActionEvent event) {
+    void likeButtonClickHandler(ActionEvent event) {
+        CommonClickHandlers.likeButton(likeButton, likeLabel, post);
     }
 
     @FXML
-    void likeButtonClickHandler(ActionEvent event)
-    {
-        Request req;
-        if (! post.getLikedBy().contains(Utils.currentUser) ) {
-            req = new Request(Utils.REQ.LIKE, new Data(Utils.currentUser, post.getID()));
-            post.addLike(Utils.currentUser);
-            likeButton.setText("Liked!");
-        }
-        else {
-            req = new Request(Utils.REQ.UNLIKE, new Data(Utils.currentUser, post.getID()));
-            post.removeLike(Utils.currentUser);
-            likeButton.setText("Like");
-        }
+    void commentsButtonClickHandler(ActionEvent event) {
+        CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF);
+    }
 
-        likeLabel.setText(post.getLikes().toString());
-        NetworkManager.putRequest(req);
+    @FXML
+    void sendButtonClickHandler() {
+        CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post);
     }
 
     @FXML

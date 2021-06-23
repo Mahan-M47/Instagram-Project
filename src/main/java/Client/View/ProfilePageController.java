@@ -23,7 +23,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -46,10 +45,10 @@ public class ProfilePageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        usernameLabel.setText(Utils.receivedUserObj.getUsername());
-        bioLabel.setText(Utils.receivedUserObj.getBioText());
         followersLink.setText("" + Utils.receivedUserObj.getFollowers().size());
         followingLink.setText("" + Utils.receivedUserObj.getFollowing().size());
+        usernameLabel.setText(Utils.receivedUserObj.getUsername());
+        bioLabel.setText(Utils.receivedUserObj.getBioText());
 
         if ( Utils.receivedUserObj.getFollowers().contains(Utils.currentUser) ) {
             followButton.setText("Unfollow");

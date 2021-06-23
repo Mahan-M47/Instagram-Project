@@ -34,13 +34,11 @@ public class FollowersPageController implements Initializable {
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
-        Request req = new Request(Utils.REQ.PROFILE, new Data(Utils.receivedUserObj.getUsername()) );
-        NetworkManager.putRequest(req);
+        CommonClickHandlers.showProfileButton(Utils.receivedUserObj.getUsername());
     }
 
     @FXML
-    public void showProfileButtonClickHandler(ActionEvent event)
-    {
+    public void showProfileButtonClickHandler(ActionEvent event) {
         String username = listView.getSelectionModel().getSelectedItem();
         CommonClickHandlers.showProfileButton(username);
     }
