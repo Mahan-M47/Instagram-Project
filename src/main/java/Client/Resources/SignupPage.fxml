@@ -14,7 +14,7 @@
    <children>
       <AnchorPane prefHeight="285.0" prefWidth="1300.0">
          <children>
-            <ImageView fitHeight="285.0" fitWidth="1300.0" pickOnBounds="true">
+            <ImageView fitHeight="285.0" fitWidth="1300.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <image>
                   <Image url="@GUI_Images/loginpage.png" />
                </image>
