@@ -51,7 +51,7 @@ public class ViewMyPostController implements Initializable
     {
         commentsLabel.setText("" + post.getComments().size());
         likeLabel.setText("" + post.getLikedBy().size());
-        captionLabel.setText(post.getCaption());
+        captionLabel.setText( post.getCaption() );
 
         if (post.getLikedBy().contains(Utils.currentUser)) {
             likeButton.setText("Unlike");

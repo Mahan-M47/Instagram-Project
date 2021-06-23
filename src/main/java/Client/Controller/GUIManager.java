@@ -21,7 +21,7 @@ public class GUIManager
 
     public static void showProfilePage() { Starter.changeScene(Utils.GUI.PROFILE); }
 
-    public static void showEditProfilePage() { Starter.changeScene(Utils.GUI.EDIT_PROFILE); }
+    public static void showViewMyPostPage() { Starter.changeScene(Utils.GUI.MY_POST); }
 
     public static void reload() { Starter.reloadScene(); }
 }

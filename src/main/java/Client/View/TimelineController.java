@@ -44,10 +44,9 @@ public class TimelineController implements Initializable
 
     void addPosts()
     {
-        List<Post> posts = Utils.timelinePosts;
-        Post post = new PostImage("temp username", "temp caption"); // temp
+        List<Post> posts = Utils.timelineData;
 
-        for (int i = 0; i < 10; i++)  // changes to enhanced for loop over the posts List.
+        for (Post post : posts)
         {
             File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
             ImageView imageView = null;

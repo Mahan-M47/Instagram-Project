@@ -33,7 +33,7 @@ public class Utils
 
     public static User receivedUserObj = null;
     public static List<String> searchResults = new ArrayList<>();
-    public static List<Post> timelinePosts = new ArrayList<>();
+    public static List<Post> timelineData = new ArrayList<>();
 
 
     //GUI page titles

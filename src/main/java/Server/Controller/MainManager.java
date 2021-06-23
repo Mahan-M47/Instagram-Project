@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Server.Model.Post;
 import Server.Utils;
 import java.util.List;
 import Server.Model.User;
@@ -69,7 +70,7 @@ public class MainManager
 
                 case Utils.REQ.CREATE_POST:
                     DatabaseManager.createPost(dat.post);
-                    break;
+                    return new Response(Utils.REQ.CREATE_POST, dat);
 
 
                 case Utils.REQ.LIKE:
@@ -85,6 +86,11 @@ public class MainManager
                 case Utils.REQ.COMMENT:
                     DatabaseManager.comment(dat.clientUsername, dat.postID, dat.text);
                     break;
+
+
+                case Utils.REQ.TIMELINE:
+                    ArrayList<Post> posts = DatabaseManager.assembleTimeline(dat.clientUsername);
+                    return new Response(Utils.REQ.TIMELINE, new Data(posts));
 
 
                 case Utils.REQ.LOGOUT:

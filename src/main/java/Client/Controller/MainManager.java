@@ -2,6 +2,9 @@ package Client.Controller;
 
 import Client.Model.User;
 import Client.Utils;
+import Client.View.CommonClickHandlers;
+import Client.View.ViewMyPostController;
+
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -43,7 +46,7 @@ public class MainManager
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
-                    GUIManager.showTimeline();
+                    CommonClickHandlers.myProfileButton();
                 }
                 else {
                     Utils.SIGNUP_ERROR_TEXT = "This Username Has Already Been Taken.";
@@ -56,7 +59,7 @@ public class MainManager
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
-                    GUIManager.showTimeline();
+                    CommonClickHandlers.myProfileButton();
                 }
                 else {
                     Utils.LOGIN_ERROR_TEXT = "The Entered Username or Password Is Incorrect.";
@@ -89,20 +92,32 @@ public class MainManager
 
 
             case Utils.REQ.FOLLOW:
-                Utils.receivedUserObj  = dat.user;
+                Utils.receivedUserObj = dat.user;
                 GUIManager.reload();
                 break;
 
 
             case Utils.REQ.UNFOLLOW:
-                Utils.receivedUserObj  = dat.user;
+                Utils.receivedUserObj = dat.user;
                 GUIManager.reload();
                 break;
 
 
             case Utils.REQ.BIO:
                 Utils.currentUserObj = dat.user;
-                GUIManager.reload();
+                GUIManager.showMyProfilePage();
+                break;
+
+
+            case Utils.REQ.CREATE_POST:
+                ViewMyPostController.setPost(dat.post);
+                GUIManager.showViewMyPostPage();
+                break;
+
+
+            case Utils.REQ.TIMELINE:
+                Utils.timelineData = dat.posts;
+                GUIManager.showTimeline();
                 break;
         }
 

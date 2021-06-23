@@ -50,7 +50,7 @@ public class LoginPageController implements Initializable
 
 
         /*  test  */
-        NotificationController.show("Test", "OK");
+        NotificationController.show("Login Was Successful!", "Welcome Back " + Utils.currentUser);
 
 
     }
