@@ -30,40 +30,49 @@ public class DatabaseManager {
 
     }
 
-    public synchronized static void post(Post post){
-        DBCollection postcollection = db.getCollection(Utils.DB_POST);
-        postcollection.insert(post.getDBObjectpost());
+    public synchronized static void createPost(Post post){
+        DBCollection collection = db.getCollection(Utils.DB_POST);
+        collection.insert(post.createPostDBObject());
     }
 
-    public synchronized static void like(String postid , String username){
-        DBCollection postcollection = db.getCollection(Utils.DB_POST);
-        DBObject object = new BasicDBObject()
-                .append("ID",postid);
-        object = postcollection.findOne(object);
-        PostImage post = Post.parsepost(object);
-        post.addLike(username);
-        postcollection.update(object,post.getDBObjectpost());
+    public synchronized static void like(String username, String postID)
+    {
+        DBCollection collection = db.getCollection(Utils.DB_POST);
+        DBObject query = new BasicDBObject("ID",postID);
+        DBObject object = collection.findOne(query);
+
+        if (object != null) {
+            PostImage post = Post.parsePost(object);
+            post.addLike(username);
+            collection.update(query, post.createPostDBObject());
+        }
     }
 
-    public synchronized static void unlike(String postid , String username){
-        DBCollection postcollection = db.getCollection(Utils.DB_POST);
-        DBObject object = new BasicDBObject()
-                .append("ID",postid);
-        object = postcollection.findOne(object);
-        PostImage post = Post.parsepost(object);
-        post.removeLike(username);
-        postcollection.update(object,post.getDBObjectpost());
+    public synchronized static void unlike(String username, String postID)
+    {
+        DBCollection collection = db.getCollection(Utils.DB_POST);
+        DBObject query = new BasicDBObject("ID",postID);
+        DBObject object = collection.findOne(query);
+
+        if (object != null) {
+            PostImage post = Post.parsePost(object);
+            post.removeLike(username);
+            collection.update(query, post.createPostDBObject());
+        }
     }
 
-    public synchronized static void comment(String username , String postid , String commenttext){
-        DBCollection postcollection = db.getCollection(Utils.DB_POST);
-        DBObject object = new BasicDBObject()
-                .append("ID",postid);
-        object = postcollection.findOne(object);
-        PostImage post = Post.parsepost(object);
-        String comment = username + " : " + commenttext ;
-        post.addComment(comment);
-        postcollection.update(object,post.getDBObjectpost());
+    public synchronized static void comment(String username, String postID, String commentText)
+    {
+        DBCollection collection = db.getCollection(Utils.DB_POST);
+        DBObject query = new BasicDBObject("ID",postID);
+        DBObject object = collection.findOne(query);
+
+        if (object != null) {
+            PostImage post = Post.parsePost(object);
+            String comment = username + ": " + commentText;
+            post.addComment(comment);
+            collection.update(object, post.createPostDBObject());
+        }
     }
 
     public synchronized static ArrayList<String> getUsers(String collectionName)
@@ -166,23 +175,11 @@ public class DatabaseManager {
     public synchronized static User assembleUser(String username) {
         User user = new User();
         user.setUsername(username);
-        user.setBioText  ( getBioData(username).getBioText() );
-        user.setFollowers( getFollowData(username).getFollowers() );
-        user.setFollowing( getFollowData(username).getFollowing() );
-        user.setPosts(getposts(username));
+        user.setPosts     ( getPostData(username) );
+        user.setBioText   ( getBioData(username).getBioText() );
+        user.setFollowers ( getFollowData(username).getFollowers() );
+        user.setFollowing ( getFollowData(username).getFollowing() );
         return user;
-    }
-
-    public synchronized static ArrayList<Post> getposts(String username){
-        DBCollection postcollection = db.getCollection(Utils.DB_POST);
-        DBObject object = new BasicDBObject()
-                .append("username",username);
-        ArrayList<Post> posts = new ArrayList<>();
-        DBCursor Cursor = postcollection.find(object);
-        for (DBObject dbObject : Cursor) {
-            posts.add(Post.parsepost(dbObject));
-        }
-        return posts;
     }
 
     public synchronized static User getFollowData(String username) {
@@ -197,6 +194,20 @@ public class DatabaseManager {
         DBObject query = new BasicDBObject("username", username);
         query = collection.findOne(query);
         return User.parseBioDBObject(query);
+    }
+
+    public synchronized static ArrayList<Post> getPostData(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB_POST);
+        DBObject query = new BasicDBObject("username", username);
+        Cursor cursor = collection.find(query);
+
+        ArrayList<Post> posts = new ArrayList<>();
+        while (cursor.hasNext()) {
+            DBObject obj = cursor.next();
+            posts.add( Post.parsePost(obj) );
+        }
+        return posts;
     }
 
     public synchronized static void setBio(String username , String bioText)

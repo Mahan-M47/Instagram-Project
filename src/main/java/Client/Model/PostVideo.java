@@ -13,9 +13,8 @@ public class PostVideo extends Post {
         super(username, caption);
     }
 
-    public PostVideo(File video , String username , Date date , AtomicInteger likes , String Id , ArrayList<String> comments, ArrayList<String> likedBy){
-        super(username, date, likes, Id , comments, likedBy);
+    public PostVideo(File video , String username , Date date , AtomicInteger like , String Id , ArrayList<String> comments, ArrayList<String> likedBy){
+//        super(username, date, like, Id , comments, likedBy);
         this.video = video ;
     }
-
 }

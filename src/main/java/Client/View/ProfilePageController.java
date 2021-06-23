@@ -4,7 +4,6 @@ import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Model.Post;
-import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -60,15 +59,24 @@ public class ProfilePageController implements Initializable {
     public void addPosts()
     {
         List<Post> posts = Utils.receivedUserObj.getPosts();
-        Post post = new PostImage("temp username", "temp caption"); // temp
+        double count = posts.size();
 
-        for (int i = 0; i < 7; i++)  // changes to enhanced for loop over the posts List
+        for (int i = 0; i < Math.ceil(count/3); i++)  // changes to enhanced for loop over the posts List
         {
             HBox hBox = new HBox(10);
             hBox.setPrefSize(770,250);
 
-            for (int j = 0; j < 3; j++)
+            int x = 3*i + 3;
+            if (x - count == 1) {
+                x = 3*i + 2;
+            }
+            else if (x - count == 2) {
+                x = 3*i + 1;
+            }
+
+            for (int j = 3*i; j < x; j++)
             {
+                Post post = posts.get(j);
                 File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
 
                 try {
@@ -81,8 +89,9 @@ public class ProfilePageController implements Initializable {
                     imageView.setOnMouseClicked(new EventHandler() {
                         @Override
                         public void handle(Event event) {
-                            ViewPostController.setPost(post);
-                            Starter.changeScene(Utils.GUI.POST); }
+                            ViewMyPostController.setPost(post);
+                            Starter.changeScene(Utils.GUI.MY_POST);
+                        }
                     });
 
                     hBox.getChildren().add(imageView);

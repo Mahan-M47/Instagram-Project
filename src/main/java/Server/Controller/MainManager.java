@@ -67,6 +67,26 @@ public class MainManager
                     return new Response(Utils.REQ.BIO, new Data(user) );
 
 
+                case Utils.REQ.CREATE_POST:
+                    DatabaseManager.createPost(dat.post);
+                    break;
+
+
+                case Utils.REQ.LIKE:
+                    DatabaseManager.like(dat.clientUsername, dat.dataString);
+                    break;
+
+
+                case Utils.REQ.UNLIKE:
+                    DatabaseManager.unlike(dat.clientUsername, dat.dataString);
+                    break;
+
+
+                case Utils.REQ.COMMENT:
+                    DatabaseManager.comment(dat.clientUsername, dat.postID, dat.text);
+                    break;
+
+
                 case Utils.REQ.LOGOUT:
                     removeClient(dat.clientUsername);
                     break;

@@ -9,10 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class Post
+public class Post
 {
     private String username, ID, caption;
-    private AtomicInteger likes;
     private Date date;
     private List<String> likedBy;
     private ArrayList<String> comments;
@@ -26,7 +25,6 @@ public abstract class Post
         date = new Date() ;
         this.username = username;
         this.caption = caption;
-        likes = new AtomicInteger(0);
         comments = new ArrayList<>() ;
         likedBy = new ArrayList<>();
     }
@@ -40,10 +38,6 @@ public abstract class Post
     }
 
     public String getCaption() { return caption; }
-
-    public AtomicInteger getLikes() {
-        return likes;
-    }
 
     public String getUsername() {
         return username;
@@ -62,14 +56,10 @@ public abstract class Post
     }
 
     public void addLike(String username) {
-        if(!likedBy.contains(username)) {
-            likes.incrementAndGet();
             likedBy.add(username);
-        }
     }
 
     public void removeLike(String username) {
-        likes.decrementAndGet();
         likedBy.remove(username);
     }
 
@@ -97,47 +87,39 @@ public abstract class Post
         this.date = date;
     }
 
-    public void setLikes(AtomicInteger likes) {
-        this.likes = likes;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public DBObject getDBObjectpost(){
+    public DBObject createPostDBObject(){
         return new BasicDBObject()
-                .append("post",file)
+                .append("createPost",file)
                 .append("Caption",caption)
                 .append("ID",ID)
                 .append("username",username)
-                .append("Like",likes)
                 .append("Comments",comments)
                 .append("Date",date)
                 .append("LikedBy",likedBy);
     }
 
-    public static PostImage parsepost(DBObject object) {
+    public static PostImage parsePost(DBObject object)
+    {
         PostImage post = new PostImage();
-        post.setFile((File) object.get("post"));
+        post.setFile((File) object.get("createPost"));
         post.setCaption((String) object.get("Caption"));
         post.setUsername((String) object.get("username"));
         post.setLikedBy((ArrayList<String>) object.get("LikedBy"));
         post.setComments((ArrayList<String>) object.get("Comments"));
         post.setDate((Date) object.get("Date"));
         post.setID((String) object.get("ID"));
-        post.setLikes((AtomicInteger) object.get("Like"));
         return post;
     }
-
-
-
 
     public void addComment(String comment) {
         this.comments.add(comment);
     }
 
     public String IDBuilder(String username){
-        return username + " " + date;
+        return username + " " + 1;
     }
 }

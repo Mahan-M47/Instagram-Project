@@ -68,7 +68,7 @@ public class CommonClickHandlers
             likeButton.setStyle("-fx-background-color: #d4d4d4");
         }
 
-        likeLabel.setText(post.getLikes().toString());
+        likeLabel.setText("" + post.getLikedBy().size());
         NetworkManager.putRequest(req);
     }
 

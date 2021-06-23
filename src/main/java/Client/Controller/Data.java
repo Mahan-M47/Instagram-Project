@@ -10,7 +10,7 @@ import java.util.List;
 public class Data
 {
     public String clientUsername = null;
-    public List<String> usernameList = null;
+    public ArrayList<String> usernameList = null;
     public String dataString = null;
     public String postID = null;
     public String text = null;
@@ -23,7 +23,7 @@ public class Data
 
     public Data() {}
 
-    public Data (String clientUsername) {
+    public Data(String clientUsername) {
         this.clientUsername = clientUsername;
     }
 

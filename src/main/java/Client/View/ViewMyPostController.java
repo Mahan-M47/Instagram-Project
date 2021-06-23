@@ -1,7 +1,6 @@
 package Client.View;
 
 import Client.Model.Post;
-import Client.Model.User;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,8 +50,8 @@ public class ViewMyPostController implements Initializable
     public void loadPost()
     {
         commentsLabel.setText("" + post.getComments().size());
-        likeLabel.setText(post.getLikes().toString());
-        captionLabel.setText("");
+        likeLabel.setText("" + post.getLikedBy().size());
+        captionLabel.setText(post.getCaption());
 
         commentsScrollPane.setVisible(false);
         commentsTF.setVisible(false);

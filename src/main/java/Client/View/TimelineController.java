@@ -69,7 +69,7 @@ public class TimelineController implements Initializable
             Button commentsButton = new Button("Comments");
             Label commentsLabel = new Label("" + post.getComments().size());
             Button likeButton = new Button("Like");
-            Label likeLabel = new Label(post.getLikes().toString());
+            Label likeLabel = new Label("" + post.getLikedBy().size());
             Label captionLabel = new Label(post.getCaption());
 
             Button sendButton = new Button("Send");

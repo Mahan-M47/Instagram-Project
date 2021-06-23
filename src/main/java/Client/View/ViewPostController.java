@@ -55,9 +55,14 @@ public class ViewPostController implements Initializable
     }
 
     public void loadPost() {
-        likeLabel.setText(post.getLikes().toString());
-        commentsLabel.setText("" + post.getComments().size());
-        captionLabel.setText("");
+        likeLabel.setText("" + post.getLikedBy().size() );
+        commentsLabel.setText( "" + post.getComments().size() );
+        captionLabel.setText( post.getCaption() );
+
+        commentsScrollPane.setVisible(false);
+        commentsTF.setVisible(false);
+        sendButton.setVisible(false);
+
         // add imageview here
     }
 
