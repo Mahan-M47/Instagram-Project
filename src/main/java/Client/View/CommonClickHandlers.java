@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 public class CommonClickHandlers
 {
     public static void homeButton() {
-        Starter.changeScene(Utils.GUI.TIMELINE);  //should be removed
         Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
@@ -95,7 +94,7 @@ public class CommonClickHandlers
         {
             String commentText = Utils.currentUser + ": " + commentsTF.getText();
             post.addComment(commentText);
-            Request req = new Request(Utils.REQ.COMMENT, new Data( Utils.currentUser, post.getID() , commentsTF.getText() ));
+            Request req = new Request(Utils.REQ.COMMENT, new Data( Utils.currentUser, post.getID() ,commentsTF.getText() ));
             NetworkManager.putRequest(req);
 
             Label comment = createCommentLabel(commentText);

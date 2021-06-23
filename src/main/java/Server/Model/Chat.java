@@ -1,4 +1,4 @@
 package Server.Model;
 
-public abstract class Chat {
+public class Chat {
 }

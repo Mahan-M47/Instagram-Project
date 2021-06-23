@@ -1,4 +1,4 @@
 package Client.Model;
 
-public abstract class Message {
+public class Message {
 }

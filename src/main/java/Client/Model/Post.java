@@ -6,9 +6,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Post
+public class Post implements Comparable<Post>
 {
     private String username, ID, caption;
     private Date date;
@@ -118,7 +117,11 @@ public class Post
         this.comments.add(comment);
     }
 
-    public String IDBuilder(String username){
-        return username + " " + 1;
+    public String IDBuilder(String username) { return username + System.currentTimeMillis(); }
+
+    @Override
+    public int compareTo(Post post) {
+        return getDate().compareTo(post.getDate());
     }
+
 }

@@ -54,20 +54,12 @@ public class MyProfilePageController implements Initializable
         List<Post> posts = Utils.currentUserObj.getPosts();
         double count = posts.size();
 
-        for (int i = 0; i < Math.ceil(count/3); i++)  // changes to enhanced for loop over the posts List
+        for (int i = 0; i < Math.ceil(count/3); i++)
         {
             HBox hBox = new HBox(10);
             hBox.setPrefSize(770,250);
 
-            int x = 3*i + 3;
-            if (x - count == 1) {
-                x = 3*i + 2;
-            }
-            else if (x - count == 2) {
-                x = 3*i + 1;
-            }
-
-            for (int j = 3*i; j < x; j++)
+            for (int j = 3*i; j < (3*i) + 3 && j < count ; j++)
             {
                 Post post = posts.get(j);
                 File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");

@@ -63,6 +63,11 @@ public class ViewPostController implements Initializable
             likeButton.setText("Unlike");
         }
 
+        for (String commentText : post.getComments()) {
+            Label comment = CommonClickHandlers.createCommentLabel(commentText);
+            commentsVBox.getChildren().add(comment);
+        }
+
         commentsScrollPane.setVisible(false);
         commentsTF.setVisible(false);
         sendButton.setVisible(false);

@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.SearchPageController">
    <children>
-      <Button fx:id="startSearchButton" layoutX="990.0" layoutY="46.0" mnemonicParsing="false" onAction="#startSearchClickListener" prefHeight="59.0" prefWidth="90.0" text="Search">
+      <Button fx:id="startSearchButton" defaultButton="true" layoutX="990.0" layoutY="46.0" mnemonicParsing="false" onAction="#startSearchClickListener" prefHeight="59.0" prefWidth="90.0" style="-fx-background-color: #d4d4d4;" text="Search">
          <font>
             <Font size="20.0" />
          </font>
