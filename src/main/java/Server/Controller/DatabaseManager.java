@@ -1,5 +1,7 @@
 package Server.Controller;
 
+import Server.Model.Post;
+import Server.Model.PostImage;
 import Server.Model.User;
 import Server.Utils;
 import com.mongodb.*;
@@ -25,6 +27,32 @@ public class DatabaseManager {
 
         DBCollection Bio = db.getCollection(Utils.DB_BIO);
         Bio.insert(user.createBioDBObject());
+
+    }
+
+    public synchronized static void post(Post post){
+        DBCollection postcollection = db.getCollection(Utils.DB_POST);
+        postcollection.insert(post.getDBObjectpost());
+    }
+
+    public synchronized static void like(String postid , String username){
+        DBCollection postcollection = db.getCollection(Utils.DB_POST);
+        DBObject object = new BasicDBObject()
+                .append("ID",postid);
+        object = postcollection.findOne(object);
+        PostImage post = Post.parsepost(object);
+        post.addLike(username);
+        postcollection.update(object,post.getDBObjectpost());
+    }
+
+    public synchronized static void unlike(String postid , String username){
+        DBCollection postcollection = db.getCollection(Utils.DB_POST);
+        DBObject object = new BasicDBObject()
+                .append("ID",postid);
+        object = postcollection.findOne(object);
+        PostImage post = Post.parsepost(object);
+        post.removeLike(username);
+        postcollection.update(object,post.getDBObjectpost());
     }
 
     public synchronized static ArrayList<String> getUsers(String collectionName)

@@ -12,6 +12,7 @@ public class Utils
     public static final String DB_LOGIN = "login";
     public static final String DB_FOLLOW = "follow";
     public static final String DB_BIO = "bio";
+    public static final String DB_POST = "post";
 
 
     //Request titles
