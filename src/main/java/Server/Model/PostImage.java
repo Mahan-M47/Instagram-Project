@@ -18,5 +18,4 @@ public class PostImage extends Post {
     }
 
 
-
 }

@@ -138,6 +138,6 @@ public abstract class Post
     }
 
     public String IDBuilder(String username){
-        return null ;
+        return username + " " + date;
     }
 }

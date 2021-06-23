@@ -2,6 +2,7 @@ package Server;
 
 import Server.Controller.DatabaseManager;
 import Server.Controller.NetworkManager;
+import Server.Model.PostImage;
 import Server.Model.User;
 
 import java.io.IOException;
