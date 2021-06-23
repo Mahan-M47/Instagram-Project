@@ -62,8 +62,10 @@ public abstract class Post
     }
 
     public void addLike(String username) {
-        likes.incrementAndGet();
-        likedBy.add(username);
+        if(!likedBy.contains(username)) {
+            likes.incrementAndGet();
+            likedBy.add(username);
+        }
     }
 
     public void removeLike(String username) {

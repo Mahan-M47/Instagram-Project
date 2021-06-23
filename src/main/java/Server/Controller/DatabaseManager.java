@@ -55,6 +55,17 @@ public class DatabaseManager {
         postcollection.update(object,post.getDBObjectpost());
     }
 
+    public synchronized static void comment(String username , String postid , String commenttext){
+        DBCollection postcollection = db.getCollection(Utils.DB_POST);
+        DBObject object = new BasicDBObject()
+                .append("ID",postid);
+        object = postcollection.findOne(object);
+        PostImage post = Post.parsepost(object);
+        String comment = username + " : " + commenttext ;
+        post.addComment(comment);
+        postcollection.update(object,post.getDBObjectpost());
+    }
+
     public synchronized static ArrayList<String> getUsers(String collectionName)
     {
         DBCollection collection = db.getCollection(collectionName);
