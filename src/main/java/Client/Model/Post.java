@@ -118,7 +118,5 @@ public class Post
         this.comments.add(comment);
     }
 
-    public String IDBuilder(String username){
-        return username + " " + 1;
-    }
+    public String IDBuilder(String username) { return username + System.currentTimeMillis(); }
 }

@@ -89,8 +89,8 @@ public class ProfilePageController implements Initializable {
                     imageView.setOnMouseClicked(new EventHandler() {
                         @Override
                         public void handle(Event event) {
-                            ViewMyPostController.setPost(post);
-                            Starter.changeScene(Utils.GUI.MY_POST);
+                            ViewPostController.setPost(post);
+                            Starter.changeScene(Utils.GUI.POST);
                         }
                     });
 
