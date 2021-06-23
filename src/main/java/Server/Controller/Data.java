@@ -10,7 +10,7 @@ import java.util.List;
 public class Data
 {
     public String clientUsername = null;
-    public List<String> usernames = null;
+    public ArrayList<String> usernameList = null;
     public String dataString = null;
     public String postID = null;
     public String text = null;
@@ -34,10 +34,8 @@ public class Data
     }
 
     //only used by the server so there's no need to add the client's username. (e.g. returning search results)
-    public Data(ArrayList<String> usernames) {
-        for (String username : usernames) {
-            this.usernames.add(username);
-        }
+    public Data(ArrayList<String> usernameList) {
+        this.usernameList = new ArrayList<>(usernameList);
     }
 
     public Data(String clientUsername, String postID, String text) {
@@ -58,9 +56,7 @@ public class Data
 
     //only used by the server so there's no need to add the client's username. (e.g. posts in the Timeline)
     public Data(List<Post> posts) {
-        for (Post post: posts) {
-            this.posts.add(post);
-        }
+        this.posts = new ArrayList<>(posts);
     }
 
     public Data(String clientUsername, Chat chat) {

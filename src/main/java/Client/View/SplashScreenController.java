@@ -1,5 +1,6 @@
 package Client.View;
 
+import Client.Utils;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +47,7 @@ public class SplashScreenController implements Initializable {
         fadeIn.play();
         fadeIn.setOnFinished((e)-> fadeOut.play());
         fadeOut.setOnFinished((e)->{
-            Starter.changeScene("LoginPage");
+            Starter.changeScene(Utils.GUI.LOGIN);
         });
     }
 

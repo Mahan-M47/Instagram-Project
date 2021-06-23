@@ -1,5 +1,7 @@
 package Server.Controller;
 
+import Server.Utils;
+
 public class Request
 {
     private String title;
@@ -22,7 +24,7 @@ public class Request
     public static class Termination extends Request
     {
         public Termination() {
-            super("terminate");
+            super(Utils.REQ.TERMINATE);
         }
     }
 }

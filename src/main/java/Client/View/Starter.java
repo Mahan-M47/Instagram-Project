@@ -12,31 +12,43 @@ import java.nio.file.Paths;
 public class Starter extends Application
 {
     public static Stage stage;
+    public static String currentScene;
     public static boolean isSplashLoaded = false;
 
     @Override
-    public void start(Stage primaryStage) throws IOException
+    public void start(Stage primaryStage)
     {
-        stage = primaryStage;
-        URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
-        Parent root = FXMLLoader.load(url);
-        primaryStage.setResizable(false);
         primaryStage.setTitle("Instagram");
-        primaryStage.setScene(new Scene(root, 1300, 850));
-        primaryStage.show();
+        primaryStage.setResizable(false);
+        stage = primaryStage
+        ;
+        try {
+            URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
+            Parent root = FXMLLoader.load(url);
+            primaryStage.setScene(new Scene(root, 1300, 850));
+            primaryStage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void changeScene(String fxmlFileName)
     {
+        currentScene = fxmlFileName;
+
         try {
-            URL url = Paths.get("./src/main/java/Client/Resources/" + fxmlFileName + ".fxml").toUri().toURL();
-            Parent pane = FXMLLoader.load(url);
-            stage.getScene().setRoot(pane);
+            URL url = Paths.get("./src/main/java/Client/Resources/" + currentScene + ".fxml").toUri().toURL();
+            Parent root = FXMLLoader.load(url);
+            stage.getScene().setRoot(root);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public static void reloadScene() {
+        changeScene(currentScene);
     }
 
     public static void main(String[] args) {

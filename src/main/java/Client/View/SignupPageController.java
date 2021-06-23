@@ -16,9 +16,7 @@ public class SignupPageController implements Initializable
     @FXML
     private TextField usernameTF;
     @FXML
-    private PasswordField passwordTF;
-    @FXML
-    private PasswordField confirmPasswordTF;
+    private PasswordField passwordTF, confirmPasswordTF;
     @FXML
     private Hyperlink loginInsteadHL;
     @FXML
@@ -35,7 +33,7 @@ public class SignupPageController implements Initializable
 
     @FXML
     void loginInsteadHLHandler(ActionEvent event) {
-        Starter.changeScene("LoginPage");
+        Starter.changeScene(Utils.GUI.LOGIN);
         Utils.resetErrorTexts();
     }
 
@@ -46,7 +44,7 @@ public class SignupPageController implements Initializable
         String password = passwordTF.getText();
 
         if ( checkTextFields(username, password) ) {
-            Request req = new Request("signup", new Data(username, password));
+            Request req = new Request(Utils.REQ.SIGNUP, new Data(username, password));
             NetworkManager.putRequest(req);
         }
     }
@@ -71,6 +69,12 @@ public class SignupPageController implements Initializable
         }
         else if (!password.equals(confirmPassword)) {
             errorLabel.setText("The Passwords Didn't Match. Please Try Again.");
+        }
+        else if (username.contains(" ")) {
+            errorLabel.setText("Username Cannot Contain White Space");
+        }
+        else if (password.contains(" ")) {
+            errorLabel.setText("Password Cannot Contain White Space.");
         }
         else {
             errorLabel.setText("");

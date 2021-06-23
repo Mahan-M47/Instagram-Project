@@ -3,6 +3,7 @@ package Client.Controller;
 import Client.Model.User;
 import Client.Utils;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class MainManager
 {
@@ -38,7 +39,7 @@ public class MainManager
 
         switch ( response.getTitle() )
         {
-            case "signup":
+            case Utils.REQ.SIGNUP:
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
@@ -50,7 +51,8 @@ public class MainManager
                 }
                 break;
 
-            case "login":
+
+            case Utils.REQ.LOGIN:
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
@@ -60,6 +62,47 @@ public class MainManager
                     Utils.LOGIN_ERROR_TEXT = "The Entered Username or Password Is Incorrect.";
                     GUIManager.showLoginPage();
                 }
+                break;
+
+
+            case Utils.REQ.SEARCH:
+                if (dat.usernameList.size() == 0) {
+                    Utils.SEARCH_ERROR_TEXT = "No Results";
+                }
+                else {
+                    Utils.searchResults = new ArrayList<>(dat.usernameList);
+                }
+                GUIManager.showSearchPage();
+                break;
+
+
+            case Utils.REQ.PROFILE:
+                Utils.receivedUserObj = dat.user;
+                GUIManager.showProfilePage();
+                break;
+
+
+            case Utils.REQ.MY_PROFILE:
+                Utils.currentUserObj = dat.user;
+                GUIManager.showMyProfilePage();
+                break;
+
+
+            case Utils.REQ.FOLLOW:
+                Utils.receivedUserObj  = dat.user;
+                GUIManager.reload();
+                break;
+
+
+            case Utils.REQ.UNFOLLOW:
+                Utils.receivedUserObj  = dat.user;
+                GUIManager.reload();
+                break;
+
+
+            case Utils.REQ.BIO:
+                Utils.currentUserObj = dat.user;
+                GUIManager.reload();
                 break;
         }
 
