@@ -83,6 +83,10 @@ public class User
 
     public List<Post> getPosts() { return posts; }
 
+    public void setPosts(ArrayList<Post> posts) {
+        this.posts = posts;
+    }
+
     public void addPost(Post post) { this.posts.add(post); }
 
     public DBObject createLoginDBObject() {

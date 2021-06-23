@@ -169,7 +169,20 @@ public class DatabaseManager {
         user.setBioText  ( getBioData(username).getBioText() );
         user.setFollowers( getFollowData(username).getFollowers() );
         user.setFollowing( getFollowData(username).getFollowing() );
+        user.setPosts(getposts(username));
         return user;
+    }
+
+    public synchronized static ArrayList<Post> getposts(String username){
+        DBCollection postcollection = db.getCollection(Utils.DB_POST);
+        DBObject object = new BasicDBObject()
+                .append("username",username);
+        ArrayList<Post> posts = new ArrayList<>();
+        DBCursor Cursor = postcollection.find(object);
+        for (DBObject dbObject : Cursor) {
+            posts.add(Post.parsepost(dbObject));
+        }
+        return posts;
     }
 
     public synchronized static User getFollowData(String username) {
