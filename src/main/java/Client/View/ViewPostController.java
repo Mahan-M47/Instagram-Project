@@ -59,6 +59,10 @@ public class ViewPostController implements Initializable
         commentsLabel.setText( "" + post.getComments().size() );
         captionLabel.setText( post.getCaption() );
 
+        if (post.getLikedBy().contains(Utils.currentUser)) {
+            likeButton.setText("Unlike");
+        }
+
         commentsScrollPane.setVisible(false);
         commentsTF.setVisible(false);
         sendButton.setVisible(false);

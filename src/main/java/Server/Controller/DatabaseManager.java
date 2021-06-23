@@ -71,7 +71,7 @@ public class DatabaseManager {
             PostImage post = Post.parsePost(object);
             String comment = username + ": " + commentText;
             post.addComment(comment);
-            collection.update(object, post.createPostDBObject());
+            collection.update(query, post.createPostDBObject());
         }
     }
 
