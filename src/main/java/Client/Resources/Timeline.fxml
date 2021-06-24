@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -14,11 +13,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.TimelineController">
    <children>
       <Separator layoutY="124.0" prefHeight="0.0" prefWidth="1300.0" />
-      <Label fx:id="timelineLabel" layoutX="30.0" layoutY="41.0" prefHeight="44.0" prefWidth="300.0" text="Logged in as: ">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font>
-      </Label>
       <ImageView fitHeight="125.0" fitWidth="350.0" layoutX="468.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@GUI_Images/Instagram.png" />

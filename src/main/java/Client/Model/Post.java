@@ -6,10 +6,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Post implements Comparable<Post>
 {
-    private String username, ID, caption;
+    private String postType, username, ID, caption;
     private Date date;
     private List<String> likedBy;
     private ArrayList<String> comments;
@@ -34,6 +35,8 @@ public class Post implements Comparable<Post>
     public String getID() {
         return ID;
     }
+
+    public String getPostType() { return postType; }
 
     public String getCaption() { return caption; }
 
@@ -77,6 +80,8 @@ public class Post implements Comparable<Post>
         this.ID = ID;
     }
 
+    public void setPostType(String postType) { this.postType = postType; }
+
     public void setLikedBy(List<String> likedBy) {
         this.likedBy = likedBy;
     }
@@ -89,7 +94,7 @@ public class Post implements Comparable<Post>
         this.username = username;
     }
 
-    public DBObject createPostDBObject(){
+    public DBObject createPostDBObject() {
         return new BasicDBObject()
                 .append("createPost",file)
                 .append("Caption",caption)
@@ -100,9 +105,9 @@ public class Post implements Comparable<Post>
                 .append("LikedBy",likedBy);
     }
 
-    public static PostImage parsePost(DBObject object)
+    public static Post parsePost(DBObject object)
     {
-        PostImage post = new PostImage();
+        Post post = new Post();
         post.setFile((File) object.get("createPost"));
         post.setCaption((String) object.get("Caption"));
         post.setUsername((String) object.get("username"));
@@ -117,7 +122,7 @@ public class Post implements Comparable<Post>
         this.comments.add(comment);
     }
 
-    public String IDBuilder(String username) { return username + System.currentTimeMillis(); }
+    public String IDBuilder(String username) { return username + UUID.randomUUID().toString(); }
 
     @Override
     public int compareTo(Post post) {

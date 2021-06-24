@@ -1,13 +1,11 @@
 package Server.Controller;
 
 import Server.Model.Post;
-import Server.Model.PostImage;
 import Server.Model.User;
 import Server.Utils;
 import com.mongodb.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class DatabaseManager {
 
@@ -141,7 +139,7 @@ public class DatabaseManager {
         DBObject object = collection.findOne(query);
 
         if (object != null) {
-            PostImage post = Post.parsePost(object);
+            Post post = Post.parsePost(object);
             post.addLike(username);
             collection.update(query, post.createPostDBObject());
         }
@@ -154,7 +152,7 @@ public class DatabaseManager {
         DBObject object = collection.findOne(query);
 
         if (object != null) {
-            PostImage post = Post.parsePost(object);
+            Post post = Post.parsePost(object);
             post.removeLike(username);
             collection.update(query, post.createPostDBObject());
         }
@@ -167,7 +165,7 @@ public class DatabaseManager {
         DBObject object = collection.findOne(query);
 
         if (object != null) {
-            PostImage post = Post.parsePost(object);
+            Post post = Post.parsePost(object);
             String comment = username + ": " + commentText;
             post.addComment(comment);
             collection.update(query, post.createPostDBObject());

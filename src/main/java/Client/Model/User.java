@@ -11,7 +11,8 @@ public class User
     private String username, password, bioText;
     private ArrayList<String> followers, following;
     private ArrayList<Post> posts;
-    private ArrayList<Chat> chats;
+    private ArrayList<ChatPersonal> personalChats;
+    private ArrayList<ChatGroup> groupChats;
     private File profilePicture;
 
     public User() {
@@ -23,7 +24,8 @@ public class User
         followers = new ArrayList<>();
         following = new ArrayList<>();
         posts = new ArrayList<>();
-        chats = new ArrayList<>();
+        personalChats = new ArrayList<>();
+        groupChats = new ArrayList<>();
         bioText = "";
     }
 
@@ -80,6 +82,24 @@ public class User
     public void setBioText(String bioText) {
         this.bioText = bioText;
     }
+
+    public void setPosts(ArrayList<Post> posts) { this.posts = posts; }
+
+    public ArrayList<ChatPersonal> getPersonalChats() { return personalChats; }
+
+    public void setPersonalChats(ArrayList<ChatPersonal> personalChats) { this.personalChats = personalChats; }
+
+    public ArrayList<ChatGroup> getGroupChats() { return groupChats; }
+
+    public void setGroupChats(ArrayList<ChatGroup> groupChats) { this.groupChats = groupChats; }
+
+    public File getProfilePicture() { return profilePicture; }
+
+    public void setProfilePicture(File profilePicture) { this.profilePicture = profilePicture; }
+
+    public void addPersonalChat(ChatPersonal chat) { personalChats.add(chat); }
+
+    public void addGroupChat(ChatGroup chat) { groupChats.add(chat); }
 
     public List<Post> getPosts() { return posts; }
 

@@ -1,9 +1,6 @@
 package Server.Controller;
 
-import Server.Model.Chat;
-import Server.Model.Message;
-import Server.Model.Post;
-import Server.Model.User;
+import Server.Model.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +15,8 @@ public class Data
     public Post post = null;
     public List<Post> posts = null;
     public Message message = null;
-    public Chat chat = null;
+    public ChatPersonal chatPersonal = null;
+    public ChatGroup chatGroup = null;
     public boolean flag;
 
     public Data() {}
@@ -59,9 +57,14 @@ public class Data
         this.posts = new ArrayList<>(posts);
     }
 
-    public Data(String clientUsername, Chat chat) {
+    public Data(String clientUsername, ChatPersonal chat) {
         this.clientUsername = clientUsername;
-        this.chat = chat;
+        this.chatPersonal = chat;
+    }
+
+    public Data(String clientUsername, ChatGroup chat) {
+        this.clientUsername = clientUsername;
+        this.chatGroup = chat;
     }
 
     public Data(String clientUsername, Message message) {

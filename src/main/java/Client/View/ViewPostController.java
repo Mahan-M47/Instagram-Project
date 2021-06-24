@@ -27,7 +27,7 @@ public class ViewPostController implements Initializable
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel, likeLabel, commentsLabel, captionLabel;
+    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
@@ -44,6 +44,7 @@ public class ViewPostController implements Initializable
     {
         followersLink.setText("" + Utils.receivedUserObj.getFollowers().size());
         followingLink.setText("" + Utils.receivedUserObj.getFollowing().size());
+        postsLabel.setText("" + Utils.receivedUserObj.getPosts().size());
         usernameLabel.setText(Utils.receivedUserObj.getUsername());
         bioLabel.setText(Utils.receivedUserObj.getBioText());
 

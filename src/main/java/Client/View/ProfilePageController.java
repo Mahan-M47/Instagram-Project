@@ -34,7 +34,7 @@ public class ProfilePageController implements Initializable {
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel;
+    private Label usernameLabel, bioLabel, postsLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
@@ -46,6 +46,7 @@ public class ProfilePageController implements Initializable {
     {
         followersLink.setText("" + Utils.receivedUserObj.getFollowers().size());
         followingLink.setText("" + Utils.receivedUserObj.getFollowing().size());
+        postsLabel.setText("" + Utils.receivedUserObj.getPosts().size());
         usernameLabel.setText(Utils.receivedUserObj.getUsername());
         bioLabel.setText(Utils.receivedUserObj.getBioText());
 

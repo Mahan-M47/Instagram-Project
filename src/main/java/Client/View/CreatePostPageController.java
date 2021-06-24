@@ -4,7 +4,6 @@ import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Model.Post;
-import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,7 +51,7 @@ public class CreatePostPageController
 
     @FXML
     void createPostButtonClickHandler(ActionEvent event) {
-        Post post = new PostImage(Utils.currentUser, captionTF.getText());
+        Post post = new Post(Utils.currentUser, captionTF.getText());
         Request req = new Request( Utils.REQ.CREATE_POST, new Data(Utils.currentUser, post) );
         NetworkManager.putRequest(req);
     }

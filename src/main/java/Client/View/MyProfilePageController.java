@@ -1,7 +1,6 @@
 package Client.View;
 
 import Client.Model.Post;
-import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -20,7 +19,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,7 +31,7 @@ public class MyProfilePageController implements Initializable
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel;
+    private Label usernameLabel, bioLabel, postsLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, editButton;
 
@@ -43,6 +41,7 @@ public class MyProfilePageController implements Initializable
     {
         followersLink.setText("" + Utils.currentUserObj.getFollowers().size());
         followingLink.setText("" + Utils.currentUserObj.getFollowing().size());
+        postsLabel.setText("" + Utils.currentUserObj.getPosts().size());
         usernameLabel.setText(Utils.currentUserObj.getUsername());
         bioLabel.setText(Utils.currentUserObj.getBioText());
 

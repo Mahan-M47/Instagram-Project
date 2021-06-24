@@ -4,7 +4,6 @@ import Client.Controller.Data;
 import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Model.Post;
-import Client.Model.PostImage;
 import Client.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -31,14 +30,11 @@ public class TimelineController implements Initializable
     @FXML
     private VBox scrollVBox;
     @FXML
-    private Label timelineLabel;
-    @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, logoutButton, loadMoreButton;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        timelineLabel.setText("Logged in as: " + Utils.currentUser);
         addPosts();
     }
 
