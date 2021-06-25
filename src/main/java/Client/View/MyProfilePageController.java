@@ -14,10 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -61,28 +59,22 @@ public class MyProfilePageController implements Initializable
             for (int j = 3*i; j < (3*i) + 3 && j < count ; j++)
             {
                 Post post = posts.get(j);
-                File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
 
-                try {
-                    InputStream in = new FileInputStream(file);
-                    Image img = new Image(in);
-                    ImageView imageView = new ImageView(img);
-                    imageView.setFitHeight(250);
-                    imageView.setFitWidth(250);
+                InputStream in = new ByteArrayInputStream( post.getFileBytes() );
+                Image img = new Image(in);
+                ImageView imageView = new ImageView(img);
+                imageView.setFitHeight(250);
+                imageView.setFitWidth(250);
 
-                    imageView.setOnMouseClicked(new EventHandler() {
-                        @Override
-                        public void handle(Event event) {
-                            ViewMyPostController.setPost(post);
-                            Starter.changeScene(Utils.GUI.MY_POST);
-                        }
-                    });
+                imageView.setOnMouseClicked(new EventHandler() {
+                    @Override
+                    public void handle(Event event) {
+                        ViewMyPostController.setPost(post);
+                        Starter.changeScene(Utils.GUI.MY_POST);
+                    }
+                });
 
                     hBox.getChildren().add(imageView);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
             scrollVBox.getChildren().add(hBox);
         }

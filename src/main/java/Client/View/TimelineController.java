@@ -17,10 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,21 +42,13 @@ public class TimelineController implements Initializable
 
         for (Post post : posts)
         {
-            File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
-            ImageView imageView = null;
-
-            try {
-                InputStream in = new FileInputStream(file);
-                Image img = new Image(in);
-                imageView = new ImageView(img);
-                imageView.setFitHeight(500);
-                imageView.setFitWidth(500);
-                imageView.setLayoutX(0);
-                imageView.setLayoutX(0);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
+            InputStream in = new ByteArrayInputStream( post.getFileBytes() );
+            Image img = new Image(in);
+            ImageView imageView = new ImageView(img);
+            imageView.setFitHeight(500);
+            imageView.setFitWidth(500);
+            imageView.setLayoutX(0);
+            imageView.setLayoutX(0);
 
             Hyperlink usernameLink = new Hyperlink(post.getUsername());
             Button commentsButton = new Button("Comments");

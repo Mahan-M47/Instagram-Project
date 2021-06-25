@@ -13,10 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class CreatePostPageController
 {
@@ -29,16 +26,18 @@ public class CreatePostPageController
     @FXML
     private Button chooseFileButton, createPostButton;
 
+    private File chosenFile;
+
     @FXML
     void chooseFileButtonClickHandler(ActionEvent event)
     {
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(new Stage());
+        chosenFile = fileChooser.showOpenDialog(new Stage());
 
-        if (file != null)
+        if (chosenFile != null)
         {
             try {
-                InputStream in = new FileInputStream(file);
+                InputStream in = new FileInputStream(chosenFile);
                 Image img = new Image(in);
                 postImage.setImage(img);
             }
@@ -51,9 +50,11 @@ public class CreatePostPageController
 
     @FXML
     void createPostButtonClickHandler(ActionEvent event) {
-        Post post = new Post(Utils.currentUser, captionTF.getText());
+        Post post = new Post(Utils.currentUser, captionTF.getText(), chosenFile.getPath());
         Request req = new Request( Utils.REQ.CREATE_POST, new Data(Utils.currentUser, post) );
         NetworkManager.putRequest(req);
+        ViewMyPostController.setPost(post);
+        Starter.changeScene(Utils.GUI.MY_POST);
     }
 
     @FXML

@@ -70,7 +70,7 @@ public class MainManager
 
                 case Utils.REQ.CREATE_POST:
                     DatabaseManager.createPost(dat.post);
-                    return new Response(Utils.REQ.CREATE_POST, dat);
+                    break;
 
 
                 case Utils.REQ.LIKE:

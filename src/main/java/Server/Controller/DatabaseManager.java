@@ -4,6 +4,10 @@ import Server.Model.Post;
 import Server.Model.User;
 import Server.Utils;
 import com.mongodb.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -127,9 +131,22 @@ public class DatabaseManager {
         collection.update(followerUserQuery, followerUser.createFollowDBObject());
     }
 
-    public synchronized static void createPost(Post post){
+    public synchronized static void createPost(Post post)
+    {
         DBCollection collection = db.getCollection(Utils.DB_POST);
+
+        try {
+            File savedFile = new File( post.getServerFilePath() );
+            FileOutputStream out = new FileOutputStream( savedFile );
+            out.write( post.getFileBytes() );
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        post.emptyFileBytes();
         collection.insert(post.createPostDBObject());
+
     }
 
     public synchronized static void like(String username, String postID)
@@ -219,7 +236,9 @@ public class DatabaseManager {
         ArrayList<Post> posts = new ArrayList<>();
         while (cursor.hasNext()) {
             DBObject obj = cursor.next();
-            posts.add(0, Post.parsePost(obj) );
+            Post post = Post.parsePost(obj);
+            post.setFileBytes( post.getServerFilePath() );
+            posts.add(0, post);
         }
         return posts;
     }

@@ -95,11 +95,7 @@
         <Separator layoutY="250.0" prefWidth="1300.0" />
       <AnchorPane layoutX="150.0" layoutY="262.0" prefHeight="500.0" prefWidth="1100.0">
          <children>
-            <ImageView fx:id="postImage" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@GUI_Images/TEST_IMG.jpg" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="postImage" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
             <Button fx:id="commentsButton" layoutX="700.0" layoutY="40.0" mnemonicParsing="false" onAction="#commentsButtonClickHandler" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: #d4d4d4;" text="Comments">
                <font>
                   <Font size="20.0" />

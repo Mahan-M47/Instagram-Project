@@ -109,12 +109,6 @@ public class MainManager
                 break;
 
 
-            case Utils.REQ.CREATE_POST:
-                ViewMyPostController.setPost(dat.post);
-                GUIManager.showViewMyPostPage();
-                break;
-
-
             case Utils.REQ.TIMELINE:
                 Utils.timelineData = dat.posts;
                 GUIManager.showTimeline();
