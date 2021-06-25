@@ -103,12 +103,6 @@ public class MainManager
                 break;
 
 
-            case Utils.REQ.BIO:
-                Utils.currentUserObj = dat.user;
-                GUIManager.showMyProfilePage();
-                break;
-
-
             case Utils.REQ.TIMELINE:
                 Utils.timelineData = dat.posts;
                 GUIManager.showTimeline();

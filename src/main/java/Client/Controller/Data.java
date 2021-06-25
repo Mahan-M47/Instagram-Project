@@ -42,7 +42,7 @@ public class Data
         this.text = text;
     }
 
-    //only used by the server so there's no need to add the client's username. (e.g. showing a user's profile)
+    //User already contains the username
     public Data(User user) {
         this.user = user;
     }

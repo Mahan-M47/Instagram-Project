@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -48,6 +47,12 @@ public class ViewMyPostController implements Initializable
         postsLabel.setText("" + Utils.currentUserObj.getPosts().size());
         usernameLabel.setText(Utils.currentUserObj.getUsername());
         bioLabel.setText(Utils.currentUserObj.getBioText());
+
+        if (Utils.currentUserObj.getProfilePicture() != null) {
+            InputStream in = new ByteArrayInputStream( Utils.currentUserObj.getProfilePicture() );
+            Image img = new Image(in);
+            profilePicture.setImage(img);
+        }
 
         loadPost();
     }

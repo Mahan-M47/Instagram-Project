@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import java.io.*;
 import java.net.URL;
 import java.util.List;
@@ -42,6 +41,12 @@ public class MyProfilePageController implements Initializable
         postsLabel.setText("" + Utils.currentUserObj.getPosts().size());
         usernameLabel.setText(Utils.currentUserObj.getUsername());
         bioLabel.setText(Utils.currentUserObj.getBioText());
+
+        if (Utils.currentUserObj.getProfilePicture() != null) {
+            InputStream in = new ByteArrayInputStream( Utils.currentUserObj.getProfilePicture() );
+            Image img = new Image(in);
+            profilePicture.setImage(img);
+        }
 
         addPosts();
     }

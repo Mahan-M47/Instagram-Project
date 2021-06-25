@@ -63,9 +63,11 @@ public class MainManager
 
 
                 case Utils.REQ.BIO:
-                    DatabaseManager.setBio(dat.clientUsername, dat.dataString);
-                    user = DatabaseManager.assembleUser(dat.clientUsername);
-                    return new Response(Utils.REQ.BIO, new Data(user) );
+                    DatabaseManager.setBio(dat.user);
+                    if (dat.user.getProfilePicture() != null) {
+                        DatabaseManager.setProfilePicture(dat.user);
+                    }
+                    break;
 
 
                 case Utils.REQ.CREATE_POST:
