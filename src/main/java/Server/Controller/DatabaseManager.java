@@ -204,11 +204,6 @@ public class DatabaseManager {
         user.setFollowers ( getFollowData(username).getFollowers() );
         user.setFollowing ( getFollowData(username).getFollowing() );
         user.setProfilePicture( user.getServerFilePath() );
-
-//        user.setPosts(new ArrayList<>());
-//        user.setFollowers(new ArrayList<>());
-//        user.setFollowing(new ArrayList<>());
-
         return user;
     }
 

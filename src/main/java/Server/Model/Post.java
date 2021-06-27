@@ -13,7 +13,7 @@ public class Post implements Comparable<Post>
     private Date date;
     private List<String> likedBy;
     private ArrayList<String> comments;
-    private String serverFilePath, fileBytes;
+    private String fileBytes;
 
     public Post() {
     }
@@ -26,8 +26,12 @@ public class Post implements Comparable<Post>
         comments = new ArrayList<>() ;
         likedBy = new ArrayList<>();
         setFileBytes(clientFilePath);
-        setServerFilePath();
     }
+
+    public void setPostType(String postType) { this.postType = postType; }
+    public void setAsImagePost() { postType = "Image"; }
+    public void setAsVideoPost() { postType = "Video"; }
+    public String getPostType() { return postType; }
 
     public Date getDate() {
         return date;
@@ -36,8 +40,6 @@ public class Post implements Comparable<Post>
     public String getID() {
         return ID;
     }
-
-    public String getPostType() { return postType; }
 
     public String getCaption() { return caption; }
 
@@ -75,11 +77,7 @@ public class Post implements Comparable<Post>
     }
 
     public String getServerFilePath() {
-        return serverFilePath;
-    }
-
-    public void setServerFilePath() {
-        serverFilePath = "src/main/java/Server/Resources/" + getID() + ".jpg";
+        return "src/main/java/Server/Resources/" + ID + ".jpg";
     }
 
     public void addLike(String username) {
@@ -102,8 +100,6 @@ public class Post implements Comparable<Post>
         this.ID = ID;
     }
 
-    public void setPostType(String postType) { this.postType = postType; }
-
     public void setLikedBy(List<String> likedBy) {
         this.likedBy = likedBy;
     }
@@ -118,6 +114,7 @@ public class Post implements Comparable<Post>
 
     public DBObject createPostDBObject() {
         return new BasicDBObject()
+                .append("PostType",postType)
                 .append("Caption",caption)
                 .append("ID",ID)
                 .append("username",username)
@@ -129,13 +126,13 @@ public class Post implements Comparable<Post>
     public static Post parsePost(DBObject object)
     {
         Post post = new Post();
+        post.setPostType((String) object.get("PostType"));
         post.setCaption((String) object.get("Caption"));
         post.setUsername((String) object.get("username"));
         post.setLikedBy((ArrayList<String>) object.get("LikedBy"));
         post.setComments((ArrayList<String>) object.get("Comments"));
         post.setDate((Date) object.get("Date"));
         post.setID((String) object.get("ID"));
-        post.setServerFilePath();
         return post;
     }
 

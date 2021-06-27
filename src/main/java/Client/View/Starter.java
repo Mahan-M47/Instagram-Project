@@ -42,9 +42,7 @@ public class Starter extends Application
             Parent root = FXMLLoader.load(url);
             stage.getScene().setRoot(root);
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        catch (Exception e) { }
     }
 
     public static void reloadScene() {
