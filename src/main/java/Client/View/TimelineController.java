@@ -16,9 +16,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -41,14 +46,6 @@ public class TimelineController implements Initializable
 
         for (Post post : posts)
         {
-            InputStream in = new ByteArrayInputStream( post.getFileBytes() );
-            Image img = new Image(in);
-            ImageView imageView = new ImageView(img);
-            imageView.setFitHeight(500);
-            imageView.setFitWidth(500);
-            imageView.setLayoutX(0);
-            imageView.setLayoutX(0);
-
             Hyperlink usernameLink = new Hyperlink(post.getUsername());
             Button commentsButton = new Button("Comments");
             Label commentsLabel = new Label("" + post.getComments().size());
@@ -64,14 +61,21 @@ public class TimelineController implements Initializable
                 likeButton.setText("Unlike");
             }
 
-            createButtons(likeButton, commentsButton, sendButton, usernameLink, likeLabel, commentsLabel, captionLabel, post);
-            ScrollPane commentsScrollPane =
-                    createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
+            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel, post);
+            ScrollPane commentsScrollPane = createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
 
             AnchorPane pane = new AnchorPane();
             pane.setPrefSize(900, 500);
 
-            pane.getChildren().add(imageView);
+            if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
+                ImageView postImage = loadImage(post);
+                pane.getChildren().add(postImage);
+            }
+            else {
+                MediaView postVideo = loadVideo(post);
+                pane.getChildren().add(postVideo);
+            }
+
             pane.getChildren().add(usernameLink);
             pane.getChildren().add(likeButton);
             pane.getChildren().add(likeLabel);
@@ -86,7 +90,58 @@ public class TimelineController implements Initializable
         }
     }
 
-    public void createButtons(Button likeButton, Button commentsButton, Button sendButton, Hyperlink usernameLink,
+    public ImageView loadImage(Post post)
+    {
+        InputStream in = new ByteArrayInputStream( post.getFileBytes() );
+        Image img = new Image(in);
+        ImageView postImage = new ImageView(img);
+        postImage.setFitHeight(500);
+        postImage.setFitWidth(500);
+
+        return postImage;
+    }
+
+    public MediaView loadVideo(Post post)
+    {
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_CLIENT_POST_VIDEOS) );
+            File file = new File( Utils.DIR_CLIENT_POST_VIDEOS + post.getID() + post.getPostType());
+            OutputStream out = new FileOutputStream(file);
+            out.write(post.getFileBytes());
+
+            Media media = new Media(file.toURI().toURL().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            MediaView postVideo = new MediaView(mediaPlayer);
+
+            postVideo.setFitHeight(500);
+            postVideo.setFitWidth(500);
+
+            mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+                }
+            });
+
+            postVideo.setOnMouseClicked(new EventHandler() {
+                @Override
+                public void handle(Event event) {
+                    CommonClickHandlers.playButton(mediaPlayer);
+                }
+            });
+
+            return postVideo;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void createButtons(Button likeButton, Button commentsButton, Hyperlink usernameLink,
                               Label likeLabel, Label commentsLabel, Label captionLabel, Post post)
     {
         commentsButton.setPrefSize(130,50);

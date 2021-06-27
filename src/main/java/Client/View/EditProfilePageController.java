@@ -28,11 +28,11 @@ public class EditProfilePageController implements Initializable
     @FXML
     private TextArea BioTF;
     @FXML
-    private Label updateLabel;
+    private Label updateLabel, errorLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
-    private Button backButton, applyButton;
+    private Button chooseFileButton, backButton, applyButton;
 
     private File chosenFile;
 
@@ -56,16 +56,21 @@ public class EditProfilePageController implements Initializable
         FileChooser fileChooser = new FileChooser();
         chosenFile = fileChooser.showOpenDialog(new Stage());
 
-        if (chosenFile != null)
+        if (chosenFile != null && chosenFile.getPath().matches(".+\\.jpg") )
         {
             try {
                 InputStream in = new FileInputStream(chosenFile);
                 Image img = new Image(in);
                 profilePicture.setImage(img);
+                errorLabel.setVisible(false);
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        else {
+            chosenFile = null;
+            errorLabel.setVisible(true);
         }
     }
 

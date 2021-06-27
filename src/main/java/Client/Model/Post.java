@@ -1,5 +1,6 @@
 package Client.Model;
 
+import Client.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.io.File;
@@ -29,8 +30,7 @@ public class Post implements Comparable<Post>
     }
 
     public void setPostType(String postType) { this.postType = postType; }
-    public void setAsImagePost() { postType = "Image"; }
-    public void setAsVideoPost() { postType = "Video"; }
+
     public String getPostType() { return postType; }
 
     public Date getDate() {
@@ -77,7 +77,7 @@ public class Post implements Comparable<Post>
     }
 
     public String getServerFilePath() {
-        return "src/main/java/Server/Resources/" + ID + ".jpg";
+        return Utils.DIR_POSTS + ID + postType;
     }
 
     public void addLike(String username) {

@@ -2,17 +2,29 @@ package Server;
 
 public class Utils
 {
+    //Network constants
     public static final int PORT = 6000;
     public static final int BLOCKING_QUEUE_CAPACITY = 20;
     public static final long MONITOR_SLEEP_TIMER = 1000;
 
 
-    //Database
+    //Post types
+    public static final String POST_IMAGE = ".jpg";
+    public static final String POST_VIDEO = ".mp4";
+
+
+    //Database titles
     public static final String DATABASE_NAME = "instagram";
     public static final String DB_LOGIN = "login";
     public static final String DB_FOLLOW = "follow";
     public static final String DB_BIO = "bio";
     public static final String DB_POST = "post";
+
+
+    //File directories
+    public static final String DIR_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
+    public static final String DIR_POSTS = "src/main/java/Server/Resources/";
+    public static final String DIR_CLIENT_POST_VIDEOS = "src/main/java/Client/Resources/Post_Videos/";
 
 
     //Request titles

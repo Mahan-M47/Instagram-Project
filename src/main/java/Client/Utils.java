@@ -12,7 +12,13 @@ public class Utils
     public static User currentUserObj = null;
 
 
-    //General constants
+    //Received User
+    public static User receivedUserObj = null;
+    public static List<String> searchResults = new ArrayList<>();
+    public static List<Post> timelineData = new ArrayList<>();
+
+
+    //Network constants
     public static final String IP_ADDRESS = "localhost";
     public static final int PORT = 6000;
     public static final int BLOCKING_QUEUE_CAPACITY = 20;
@@ -20,7 +26,12 @@ public class Utils
     public static final long DISCONNECT_SLEEP_TIMER = 1000;
 
 
-    //GUI stuff
+    //Post types
+    public static final String POST_IMAGE = ".jpg";
+    public static final String POST_VIDEO = ".mp4";
+
+
+    //Error texts
     public static String SIGNUP_ERROR_TEXT = "";
     public static String LOGIN_ERROR_TEXT = "";
     public static String SEARCH_ERROR_TEXT = "";
@@ -31,9 +42,11 @@ public class Utils
         SEARCH_ERROR_TEXT = "";
     }
 
-    public static User receivedUserObj = null;
-    public static List<String> searchResults = new ArrayList<>();
-    public static List<Post> timelineData = new ArrayList<>();
+
+    //File directories
+    public static final String DIR_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
+    public static final String DIR_POSTS = "src/main/java/Server/Resources/";
+    public static final String DIR_CLIENT_POST_VIDEOS = "src/main/java/Client/Resources/Post_Videos/";
 
 
     //GUI page titles

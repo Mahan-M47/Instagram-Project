@@ -8,6 +8,8 @@ import com.mongodb.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -136,6 +138,7 @@ public class DatabaseManager {
         DBCollection collection = db.getCollection(Utils.DB_POST);
 
         try {
+            Files.createDirectories( Paths.get(Utils.DIR_POSTS) );
             File savedFile = new File( post.getServerFilePath() );
             FileOutputStream out = new FileOutputStream( savedFile );
             out.write( post.getFileBytes() );
@@ -198,12 +201,12 @@ public class DatabaseManager {
 
     public synchronized static User assembleUser(String username) {
         User user = new User();
-        user.setUsername  ( username );
-        user.setPosts     ( getPostData(username) );
-        user.setBioText   ( getBioData(username).getBioText() );
-        user.setFollowers ( getFollowData(username).getFollowers() );
-        user.setFollowing ( getFollowData(username).getFollowing() );
-        user.setProfilePicture( user.getServerFilePath() );
+        user.setUsername       ( username );
+        user.setPosts          ( getPostData(username) );
+        user.setBioText        ( getBioData(username).getBioText() );
+        user.setFollowers      ( getFollowData(username).getFollowers() );
+        user.setFollowing      ( getFollowData(username).getFollowing() );
+        user.setProfilePicture ( user.getServerFilePath() );
         return user;
     }
 
@@ -231,7 +234,6 @@ public class DatabaseManager {
         while (cursor.hasNext()) {
             DBObject obj = cursor.next();
             Post post = Post.parsePost(obj);
-            post.setFileBytes( post.getServerFilePath() );
             posts.add(0, post);
         }
         return posts;
@@ -251,8 +253,9 @@ public class DatabaseManager {
     public synchronized static void setProfilePicture(User userData)
     {
         try {
-            File savedProfilePicture = new File(userData.getServerFilePath());
-            FileOutputStream out = new FileOutputStream( savedProfilePicture );
+            Files.createDirectories( Paths.get(Utils.DIR_PROFILE_PICTURES) );
+            File savedProfilePicture = new File( userData.getServerFilePath() );
+            FileOutputStream out = new FileOutputStream(savedProfilePicture);
             out.write(userData.getProfilePicture());
         }
         catch (IOException e) {

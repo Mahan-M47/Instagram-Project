@@ -1,5 +1,6 @@
 package Client.Model;
 
+import Client.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.io.File;
@@ -113,7 +114,7 @@ public class User
         }
     }
 
-    public String getServerFilePath() { return "src/main/java/Server/Resources/ProfilePictures/" + username + ".jpg"; }
+    public String getServerFilePath() { return Utils.DIR_PROFILE_PICTURES + username + ".jpg"; }
 
     public void addPost(Post post) { this.posts.add(post); }
 

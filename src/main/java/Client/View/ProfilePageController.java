@@ -17,8 +17,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -75,25 +81,65 @@ public class ProfilePageController implements Initializable {
             {
                 Post post = posts.get(j);
 
-                InputStream in = new ByteArrayInputStream( post.getFileBytes() );
-                Image img = new Image(in);
-                ImageView imageView = new ImageView(img);
-                imageView.setFitHeight(250);
-                imageView.setFitWidth(250);
-
-                imageView.setOnMouseClicked(new EventHandler() {
-                    @Override
-                    public void handle(Event event) {
-                        ViewPostController.setPost(post);
-                        Starter.changeScene(Utils.GUI.POST);
-                    }
-                });
-
-                hBox.getChildren().add(imageView);
-
+                if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
+                    ImageView postImage = loadImage(post);
+                    hBox.getChildren().add(postImage);
+                }
+                else {
+                    MediaView postVideo = loadVideo(post);
+                    hBox.getChildren().add(postVideo);
+                }
             }
             scrollVBox.getChildren().add(hBox);
         }
+    }
+
+    public ImageView loadImage(Post post)
+    {
+        InputStream in = new ByteArrayInputStream( post.getFileBytes() );
+        Image img = new Image(in);
+        ImageView postImage = new ImageView(img);
+        postImage.setFitHeight(250);
+        postImage.setFitWidth(250);
+
+        postImage.setOnMouseClicked(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                ViewPostController.setPost(post);
+                Starter.changeScene(Utils.GUI.POST);
+            }
+        });
+
+        return postImage;
+    }
+
+    public MediaView loadVideo(Post post)
+    {
+        MediaView postVideo = null;
+
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_CLIENT_POST_VIDEOS) );
+            File file = new File( Utils.DIR_CLIENT_POST_VIDEOS + post.getID() + post.getPostType());
+            OutputStream out = new FileOutputStream(file);
+            out.write(post.getFileBytes());
+
+            Media media = new Media(file.toURI().toURL().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            postVideo = new MediaView(mediaPlayer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        postVideo.setOnMouseClicked(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                ViewPostController.setPost(post);
+                Starter.changeScene(Utils.GUI.POST);
+            }
+        });
+
+        return postVideo;
     }
 
     @FXML

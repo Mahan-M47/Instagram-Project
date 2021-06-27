@@ -50,10 +50,10 @@ public class CreatePostPageController
             filePath = chosenFile.getPath();
 
             if (filePath.matches(".+\\.jpg")) {
-                showImage();
+                loadImage();
             }
             else if (filePath.matches(".+\\.mp4")) {
-                showVideo();
+                loadVideo();
             }
             else {
                 postImage.setImage(null);
@@ -64,7 +64,7 @@ public class CreatePostPageController
         }
     }
 
-    public void showImage()
+    public void loadImage()
     {
         try {
             postVideo.setMediaPlayer(null);
@@ -80,7 +80,7 @@ public class CreatePostPageController
         }
     }
 
-    public void showVideo()
+    public void loadVideo()
     {
         try {
             postImage.setImage(null);
@@ -106,27 +106,15 @@ public class CreatePostPageController
     }
 
     @FXML
-    void playButtonClickHandler(MouseEvent event)
-    {
-        if (postVideo.getMediaPlayer() != null)
-        {
-            if (mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
-                mediaPlayer.pause();
-            }
-            else mediaPlayer.play();
-        }
-    }
-
-    @FXML
     void createPostButtonClickHandler(ActionEvent event)
     {
         Post post = new Post(Utils.currentUser, captionTF.getText(), filePath);
 
         if (filePath.matches(".+\\.jpg")) {
-            post.setAsImagePost();
+            post.setPostType(Utils.POST_IMAGE);
         }
         else {
-            post.setAsVideoPost();
+            post.setPostType(Utils.POST_VIDEO);
         }
 
         Request req = new Request(Utils.REQ.CREATE_POST, new Data(Utils.currentUser, post));
@@ -134,6 +122,9 @@ public class CreatePostPageController
         ViewMyPostController.setPost(post);
         Starter.changeScene(Utils.GUI.MY_POST);
     }
+
+    @FXML
+    void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer); }
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }

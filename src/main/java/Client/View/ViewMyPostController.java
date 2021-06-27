@@ -8,16 +8,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class ViewMyPostController implements Initializable
 {
     @FXML
     private ImageView profilePicture, postImage;
+    @FXML
+    private MediaView postVideo;
     @FXML
     private VBox commentsVBox;
     @FXML
@@ -32,6 +39,8 @@ public class ViewMyPostController implements Initializable
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, editButton;
     @FXML
     private Button backButton, commentsButton, likeButton, sendButton;
+
+    private MediaPlayer mediaPlayer;
 
     private static Post post;
     public static void setPost(Post chosenPost) {
@@ -76,25 +85,56 @@ public class ViewMyPostController implements Initializable
         commentsTF.setVisible(false);
         sendButton.setVisible(false);
 
+        if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
+            loadImage();
+        }
+        else {
+            loadVideo();
+        }
+    }
+
+    public void loadImage()
+    {
         InputStream in = new ByteArrayInputStream( post.getFileBytes() );
         Image img = new Image(in);
         postImage.setImage(img);
     }
 
-    @FXML
-    void likeButtonClickHandler(ActionEvent event) {
-        CommonClickHandlers.likeButton(likeButton, likeLabel, post);
+    public void loadVideo()
+    {
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_CLIENT_POST_VIDEOS) );
+            File file = new File(Utils.DIR_CLIENT_POST_VIDEOS + post.getID() + post.getPostType());
+
+            Media media = new Media(file.toURI().toURL().toString());
+            mediaPlayer = new MediaPlayer(media);
+            postVideo.setMediaPlayer(mediaPlayer);
+
+            mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+                }
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    void commentsButtonClickHandler(ActionEvent event) {
-        CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF);
-    }
+    void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer); }
 
     @FXML
-    void sendButtonClickHandler() {
-        CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post);
-    }
+    void likeButtonClickHandler(ActionEvent event) { CommonClickHandlers.likeButton(likeButton, likeLabel, post); }
+
+    @FXML
+    void commentsButtonClickHandler(ActionEvent event) { CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF); }
+
+    @FXML
+    void sendButtonClickHandler() { CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post); }
 
     @FXML
     void followersLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.MY_FOLLOWERS); }

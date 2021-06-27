@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
@@ -91,6 +92,7 @@
       <AnchorPane layoutX="150.0" layoutY="262.0" prefHeight="500.0" prefWidth="1100.0">
          <children>
             <ImageView fx:id="postImage" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
+            <MediaView fx:id="postVideo" fitHeight="450.0" fitWidth="450.0" onMouseClicked="#playButtonClickHandler" />
             <Button fx:id="commentsButton" layoutX="700.0" layoutY="40.0" mnemonicParsing="false" onAction="#commentsButtonClickHandler" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: #d4d4d4;" text="Comments">
                <font>
                   <Font size="20.0" />
