@@ -325,19 +325,11 @@ public class DatabaseManager {
     }
 
     public synchronized static void addMember(String ChatID, String member) {
-        if (checkchatid(ChatID, Utils.DB_PERSONALCHAT)) {
-            DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
-            ChatPersonal chat = getPersonalChat(ChatID);
-            chat.addMember(member);
-            DBObject query = new BasicDBObject("ChatID", ChatID);
-            collection.update(query, chat.createChatPersonalDBObject());
-        } else {
             DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
             ChatGroup chat = getGroupChat(ChatID);
             chat.addMember(member);
             DBObject query = new BasicDBObject("ChatID", ChatID);
             collection.update(query, chat.createChatGroupDBObject());
-        }
     }
 
     
@@ -345,7 +337,7 @@ public class DatabaseManager {
         ArrayList<String> chatids = getChatids(username);
         ArrayList<ChatPersonal> chatpersonals = new ArrayList<>();
 
-        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
+        DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
         for(int i = 0 ; i < chatids.size() ; i++){
             chatpersonals.add(ChatPersonal.parsePersonalChatDBObject(collection.findOne(new BasicDBObject()
                     .append("ChatID",chatids.get(i)))))
