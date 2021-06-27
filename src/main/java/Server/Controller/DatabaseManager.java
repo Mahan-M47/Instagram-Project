@@ -340,34 +340,31 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static ArrayList<Message> getALLChats(String username){
-        DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
-
+    
+    public synchronized static ArrayList<ChatPersonal> getALLChatPersonal(String username) {
         ArrayList<String> chatids = getChatids(username);
-        ArrayList<Message> temp = new ArrayList<>();
-        ArrayList<Message> ALLmessages = new ArrayList<>();
+        ArrayList<ChatPersonal> chatpersonals = new ArrayList<>();
 
+        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
         for(int i = 0 ; i < chatids.size() ; i++){
-            temp = ChatPersonal.parsePersonalChatDBObject(collection
-                    .findOne(new BasicDBObject()
-                            .append("ChatID",chatids.get(i))))
-                    .getMessageList();
-            for(int j = 0 ; j < temp.size() ; j++){
-                ALLmessages.add(temp.get(j));
-            }
+            chatpersonals.add(ChatPersonal.parsePersonalChatDBObject(collection.findOne(new BasicDBObject()
+                    .append("ChatID",chatids.get(i)))))
+            ;
         }
+        return chatpersonals;
+    }
 
-        collection = db.getCollection(Utils.DB_GROUPCHAT);
+    public synchronized static ArrayList<ChatGroup> getALLChatGroups(String username) {
+        ArrayList<String> chatids = getChatids(username);
+        ArrayList<ChatGroup> chatGroups = new ArrayList<>();
+
+        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
         for(int i = 0 ; i < chatids.size() ; i++){
-            temp = ChatPersonal.parsePersonalChatDBObject(collection
-                    .findOne(new BasicDBObject()
-                            .append("ChatID",chatids.get(i))))
-                    .getMessageList();
-            for(int j = 0 ; j < temp.size() ; j++){
-                ALLmessages.add(temp.get(j));
-            }
+            chatGroups.add(ChatGroup.parseGroupChatDBObject(collection.findOne(new BasicDBObject()
+                            .append("ChatID",chatids.get(i)))))
+                    ;
         }
-        return ALLmessages;
+        return chatGroups;
     }
 
 }
