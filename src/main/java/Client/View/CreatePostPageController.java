@@ -29,7 +29,7 @@ public class CreatePostPageController
     @FXML
     private MediaView postVideo;
     @FXML
-    private Label errorLabel;
+    private Label errorLabel, playLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
@@ -60,6 +60,7 @@ public class CreatePostPageController
                 postVideo.setMediaPlayer(null);
                 createPostButton.setDisable(true);
                 errorLabel.setVisible(true);
+                playLabel.setVisible(false);
             }
         }
     }
@@ -69,6 +70,7 @@ public class CreatePostPageController
         try {
             postVideo.setMediaPlayer(null);
             errorLabel.setVisible(false);
+            playLabel.setVisible(false);
             createPostButton.setDisable(false);
 
             InputStream in = new FileInputStream(chosenFile);
@@ -85,6 +87,7 @@ public class CreatePostPageController
         try {
             postImage.setImage(null);
             createPostButton.setDisable(false);
+            playLabel.setVisible(true);
             errorLabel.setVisible(false);
 
             Media media = new Media(chosenFile.toURI().toURL().toString());
@@ -97,6 +100,7 @@ public class CreatePostPageController
                 @Override
                 public void run() {
                     mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+                    CommonClickHandlers.playButton(mediaPlayer, playLabel);
                 }
             });
         }
@@ -124,7 +128,7 @@ public class CreatePostPageController
     }
 
     @FXML
-    void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer); }
+    void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
 
     @FXML
     void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }

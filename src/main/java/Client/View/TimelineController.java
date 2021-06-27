@@ -55,7 +55,9 @@ public class TimelineController implements Initializable
 
             Button sendButton = new Button("Send");
             TextField commentTF = new TextField();
-            commentTF.setPromptText("Leave a Comment");
+
+            Label playLabel = new Label("PLAY");
+
 
             if (post.getLikedBy().contains(Utils.currentUser)) {
                 likeButton.setText("Unlike");
@@ -72,8 +74,9 @@ public class TimelineController implements Initializable
                 pane.getChildren().add(postImage);
             }
             else {
-                MediaView postVideo = loadVideo(post);
+                MediaView postVideo = loadVideo(post, playLabel);
                 pane.getChildren().add(postVideo);
+                pane.getChildren().add(playLabel);
             }
 
             pane.getChildren().add(usernameLink);
@@ -101,8 +104,12 @@ public class TimelineController implements Initializable
         return postImage;
     }
 
-    public MediaView loadVideo(Post post)
+    public MediaView loadVideo(Post post, Label playLabel)
     {
+        playLabel.setStyle(Utils.PLAY_BUTTON_CSS);
+        playLabel.setLayoutX(185);
+        playLabel.setLayoutY(210);
+
         try {
             Files.createDirectories( Paths.get(Utils.DIR_CLIENT_POST_VIDEOS) );
             File file = new File( Utils.DIR_CLIENT_POST_VIDEOS + post.getID() + post.getPostType());
@@ -122,14 +129,18 @@ public class TimelineController implements Initializable
                 @Override
                 public void run() {
                     mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+                    CommonClickHandlers.playButton(mediaPlayer, playLabel);
                 }
             });
 
             postVideo.setOnMouseClicked(new EventHandler() {
                 @Override
-                public void handle(Event event) {
-                    CommonClickHandlers.playButton(mediaPlayer);
-                }
+                public void handle(Event event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
+            });
+
+            playLabel.setOnMouseClicked(new EventHandler() {
+                @Override
+                public void handle(Event event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
             });
 
             return postVideo;
@@ -200,17 +211,19 @@ public class TimelineController implements Initializable
         });
     }
 
-    public ScrollPane createCommentScrollPane(TextField commentsTF, Button commentsButton, Button sendButton,
+    public ScrollPane createCommentScrollPane(TextField commentTF, Button commentsButton, Button sendButton,
                               Label commentsLabel, Post post)
     {
         ScrollPane commentsScrollPane = new ScrollPane();
         VBox commentsVBox = new VBox();
         commentsVBox.setPrefSize(205,1000);
 
-        commentsTF.setFont( new Font("System",14) );
-        commentsTF.setPrefSize(220,30);
-        commentsTF.setLayoutX(880);
-        commentsTF.setLayoutY(426);
+
+        commentTF.setFont( new Font("System",14) );
+        commentTF.setPrefSize(220,30);
+        commentTF.setLayoutX(880);
+        commentTF.setLayoutY(426);
+        commentTF.setPromptText("Leave a Comment");
 
         sendButton.setFont( new Font("System",14) );
         sendButton.setStyle("-fx-background-color: #d4d4d4");
@@ -225,7 +238,7 @@ public class TimelineController implements Initializable
         commentsScrollPane.setLayoutY(25);
 
         commentsScrollPane.setVisible(false);
-        commentsTF.setVisible(false);
+        commentTF.setVisible(false);
         sendButton.setVisible(false);
 
 
@@ -237,14 +250,14 @@ public class TimelineController implements Initializable
         commentsButton.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF);
+                CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentTF);
             }
         });
 
         sendButton.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post);
+                CommonClickHandlers.sendButton(commentsVBox, commentTF, commentsLabel, post);
             }
         });
 

@@ -40,7 +40,7 @@ public class ViewPostController implements Initializable
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel;
+    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, playLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
@@ -119,12 +119,14 @@ public class ViewPostController implements Initializable
             mediaPlayer = new MediaPlayer(media);
             postVideo.setMediaPlayer(mediaPlayer);
 
+            playLabel.setVisible(true);
             mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
 
             mediaPlayer.setOnEndOfMedia(new Runnable() {
                 @Override
                 public void run() {
                     mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+                    CommonClickHandlers.playButton(mediaPlayer, playLabel);
                 }
             });
         }
@@ -134,7 +136,7 @@ public class ViewPostController implements Initializable
     }
 
     @FXML
-    void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer); }
+    void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
 
     @FXML
     void likeButtonClickHandler(ActionEvent event) {

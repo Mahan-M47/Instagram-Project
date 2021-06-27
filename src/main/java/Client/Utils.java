@@ -31,6 +31,14 @@ public class Utils
     public static final String POST_VIDEO = ".mp4";
 
 
+    //PlayButton CSS string
+    public static final String PLAY_BUTTON_CSS = "  -fx-background-color: #ffffff;" +
+            "  -fx-background-radius: 15;" +
+            "  -fx-opacity: 0.6;" +
+            "  -fx-font: 40pt \"System\";" +
+            "  -fx-font-weight: bold;";
+
+
     //Error texts
     public static String SIGNUP_ERROR_TEXT = "";
     public static String LOGIN_ERROR_TEXT = "";

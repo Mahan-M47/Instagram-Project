@@ -1,0 +1,8 @@
+.label
+{
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 15;
+  -fx-opacity: 0.6;
+  -fx-font: 40pt "System";
+  -fx-font-weight: bold;
+}

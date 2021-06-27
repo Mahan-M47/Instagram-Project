@@ -89,14 +89,18 @@ public class CommonClickHandlers
         }
     }
 
-    public static void playButton(MediaPlayer mediaPlayer)
+    public static void playButton(MediaPlayer mediaPlayer, Label playLabel)
     {
         if (mediaPlayer != null)
         {
             if (mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
                 mediaPlayer.pause();
+                playLabel.setVisible(true);
             }
-            else mediaPlayer.play();
+            else {
+                mediaPlayer.play();
+                playLabel.setVisible(false);
+            }
         }
     }
 
