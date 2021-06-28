@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.ChatListController">
+   <children>
+      <AnchorPane prefHeight="110.0" prefWidth="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" layoutX="560.0" layoutY="38.0" prefHeight="21.0" prefWidth="180.0" text="Chats">
+               <font>
+                  <Font name="Ebrima Bold" size="27.0" />
+               </font>
+            </Label>
+            <Separator layoutX="150.0" layoutY="108.0" prefHeight="0.0" prefWidth="1000.0" />
+         </children></AnchorPane>
+      <AnchorPane layoutY="110.0" prefHeight="740.0" prefWidth="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ScrollPane prefHeight="740.0" prefWidth="1300.0">
+               <content>
+                  <VBox fx:id="itemHolder" prefHeight="90.0" prefWidth="1280.0" />
+               </content>
+            </ScrollPane>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
