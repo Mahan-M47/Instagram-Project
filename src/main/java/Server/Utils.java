@@ -19,6 +19,9 @@ public class Utils
     public static final String DB_FOLLOW = "follow";
     public static final String DB_BIO = "bio";
     public static final String DB_POST = "post";
+    public static final String DB_PERSONALCHAT = "PersonalChat";
+    public static final String DB_GROUPCHAT = "GroupChat";
+    public static final String DB_CHATID = "ChatID";
 
 
     //File directories
