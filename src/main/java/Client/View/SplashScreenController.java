@@ -46,9 +46,7 @@ public class SplashScreenController implements Initializable {
 
         fadeIn.play();
         fadeIn.setOnFinished((e)-> fadeOut.play());
-        fadeOut.setOnFinished((e)->{
-            Starter.changeScene(Utils.GUI.LOGIN);
-        });
+        fadeOut.setOnFinished((e)-> Starter.changeScene(Utils.GUI.LOGIN));
     }
 
 }

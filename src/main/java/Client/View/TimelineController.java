@@ -47,8 +47,10 @@ public class TimelineController implements Initializable
     {
         List<Post> posts = Utils.timelineData;
 
-        for (Post post : posts)
+        for (int i = 0; i < posts.size() && i < 10; i++)
         {
+            Post post = posts.get(i);
+
             Hyperlink usernameLink = new Hyperlink(post.getUsername());
             Button commentsButton = new Button("Comments");
             Label commentsLabel = new Label("" + post.getComments().size());
@@ -194,6 +196,7 @@ public class TimelineController implements Initializable
 
         captionLabel.setLayoutX(550);
         captionLabel.setLayoutY(210);
+        captionLabel.setWrapText(true);
 
         commentsLabel.setAlignment(Pos.CENTER);
         usernameLink.setAlignment(Pos.CENTER);

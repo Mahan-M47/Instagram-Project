@@ -1,10 +1,9 @@
 package Client.Controller;
 
-import Client.Model.User;
+import Client.Model.Notification;
 import Client.Utils;
 import Client.View.CommonClickHandlers;
-import Client.View.ViewMyPostController;
-
+import javafx.application.Platform;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -38,7 +37,6 @@ public class MainManager
     public static void process(Response response)
     {
         Data dat = response.getData();
-        User user = null;
 
         switch ( response.getTitle() )
         {
@@ -46,6 +44,10 @@ public class MainManager
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
+                    GUIManager.showNotification(
+                            new Notification("Signup Was Successful", "Welcome " + dat.clientUsername) );
+
+                    //using CommonClickHandlers to send a show my profile request
                     CommonClickHandlers.myProfileButton();
                 }
                 else {
@@ -59,6 +61,10 @@ public class MainManager
                 if (dat.flag) {
                     Utils.currentUser = dat.clientUsername;
                     Utils.resetErrorTexts();
+                    GUIManager.showNotification(
+                            new Notification("Login Was Successful", "Welcome Back, " + dat.clientUsername) );
+
+                    //using CommonClickHandlers to send a show my profile request
                     CommonClickHandlers.myProfileButton();
                 }
                 else {
@@ -103,27 +109,8 @@ public class MainManager
                 break;
 
 
-            case Utils.REQ.NOTIF_FOLLOW:
-                GUIManager.followNotification(dat.clientUsername);
-                break;
-
-
-            case Utils.REQ.NOTIF_LIKE:
-                GUIManager.likeNotification(dat.clientUsername);
-                break;
-
-
-            case Utils.REQ.NOTIF_COMMENT:
-                GUIManager.commentNotification(dat.clientUsername);
-                break;
-
-
-            case Utils.REQ.NOTIF_POST:
-                GUIManager.postNotification(dat.clientUsername);
-                break;
-
-
-            case Utils.REQ.NOTIF_MESSAGE:
+            case Utils.REQ.NOTIFICATION:
+                GUIManager.showNotification(dat.notification);
                 break;
 
 

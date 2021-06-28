@@ -47,12 +47,6 @@ public class LoginPageController implements Initializable
             Request req = new Request(Utils.REQ.LOGIN, new Data(username, password));
             NetworkManager.putRequest(req);
         }
-
-
-        /*  test  */
-        NotificationController.show("Login Was Successful!", "Welcome Back " + Utils.currentUser);
-
-
     }
 
     public boolean checkTextFields (String username, String password)

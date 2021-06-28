@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Server.Model.Notification;
 import Server.Model.Post;
 import Server.Utils;
 import java.util.ArrayList;
@@ -9,13 +10,14 @@ public class NotificationManager
 {
     public static synchronized void followNotification(String newFollower, String followedUser)
     {
-        Response response = new Response(Utils.REQ.NOTIF_FOLLOW, new Data(newFollower));
+        Notification notification = new Notification("New Follower!", newFollower + " Followed You");
+        Response response = new Response( Utils.REQ.NOTIFICATION, new Data(notification) );
 
         for (ActiveClient client : MainManager.activeClients)
         {
             if ( client.getUsername().equals(followedUser) ) {
                 sendNotification(client, response);
-                System.out.println("FOLLOW");
+                System.out.println("Follow Notification Sent.");
                 break;
             }
         }
@@ -24,14 +26,16 @@ public class NotificationManager
 
     public static synchronized void likeNotification(String likedBy, Post post)
     {
-        if (! likedBy.equals(post.getUsername()) ) {
-            Response response = new Response(Utils.REQ.NOTIF_LIKE, new Data(likedBy));
+        if (! likedBy.equals(post.getUsername()) )
+        {
+            Notification notification = new Notification("New Like!", likedBy + " Liked Your Post");
+            Response response = new Response( Utils.REQ.NOTIFICATION, new Data(notification) );
 
             for (ActiveClient client : MainManager.activeClients)
             {
                 if ( client.getUsername().equals(post.getUsername()) ) {
                     sendNotification(client, response);
-                    System.out.println("LIKE");
+                    System.out.println("Like Notification Sent.");
                     break;
                 }
             }
@@ -42,13 +46,14 @@ public class NotificationManager
     {
         if (! commentedBy.equals(post.getUsername()) )
         {
-            Response response = new Response(Utils.REQ.NOTIF_COMMENT, new Data(commentedBy));
+            Notification notification = new Notification("New Comment!", commentedBy + " Commented on Your Post");
+            Response response = new Response( Utils.REQ.NOTIFICATION, new Data(notification) );
 
             for (ActiveClient client : MainManager.activeClients)
             {
                 if ( client.getUsername().equals(post.getUsername()) ) {
                     sendNotification(client, response);
-                    System.out.println("COMMENT");
+                    System.out.println("Comment Notification Sent.");
                     break;
                 }
             }
@@ -57,7 +62,8 @@ public class NotificationManager
 
     public static synchronized void postNotification(String postedBy)
     {
-        Response response = new Response(Utils.REQ.NOTIF_POST, new Data(postedBy));
+        Notification notification = new Notification("New Post!", postedBy + " Just Made a New Post");
+        Response response = new Response( Utils.REQ.NOTIFICATION, new Data(notification) );
 
         ArrayList<String> followers = DatabaseManager.getFollowData(postedBy).getFollowers();
         Collections.sort(followers);
@@ -68,7 +74,7 @@ public class NotificationManager
 
             if (index != -1) {
                 sendNotification(client, response);
-                System.out.println("POST");
+                System.out.println("Post Notification Sent.");
             }
         }
     }
@@ -81,7 +87,8 @@ public class NotificationManager
     {
         try {
             client.getQueue().put(response);
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

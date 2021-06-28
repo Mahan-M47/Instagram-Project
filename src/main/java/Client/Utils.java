@@ -23,7 +23,7 @@ public class Utils
     public static final int PORT = 6000;
     public static final int BLOCKING_QUEUE_CAPACITY = 20;
     public static final long MAIN_SLEEP_TIMER = 100;
-    public static final long DISCONNECT_SLEEP_TIMER = 1000;
+    public static final long DISCONNECT_SLEEP_TIMER = 500;
 
 
     //Post types
@@ -92,15 +92,8 @@ public class Utils
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
         public static final String TIMELINE = "getTimeline";
-        public static final String NOTIF_FOLLOW = "followNotification";
-        public static final String NOTIF_POST = "newPostNotification";
-        public static final String NOTIF_LIKE = "likeNotification";
-        public static final String NOTIF_COMMENT = "commentNotification";
-        public static final String NOTIF_MESSAGE = "messageNotification";
+        public static final String NOTIFICATION = "notification";
         public static final String TERMINATE = "terminate";
     }
-
-
-
 
 }

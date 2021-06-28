@@ -1,6 +1,8 @@
 package Client.View;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,8 +22,8 @@ public class Starter extends Application
     {
         primaryStage.setTitle("Instagram");
         primaryStage.setResizable(false);
-        stage = primaryStage
-        ;
+        stage = primaryStage;
+
         try {
             URL url = Paths.get("./src/main/java/Client/Resources/SplashScreen.fxml").toUri().toURL();
             Parent root = FXMLLoader.load(url);
@@ -32,6 +34,7 @@ public class Starter extends Application
             e.printStackTrace();
         }
     }
+
 
     public static void changeScene(String fxmlFileName)
     {
