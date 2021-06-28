@@ -135,12 +135,9 @@ public class DatabaseManager {
         collection.update(followerUserQuery, followerUser.createFollowDBObject());
     }
 
-<<<<<<< src/main/java/Server/Controller/DatabaseManager.java
+
     public synchronized static void createPost(Post post)
     {
-=======
-    public synchronized static void createPost(Post post) {
->>>>>>> src/main/java/Server/Controller/DatabaseManager.java
         DBCollection collection = db.getCollection(Utils.DB_POST);
 
         try {
@@ -157,12 +154,9 @@ public class DatabaseManager {
         collection.insert(post.createPostDBObject());
     }
 
-<<<<<<< src/main/java/Server/Controller/DatabaseManager.java
+
     public synchronized static Post like(String username, String postID)
     {
-=======
-    public synchronized static void like(String username, String postID) {
->>>>>>> src/main/java/Server/Controller/DatabaseManager.java
         DBCollection collection = db.getCollection(Utils.DB_POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
@@ -184,12 +178,8 @@ public class DatabaseManager {
         collection.update(query, post.createPostDBObject());
     }
 
-<<<<<<< src/main/java/Server/Controller/DatabaseManager.java
     public synchronized static Post comment(String username, String postID, String commentText)
     {
-=======
-    public synchronized static void comment(String username, String postID, String commentText) {
->>>>>>> src/main/java/Server/Controller/DatabaseManager.java
         DBCollection collection = db.getCollection(Utils.DB_POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
@@ -217,20 +207,12 @@ public class DatabaseManager {
 
     public synchronized static User assembleUser(String username) {
         User user = new User();
-<<<<<<< src/main/java/Server/Controller/DatabaseManager.java
         user.setUsername       ( username );
         user.setPosts          ( getPostData(username) );
         user.setBioText        ( getBioData(username).getBioText() );
         user.setFollowers      ( getFollowData(username).getFollowers() );
         user.setFollowing      ( getFollowData(username).getFollowing() );
         user.setProfilePicture ( user.getServerFilePath() );
-=======
-        user.setUsername(username);
-        user.setPosts(getPostData(username));
-        user.setBioText(getBioData(username).getBioText());
-        user.setFollowers(getFollowData(username).getFollowers());
-        user.setFollowing(getFollowData(username).getFollowing());
->>>>>>> src/main/java/Server/Controller/DatabaseManager.java
         return user;
     }
 
@@ -256,22 +238,15 @@ public class DatabaseManager {
         ArrayList<Post> posts = new ArrayList<>();
         while (cursor.hasNext()) {
             DBObject obj = cursor.next();
-<<<<<<< src/main/java/Server/Controller/DatabaseManager.java
             Post post = Post.parsePost(obj);
             posts.add(0, post);
-=======
-            posts.add(0, Post.parsePost(obj));
->>>>>>> src/main/java/Server/Controller/DatabaseManager.java
         }
+
         return posts;
     }
 
-<<<<<<< src/main/java/Server/Controller/DatabaseManager.java
     public synchronized static void setBio(User userData)
     {
-=======
-    public synchronized static void setBio(String username, String bioText) {
->>>>>>> src/main/java/Server/Controller/DatabaseManager.java
         DBCollection collection = db.getCollection(Utils.DB_BIO);
 
         User user = getBioData(userData.getUsername());
