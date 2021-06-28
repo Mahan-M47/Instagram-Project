@@ -159,39 +159,72 @@ public class ViewPostController implements Initializable
 
         if ( followButton.getText().equals("Follow") ) {
             req = new Request(Utils.REQ.FOLLOW, data);
+            followButton.setText("Unfollow");
         }
         else {
             req = new Request(Utils.REQ.UNFOLLOW, data);
+            followButton.setText("Follow");
         }
 
         NetworkManager.putRequest(req);
+        stopMediaPlayer();
     }
 
     @FXML
     void messageButtonClickHandler(ActionEvent event) {
+        //chat Request
+        stopMediaPlayer();
     }
 
     @FXML
-    void followersLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.FOLLOWERS); }
+    void followersLinkClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        Starter.changeScene(Utils.GUI.FOLLOWERS);
+    }
 
     @FXML
-    void followingLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.FOLLOWING); }
+    void followingLinkClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        Starter.changeScene(Utils.GUI.FOLLOWING);
+    }
 
     @FXML
     void backButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
         CommonClickHandlers.showProfileButton(Utils.receivedUserObj.getUsername());
     }
 
+    public void stopMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
+
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }
+    void homeButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.homeButton();
+    }
     @FXML
-    void profileButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
+    void profileButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.myProfileButton();
+    }
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { CommonClickHandlers.searchButton(); }
+    void searchButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.searchButton();
+    }
     @FXML
-    void postButtonClickHandler(ActionEvent event) { CommonClickHandlers.postButton(); }
+    void postButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.postButton();
+    }
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
+    void chatsButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.chatsButton();
+    }
 
 }
 

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +20,10 @@
             <children>
                 <AnchorPane layoutX="80.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <ImageView fx:id="profilePicture" fitHeight="198.0" fitWidth="198.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="profilePicture" fitHeight="198.0" fitWidth="198.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GUI_Images/Default_Profile_Picture.jpg" />
+                     </image></ImageView>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="200.0" smooth="false" stroke="#f4f4f400" strokeType="INSIDE" strokeWidth="0.0" width="200.0">
                             <fill>
                                 <RadialGradient centerX="0.5" centerY="0.5047619047619047" radius="0.4883720930232558">

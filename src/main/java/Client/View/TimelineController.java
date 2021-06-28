@@ -24,6 +24,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -34,9 +35,11 @@ public class TimelineController implements Initializable
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, logoutButton, loadMoreButton;
 
+    private List<MediaPlayer> mediaPlayerList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mediaPlayerList = new ArrayList<>();
         addPosts();
     }
 
@@ -123,8 +126,6 @@ public class TimelineController implements Initializable
             postVideo.setFitHeight(500);
             postVideo.setFitWidth(500);
 
-            mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
-
             mediaPlayer.setOnEndOfMedia(new Runnable() {
                 @Override
                 public void run() {
@@ -132,6 +133,9 @@ public class TimelineController implements Initializable
                     CommonClickHandlers.playButton(mediaPlayer, playLabel);
                 }
             });
+
+            mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+            mediaPlayerList.add(mediaPlayer);
 
             postVideo.setOnMouseClicked(new EventHandler() {
                 @Override
@@ -270,20 +274,47 @@ public class TimelineController implements Initializable
         //reload page with another set of pictures
     }
 
+    public void stopMediaPlayers()
+    {
+        for (MediaPlayer mp : mediaPlayerList) {
+            mp.stop();
+        }
+    }
+
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }
+    void homeButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.homeButton();
+    }
+
     @FXML
-    void profileButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
+    void profileButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.myProfileButton();
+    }
+
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { CommonClickHandlers.searchButton(); }
+    void searchButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.searchButton();
+    }
+
     @FXML
-    void postButtonClickHandler(ActionEvent event) { CommonClickHandlers.postButton(); }
+    void postButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.postButton();
+    }
+
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
+    void chatsButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.chatsButton();
+    }
 
     @FXML
     void logoutButtonClickHandler(ActionEvent event)
     {
+        stopMediaPlayers();
         Request req = new Request(Utils.REQ.LOGOUT,new Data(Utils.currentUser) );
         NetworkManager.putRequest(req);
         Utils.currentUser = "";

@@ -131,6 +131,9 @@ public class ProfilePageController implements Initializable {
             e.printStackTrace();
         }
 
+        postVideo.setFitHeight(250);
+        postVideo.setFitWidth(250);
+
         postVideo.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
@@ -150,9 +153,11 @@ public class ProfilePageController implements Initializable {
 
         if ( followButton.getText().equals("Follow") ) {
             req = new Request(Utils.REQ.FOLLOW, data);
+            followButton.setText("Unfollow");
         }
         else {
             req = new Request(Utils.REQ.UNFOLLOW, data);
+            followButton.setText("Follow");
         }
 
         NetworkManager.putRequest(req);

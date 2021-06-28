@@ -45,6 +45,8 @@ public class CreatePostPageController
         FileChooser fileChooser = new FileChooser();
         chosenFile = fileChooser.showOpenDialog(new Stage());
 
+        stopMediaPlayer();
+
         if (chosenFile != null)
         {
             filePath = chosenFile.getPath();
@@ -119,6 +121,7 @@ public class CreatePostPageController
         }
         else {
             post.setPostType(Utils.POST_VIDEO);
+            mediaPlayer.stop();
         }
 
         Request req = new Request(Utils.REQ.CREATE_POST, new Data(Utils.currentUser, post));
@@ -130,15 +133,36 @@ public class CreatePostPageController
     @FXML
     void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
 
+    public void stopMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
+
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }
+    void homeButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.homeButton();
+    }
     @FXML
-    void profileButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
+    void profileButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.myProfileButton();
+    }
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { CommonClickHandlers.searchButton(); }
+    void searchButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.searchButton();
+    }
     @FXML
-    void postButtonClickHandler(ActionEvent event) { CommonClickHandlers.postButton(); }
+    void postButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.postButton();
+    }
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
+    void chatsButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.chatsButton();
+    }
 
 }
