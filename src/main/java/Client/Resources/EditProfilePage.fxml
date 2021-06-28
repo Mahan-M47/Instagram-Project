@@ -18,9 +18,8 @@
          <children>
             <ImageView fx:id="profilePicture" fitHeight="248.0" fitWidth="248.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@GUI_Images/TEST_IMG.jpg" />
-               </image>
-            </ImageView>
+                  <Image url="@GUI_Images/Default_Profile_Picture.jpg" />
+               </image></ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="250.0" smooth="false" stroke="#f4f4f400" strokeType="INSIDE" strokeWidth="0.0" width="250.0">
                <fill>
                   <RadialGradient centerX="0.5" centerY="0.5047619047619047" radius="0.4883720930232558">
@@ -58,11 +57,16 @@
             <Font size="21.0" />
          </font>
       </Button>
-      <Button fx:id="applyButton" layoutX="960.0" layoutY="600.0" mnemonicParsing="false" onAction="#applyButtonClickHandler" prefHeight="50.0" prefWidth="100.0" text="Apply" textFill="#259444">
+      <Button fx:id="applyButton" layoutX="960.0" layoutY="600.0" mnemonicParsing="false" onAction="#applyButtonClickHandler" prefHeight="50.0" prefWidth="100.0" text="Apply" textFill="#589687">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Button>
+      <Label fx:id="errorLabel" layoutX="545.0" layoutY="630.0" prefHeight="75.0" prefWidth="400.0" text="You Can Only Use jpg Files As Profile Picture" textAlignment="CENTER" textFill="#d31111" visible="false">
+         <font>
+            <Font name="System Italic" size="20.0" />
+         </font>
+      </Label>
       <AnchorPane layoutY="725.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
          <children>
             <HBox alignment="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="75.0" prefWidth="750.0" spacing="50.0">
@@ -96,5 +100,10 @@
             </HBox>
          </children>
       </AnchorPane>
+      <Label fx:id="updateLabel" layoutX="1080.0" layoutY="600.0" prefHeight="50.0" prefWidth="170.0" text="Profile Updated!" textFill="#589687" visible="false">
+         <font>
+            <Font name="Calibri Light" size="25.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -16,12 +16,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,9 +35,11 @@ public class TimelineController implements Initializable
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, logoutButton, loadMoreButton;
 
+    private List<MediaPlayer> mediaPlayerList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mediaPlayerList = new ArrayList<>();
         addPosts();
     }
 
@@ -42,23 +47,9 @@ public class TimelineController implements Initializable
     {
         List<Post> posts = Utils.timelineData;
 
-        for (Post post : posts)
+        for (int i = 0; i < posts.size() && i < 10; i++)
         {
-            File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
-            ImageView imageView = null;
-
-            try {
-                InputStream in = new FileInputStream(file);
-                Image img = new Image(in);
-                imageView = new ImageView(img);
-                imageView.setFitHeight(500);
-                imageView.setFitWidth(500);
-                imageView.setLayoutX(0);
-                imageView.setLayoutX(0);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
+            Post post = posts.get(i);
 
             Hyperlink usernameLink = new Hyperlink(post.getUsername());
             Button commentsButton = new Button("Comments");
@@ -69,20 +60,30 @@ public class TimelineController implements Initializable
 
             Button sendButton = new Button("Send");
             TextField commentTF = new TextField();
-            commentTF.setPromptText("Leave a Comment");
+
+            Label playLabel = new Label("PLAY");
+
 
             if (post.getLikedBy().contains(Utils.currentUser)) {
                 likeButton.setText("Unlike");
             }
 
-            createButtons(likeButton, commentsButton, sendButton, usernameLink, likeLabel, commentsLabel, captionLabel, post);
-            ScrollPane commentsScrollPane =
-                    createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
+            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel, post);
+            ScrollPane commentsScrollPane = createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
 
             AnchorPane pane = new AnchorPane();
             pane.setPrefSize(900, 500);
 
-            pane.getChildren().add(imageView);
+            if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
+                ImageView postImage = loadImage(post);
+                pane.getChildren().add(postImage);
+            }
+            else {
+                MediaView postVideo = loadVideo(post, playLabel);
+                pane.getChildren().add(postVideo);
+                pane.getChildren().add(playLabel);
+            }
+
             pane.getChildren().add(usernameLink);
             pane.getChildren().add(likeButton);
             pane.getChildren().add(likeLabel);
@@ -97,7 +98,67 @@ public class TimelineController implements Initializable
         }
     }
 
-    public void createButtons(Button likeButton, Button commentsButton, Button sendButton, Hyperlink usernameLink,
+    public ImageView loadImage(Post post)
+    {
+        InputStream in = new ByteArrayInputStream( post.getFileBytes() );
+        Image img = new Image(in);
+        ImageView postImage = new ImageView(img);
+        postImage.setFitHeight(500);
+        postImage.setFitWidth(500);
+
+        return postImage;
+    }
+
+    public MediaView loadVideo(Post post, Label playLabel)
+    {
+        playLabel.setStyle(Utils.PLAY_BUTTON_CSS);
+        playLabel.setLayoutX(185);
+        playLabel.setLayoutY(210);
+
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_CLIENT_POST_VIDEOS) );
+            File file = new File( Utils.DIR_CLIENT_POST_VIDEOS + post.getID() + post.getPostType());
+            OutputStream out = new FileOutputStream(file);
+            out.write(post.getFileBytes());
+
+            Media media = new Media(file.toURI().toURL().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            MediaView postVideo = new MediaView(mediaPlayer);
+
+            postVideo.setFitHeight(500);
+            postVideo.setFitWidth(500);
+
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+                    CommonClickHandlers.playButton(mediaPlayer, playLabel);
+                }
+            });
+
+            mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+            mediaPlayerList.add(mediaPlayer);
+
+            postVideo.setOnMouseClicked(new EventHandler() {
+                @Override
+                public void handle(Event event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
+            });
+
+            playLabel.setOnMouseClicked(new EventHandler() {
+                @Override
+                public void handle(Event event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
+            });
+
+            return postVideo;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void createButtons(Button likeButton, Button commentsButton, Hyperlink usernameLink,
                               Label likeLabel, Label commentsLabel, Label captionLabel, Post post)
     {
         commentsButton.setPrefSize(130,50);
@@ -135,6 +196,7 @@ public class TimelineController implements Initializable
 
         captionLabel.setLayoutX(550);
         captionLabel.setLayoutY(210);
+        captionLabel.setWrapText(true);
 
         commentsLabel.setAlignment(Pos.CENTER);
         usernameLink.setAlignment(Pos.CENTER);
@@ -156,17 +218,19 @@ public class TimelineController implements Initializable
         });
     }
 
-    public ScrollPane createCommentScrollPane(TextField commentsTF, Button commentsButton, Button sendButton,
+    public ScrollPane createCommentScrollPane(TextField commentTF, Button commentsButton, Button sendButton,
                               Label commentsLabel, Post post)
     {
         ScrollPane commentsScrollPane = new ScrollPane();
         VBox commentsVBox = new VBox();
         commentsVBox.setPrefSize(205,1000);
 
-        commentsTF.setFont( new Font("System",14) );
-        commentsTF.setPrefSize(220,30);
-        commentsTF.setLayoutX(880);
-        commentsTF.setLayoutY(426);
+
+        commentTF.setFont( new Font("System",14) );
+        commentTF.setPrefSize(220,30);
+        commentTF.setLayoutX(880);
+        commentTF.setLayoutY(426);
+        commentTF.setPromptText("Leave a Comment");
 
         sendButton.setFont( new Font("System",14) );
         sendButton.setStyle("-fx-background-color: #d4d4d4");
@@ -181,7 +245,7 @@ public class TimelineController implements Initializable
         commentsScrollPane.setLayoutY(25);
 
         commentsScrollPane.setVisible(false);
-        commentsTF.setVisible(false);
+        commentTF.setVisible(false);
         sendButton.setVisible(false);
 
 
@@ -193,14 +257,14 @@ public class TimelineController implements Initializable
         commentsButton.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF);
+                CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentTF);
             }
         });
 
         sendButton.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post);
+                CommonClickHandlers.sendButton(commentsVBox, commentTF, commentsLabel, post);
             }
         });
 
@@ -213,20 +277,47 @@ public class TimelineController implements Initializable
         //reload page with another set of pictures
     }
 
+    public void stopMediaPlayers()
+    {
+        for (MediaPlayer mp : mediaPlayerList) {
+            mp.stop();
+        }
+    }
+
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }
+    void homeButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.homeButton();
+    }
+
     @FXML
-    void profileButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
+    void profileButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.myProfileButton();
+    }
+
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { CommonClickHandlers.searchButton(); }
+    void searchButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.searchButton();
+    }
+
     @FXML
-    void postButtonClickHandler(ActionEvent event) { CommonClickHandlers.postButton(); }
+    void postButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.postButton();
+    }
+
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
+    void chatsButtonClickHandler(ActionEvent event) {
+        stopMediaPlayers();
+        CommonClickHandlers.chatsButton();
+    }
 
     @FXML
     void logoutButtonClickHandler(ActionEvent event)
     {
+        stopMediaPlayers();
         Request req = new Request(Utils.REQ.LOGOUT,new Data(Utils.currentUser) );
         NetworkManager.putRequest(req);
         Utils.currentUser = "";

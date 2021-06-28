@@ -3,6 +3,11 @@ package Server.Controller;
 import Server.Model.*;
 import Server.Utils;
 import com.mongodb.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -130,21 +135,37 @@ public class DatabaseManager {
         collection.update(followerUserQuery, followerUser.createFollowDBObject());
     }
 
-    public synchronized static void createPost(Post post) {
+
+    public synchronized static void createPost(Post post)
+    {
         DBCollection collection = db.getCollection(Utils.DB_POST);
+
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_POSTS) );
+            File savedFile = new File( post.getServerFilePath() );
+            FileOutputStream out = new FileOutputStream( savedFile );
+            out.write( post.getFileBytes() );
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        post.emptyFileBytes();
         collection.insert(post.createPostDBObject());
     }
 
-    public synchronized static void like(String username, String postID) {
+
+    public synchronized static Post like(String username, String postID)
+    {
         DBCollection collection = db.getCollection(Utils.DB_POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
-        if (object != null) {
-            Post post = Post.parsePost(object);
-            post.addLike(username);
-            collection.update(query, post.createPostDBObject());
-        }
+        Post post = Post.parsePost(object);
+        post.addLike(username);
+        collection.update(query, post.createPostDBObject());
+
+        return post;
     }
 
     public synchronized static void unlike(String username, String postID) {
@@ -152,24 +173,23 @@ public class DatabaseManager {
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
-        if (object != null) {
-            Post post = Post.parsePost(object);
-            post.removeLike(username);
-            collection.update(query, post.createPostDBObject());
-        }
+        Post post = Post.parsePost(object);
+        post.removeLike(username);
+        collection.update(query, post.createPostDBObject());
     }
 
-    public synchronized static void comment(String username, String postID, String commentText) {
+    public synchronized static Post comment(String username, String postID, String commentText)
+    {
         DBCollection collection = db.getCollection(Utils.DB_POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
-        if (object != null) {
-            Post post = Post.parsePost(object);
-            String comment = username + ": " + commentText;
-            post.addComment(comment);
-            collection.update(query, post.createPostDBObject());
-        }
+        Post post = Post.parsePost(object);
+        String comment = username + ": " + commentText;
+        post.addComment(comment);
+        collection.update(query, post.createPostDBObject());
+
+        return post;
     }
 
     public synchronized static ArrayList<Post> assembleTimeline(String username) {
@@ -187,11 +207,12 @@ public class DatabaseManager {
 
     public synchronized static User assembleUser(String username) {
         User user = new User();
-        user.setUsername(username);
-        user.setPosts(getPostData(username));
-        user.setBioText(getBioData(username).getBioText());
-        user.setFollowers(getFollowData(username).getFollowers());
-        user.setFollowing(getFollowData(username).getFollowing());
+        user.setUsername       ( username );
+        user.setPosts          ( getPostData(username) );
+        user.setBioText        ( getBioData(username).getBioText() );
+        user.setFollowers      ( getFollowData(username).getFollowers() );
+        user.setFollowing      ( getFollowData(username).getFollowing() );
+        user.setProfilePicture ( user.getServerFilePath() );
         return user;
     }
 
@@ -217,18 +238,35 @@ public class DatabaseManager {
         ArrayList<Post> posts = new ArrayList<>();
         while (cursor.hasNext()) {
             DBObject obj = cursor.next();
-            posts.add(0, Post.parsePost(obj));
+            Post post = Post.parsePost(obj);
+            posts.add(0, post);
         }
+
         return posts;
     }
 
-    public synchronized static void setBio(String username, String bioText) {
+    public synchronized static void setBio(User userData)
+    {
         DBCollection collection = db.getCollection(Utils.DB_BIO);
-        User user = getBioData(username);
-        user.setBioText(bioText);
 
-        DBObject query = new BasicDBObject("username", username);
+        User user = getBioData(userData.getUsername());
+        user.setBioText(userData.getBioText());
+
+        DBObject query = new BasicDBObject("username", userData.getUsername());
         collection.update(query, user.createBioDBObject());
+    }
+
+    public synchronized static void setProfilePicture(User userData)
+    {
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_PROFILE_PICTURES) );
+            File savedProfilePicture = new File( userData.getServerFilePath() );
+            FileOutputStream out = new FileOutputStream(savedProfilePicture);
+            out.write(userData.getProfilePicture());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public synchronized static void CreateChatIDs(String username , String chatid){

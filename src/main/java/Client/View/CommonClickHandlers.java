@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 
 public class CommonClickHandlers
@@ -85,6 +86,21 @@ public class CommonClickHandlers
             sendButton.setVisible(true);
             commentsTF.setVisible(true);
             sendButton.setDefaultButton(true);
+        }
+    }
+
+    public static void playButton(MediaPlayer mediaPlayer, Label playLabel)
+    {
+        if (mediaPlayer != null)
+        {
+            if (mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+                mediaPlayer.pause();
+                playLabel.setVisible(true);
+            }
+            else {
+                mediaPlayer.play();
+                playLabel.setVisible(false);
+            }
         }
     }
 

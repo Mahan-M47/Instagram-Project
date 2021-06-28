@@ -14,6 +14,7 @@ public class Data
     public User user = null;
     public Post post = null;
     public List<Post> posts = null;
+    public Notification notification = null;
     public Message message = null;
     public ChatPersonal chatPersonal = null;
     public ChatGroup chatGroup = null;
@@ -42,7 +43,7 @@ public class Data
         this.text = text;
     }
 
-    //only used by the server so there's no need to add the client's username. (e.g. showing a user's profile)
+    //User already contains the username
     public Data(User user) {
         this.user = user;
     }
@@ -55,6 +56,10 @@ public class Data
     //only used by the server so there's no need to add the client's username. (e.g. posts in the Timeline)
     public Data(List<Post> posts) {
         this.posts = new ArrayList<>(posts);
+    }
+
+    public Data(Notification notification) {
+        this.notification = notification;
     }
 
     public Data(String clientUsername, ChatPersonal chat) {

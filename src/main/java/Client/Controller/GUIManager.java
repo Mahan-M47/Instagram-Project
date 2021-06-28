@@ -1,7 +1,12 @@
 package Client.Controller;
 
+import Client.Model.Notification;
 import Client.Utils;
 import Client.View.Starter;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 public class GUIManager
 {
@@ -21,7 +26,19 @@ public class GUIManager
 
     public static void showProfilePage() { Starter.changeScene(Utils.GUI.PROFILE); }
 
-    public static void showViewMyPostPage() { Starter.changeScene(Utils.GUI.MY_POST); }
-
     public static void reload() { Starter.reloadScene(); }
+
+    public static void showNotification(Notification notificationObj)
+    {
+        Platform.runLater(() -> {
+            Notifications notification = Notifications.create()
+                    .title( notificationObj.getTitle() )
+                    .text( notificationObj.getText() )
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.BOTTOM_RIGHT);
+
+            notification.show();
+        });
+    }
+
 }

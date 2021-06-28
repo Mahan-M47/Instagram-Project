@@ -6,15 +6,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class ViewMyPostController implements Initializable
 {
     @FXML
     private ImageView profilePicture, postImage;
+    @FXML
+    private MediaView postVideo;
     @FXML
     private VBox commentsVBox;
     @FXML
@@ -24,11 +34,13 @@ public class ViewMyPostController implements Initializable
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel;
+    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, playLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, editButton;
     @FXML
     private Button backButton, commentsButton, likeButton, sendButton;
+
+    private MediaPlayer mediaPlayer;
 
     private static Post post;
     public static void setPost(Post chosenPost) {
@@ -44,6 +56,12 @@ public class ViewMyPostController implements Initializable
         postsLabel.setText("" + Utils.currentUserObj.getPosts().size());
         usernameLabel.setText(Utils.currentUserObj.getUsername());
         bioLabel.setText(Utils.currentUserObj.getBioText());
+
+        if (Utils.currentUserObj.getProfilePicture() != null) {
+            InputStream in = new ByteArrayInputStream( Utils.currentUserObj.getProfilePicture() );
+            Image img = new Image(in);
+            profilePicture.setImage(img);
+        }
 
         loadPost();
     }
@@ -67,48 +85,113 @@ public class ViewMyPostController implements Initializable
         commentsTF.setVisible(false);
         sendButton.setVisible(false);
 
-        // add imageview here
+        if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
+            loadImage();
+        }
+        else {
+            loadVideo();
+        }
+    }
+
+    public void loadImage()
+    {
+        InputStream in = new ByteArrayInputStream( post.getFileBytes() );
+        Image img = new Image(in);
+        postImage.setImage(img);
+    }
+
+    public void loadVideo()
+    {
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_CLIENT_POST_VIDEOS) );
+            File file = new File(Utils.DIR_CLIENT_POST_VIDEOS + post.getID() + post.getPostType());
+
+            Media media = new Media(file.toURI().toURL().toString());
+            mediaPlayer = new MediaPlayer(media);
+            postVideo.setMediaPlayer(mediaPlayer);
+
+            playLabel.setVisible(true);
+            mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.setCycleCount(mediaPlayer.getCycleCount() + 1);
+                    CommonClickHandlers.playButton(mediaPlayer, playLabel);
+                }
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    void likeButtonClickHandler(ActionEvent event) {
-        CommonClickHandlers.likeButton(likeButton, likeLabel, post);
-    }
+    void playButtonClickHandler(MouseEvent event) { CommonClickHandlers.playButton(mediaPlayer, playLabel); }
 
     @FXML
-    void commentsButtonClickHandler(ActionEvent event) {
-        CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF);
-    }
+    void likeButtonClickHandler(ActionEvent event) { CommonClickHandlers.likeButton(likeButton, likeLabel, post); }
 
     @FXML
-    void sendButtonClickHandler() {
-        CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post);
-    }
+    void commentsButtonClickHandler(ActionEvent event) { CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF); }
 
     @FXML
-    void followersLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.MY_FOLLOWERS); }
+    void sendButtonClickHandler() { CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post); }
+
+    @FXML
+    void followersLinkClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        Starter.changeScene(Utils.GUI.MY_FOLLOWERS);
+    }
 
     @FXML
     void followingLinkClickHandler(ActionEvent event) {
+        stopMediaPlayer();
         Starter.changeScene(Utils.GUI.MY_FOLLOWING);
     }
 
     @FXML
-    void editButtonClickHandler(ActionEvent event) { CommonClickHandlers.editProfileButton(); }
+    void editButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.editProfileButton(); }
 
     @FXML
-    void backButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
+    void backButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.myProfileButton();
+    }
+
+    public void stopMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
 
     @FXML
-    void homeButtonClickHandler(ActionEvent event) { CommonClickHandlers.homeButton(); }
+    void homeButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.homeButton();
+    }
     @FXML
-    void profileButtonClickHandler(ActionEvent event) { CommonClickHandlers.myProfileButton(); }
+    void profileButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.myProfileButton();
+    }
     @FXML
-    void searchButtonClickHandler(ActionEvent event) { CommonClickHandlers.searchButton(); }
+    void searchButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.searchButton();
+    }
     @FXML
-    void postButtonClickHandler(ActionEvent event) { CommonClickHandlers.postButton(); }
+    void postButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.postButton();
+    }
     @FXML
-    void chatsButtonClickHandler(ActionEvent event) { CommonClickHandlers.chatsButton(); }
+    void chatsButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        CommonClickHandlers.chatsButton();
+    }
 
 }
 

@@ -1,9 +1,13 @@
 package Server.Model;
 
+import Server.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class User
@@ -11,7 +15,7 @@ public class User
     private String username, password, bioText;
     private ArrayList<String> followers, following;
     private ArrayList<Post> posts;
-    private File profilePicture;
+    private String profilePicture;
 
     public User() {
     }
@@ -25,9 +29,7 @@ public class User
         bioText = "";
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return username; }
 
     public void setUsername(String username) {
         this.username = username;
@@ -85,25 +87,50 @@ public class User
         this.posts = posts;
     }
 
-    public File getProfilePicture() { return profilePicture; }
+    public byte[] getProfilePicture() {
+        if (profilePicture != null) {
+            return Base64.getDecoder().decode(profilePicture);
+        }
+        else {
+            return null;
+        }
 
-    public void setProfilePicture(File profilePicture) { this.profilePicture = profilePicture; }
+    }
+
+    public void setProfilePicture(String filePath) {
+        try {
+            File savedFile = new File(filePath);
+
+            if (savedFile.exists())
+            {
+                FileInputStream in = new FileInputStream(savedFile);
+                byte[] bytes = new byte[(int) savedFile.length()];
+                in.read(bytes);
+                this.profilePicture = new String(Base64.getEncoder().encode(bytes), "UTF-8");
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getServerFilePath() { return Utils.DIR_PROFILE_PICTURES + username + ".jpg"; }
 
     public void addPost(Post post) { this.posts.add(post); }
 
     public DBObject createLoginDBObject() {
-        return new BasicDBObject("username", getUsername())
-                .append("password", getPassword());
+        return new BasicDBObject("username", username)
+                .append("password", password);
     }
 
     public DBObject createFollowDBObject() {
-        return new BasicDBObject("username", getUsername())
+        return new BasicDBObject("username", username)
                 .append("Following", following)
                 .append("Followers", followers);
     }
 
     public DBObject createBioDBObject() {
-        return new BasicDBObject("username", getUsername())
+        return new BasicDBObject("username", username)
                 .append("Bio", bioText);
     }
 

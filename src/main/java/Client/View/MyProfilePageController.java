@@ -14,11 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -45,6 +47,12 @@ public class MyProfilePageController implements Initializable
         usernameLabel.setText(Utils.currentUserObj.getUsername());
         bioLabel.setText(Utils.currentUserObj.getBioText());
 
+        if (Utils.currentUserObj.getProfilePicture() != null) {
+            InputStream in = new ByteArrayInputStream( Utils.currentUserObj.getProfilePicture() );
+            Image img = new Image(in);
+            profilePicture.setImage(img);
+        }
+
         addPosts();
     }
 
@@ -61,40 +69,76 @@ public class MyProfilePageController implements Initializable
             for (int j = 3*i; j < (3*i) + 3 && j < count ; j++)
             {
                 Post post = posts.get(j);
-                File file = new File("src/main/java/Client/Resources/GUI_Images/TEST_IMG.jpg");
 
-                try {
-                    InputStream in = new FileInputStream(file);
-                    Image img = new Image(in);
-                    ImageView imageView = new ImageView(img);
-                    imageView.setFitHeight(250);
-                    imageView.setFitWidth(250);
-
-                    imageView.setOnMouseClicked(new EventHandler() {
-                        @Override
-                        public void handle(Event event) {
-                            ViewMyPostController.setPost(post);
-                            Starter.changeScene(Utils.GUI.MY_POST);
-                        }
-                    });
-
-                    hBox.getChildren().add(imageView);
+                if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
+                    ImageView postImage = loadImage(post);
+                    hBox.getChildren().add(postImage);
                 }
-                catch (IOException e) {
-                    e.printStackTrace();
+                else {
+                    MediaView postVideo = loadVideo(post);
+                    hBox.getChildren().add(postVideo);
                 }
             }
             scrollVBox.getChildren().add(hBox);
         }
     }
 
+    public ImageView loadImage(Post post)
+    {
+        InputStream in = new ByteArrayInputStream( post.getFileBytes() );
+        Image img = new Image(in);
+        ImageView postImage = new ImageView(img);
+        postImage.setFitHeight(250);
+        postImage.setFitWidth(250);
+
+        postImage.setOnMouseClicked(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                ViewMyPostController.setPost(post);
+                Starter.changeScene(Utils.GUI.MY_POST);
+            }
+        });
+
+        return postImage;
+    }
+
+    public MediaView loadVideo(Post post)
+    {
+        MediaView postVideo = null;
+
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_CLIENT_POST_VIDEOS) );
+            File file = new File(Utils.DIR_CLIENT_POST_VIDEOS + post.getID() + post.getPostType());
+            OutputStream out = new FileOutputStream(file);
+            out.write(post.getFileBytes());
+
+            Media media = new Media(file.toURI().toURL().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            postVideo = new MediaView(mediaPlayer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        postVideo.setFitHeight(250);
+        postVideo.setFitWidth(250);
+
+        postVideo.setOnMouseClicked(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                ViewMyPostController.setPost(post);
+                Starter.changeScene(Utils.GUI.MY_POST);
+            }
+        });
+
+        return postVideo;
+    }
+
     @FXML
     void followersLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.MY_FOLLOWERS); }
 
     @FXML
-    void followingLinkClickHandler(ActionEvent event) {
-        Starter.changeScene(Utils.GUI.MY_FOLLOWING);
-    }
+    void followingLinkClickHandler(ActionEvent event) { Starter.changeScene(Utils.GUI.MY_FOLLOWING); }
 
     @FXML
     void editButtonClickHandler(ActionEvent event) { CommonClickHandlers.editProfileButton(); }

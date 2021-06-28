@@ -1,12 +1,12 @@
 package Client.Model;
 
+import Client.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
 
 public class Post implements Comparable<Post>
 {
@@ -14,19 +14,24 @@ public class Post implements Comparable<Post>
     private Date date;
     private List<String> likedBy;
     private ArrayList<String> comments;
-    private File file;
+    private String fileBytes;
 
     public Post() {
     }
 
-    public Post(String username, String caption) {
+    public Post(String username, String caption, String clientFilePath) {
         ID = IDBuilder(username);
         date = new Date() ;
         this.username = username;
         this.caption = caption;
         comments = new ArrayList<>() ;
         likedBy = new ArrayList<>();
+        setFileBytes(clientFilePath);
     }
+
+    public void setPostType(String postType) { this.postType = postType; }
+
+    public String getPostType() { return postType; }
 
     public Date getDate() {
         return date;
@@ -35,8 +40,6 @@ public class Post implements Comparable<Post>
     public String getID() {
         return ID;
     }
-
-    public String getPostType() { return postType; }
 
     public String getCaption() { return caption; }
 
@@ -52,12 +55,33 @@ public class Post implements Comparable<Post>
         return likedBy;
     }
 
-    public File getFile() {
-        return file;
+    public byte[] getFileBytes() {
+        return Base64.getDecoder().decode(fileBytes);
+    }
+
+    public void setFileBytes(String filePath) {
+        try {
+            File savedFile = new File(filePath);
+            FileInputStream in = new FileInputStream(savedFile);
+            byte[] bytes = new byte[(int) savedFile.length()];
+            in.read(bytes);
+            this.fileBytes = new String(Base64.getEncoder().encode(bytes), "UTF-8");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void emptyFileBytes() {
+        this.fileBytes = "";
+    }
+
+    public String getServerFilePath() {
+        return Utils.DIR_POSTS + ID + postType;
     }
 
     public void addLike(String username) {
-            likedBy.add(username);
+        likedBy.add(username);
     }
 
     public void removeLike(String username) {
@@ -68,10 +92,6 @@ public class Post implements Comparable<Post>
         this.comments = comments;
     }
 
-    public void setFile(File file) {
-        this.file = file;
-    }
-
     public void setCaption(String caption) {
         this.caption = caption;
     }
@@ -79,8 +99,6 @@ public class Post implements Comparable<Post>
     public void setID(String ID) {
         this.ID = ID;
     }
-
-    public void setPostType(String postType) { this.postType = postType; }
 
     public void setLikedBy(List<String> likedBy) {
         this.likedBy = likedBy;
@@ -96,7 +114,7 @@ public class Post implements Comparable<Post>
 
     public DBObject createPostDBObject() {
         return new BasicDBObject()
-                .append("createPost",file)
+                .append("PostType",postType)
                 .append("Caption",caption)
                 .append("ID",ID)
                 .append("username",username)
@@ -108,7 +126,7 @@ public class Post implements Comparable<Post>
     public static Post parsePost(DBObject object)
     {
         Post post = new Post();
-        post.setFile((File) object.get("createPost"));
+        post.setPostType((String) object.get("PostType"));
         post.setCaption((String) object.get("Caption"));
         post.setUsername((String) object.get("username"));
         post.setLikedBy((ArrayList<String>) object.get("LikedBy"));

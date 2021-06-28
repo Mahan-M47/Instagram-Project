@@ -10,17 +10,36 @@ public class Utils
     //the currently logged in user
     public static String currentUser = "";
     public static User currentUserObj = null;
+    public static List<Post> timelineData = new ArrayList<>();
 
 
-    //General constants
+    //Received User
+    public static User receivedUserObj = null;
+    public static List<String> searchResults = new ArrayList<>();
+
+
+    //Network constants
     public static final String IP_ADDRESS = "localhost";
     public static final int PORT = 6000;
     public static final int BLOCKING_QUEUE_CAPACITY = 20;
     public static final long MAIN_SLEEP_TIMER = 100;
-    public static final long DISCONNECT_SLEEP_TIMER = 1000;
+    public static final long DISCONNECT_SLEEP_TIMER = 500;
 
 
-    //GUI stuff
+    //Post types
+    public static final String POST_IMAGE = ".jpg";
+    public static final String POST_VIDEO = ".mp4";
+
+
+    //PlayButton CSS string
+    public static final String PLAY_BUTTON_CSS = "  -fx-background-color: #ffffff;" +
+            "  -fx-background-radius: 15;" +
+            "  -fx-opacity: 0.6;" +
+            "  -fx-font: 40pt \"System\";" +
+            "  -fx-font-weight: bold;";
+
+
+    //Error texts
     public static String SIGNUP_ERROR_TEXT = "";
     public static String LOGIN_ERROR_TEXT = "";
     public static String SEARCH_ERROR_TEXT = "";
@@ -31,9 +50,11 @@ public class Utils
         SEARCH_ERROR_TEXT = "";
     }
 
-    public static User receivedUserObj = null;
-    public static List<String> searchResults = new ArrayList<>();
-    public static List<Post> timelineData = new ArrayList<>();
+
+    //File directories
+    public static final String DIR_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
+    public static final String DIR_POSTS = "src/main/java/Server/Resources/";
+    public static final String DIR_CLIENT_POST_VIDEOS = "src/main/java/Client/Resources/Post_Videos/";
 
 
     //GUI page titles
@@ -71,10 +92,8 @@ public class Utils
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
         public static final String TIMELINE = "getTimeline";
+        public static final String NOTIFICATION = "notification";
         public static final String TERMINATE = "terminate";
     }
-
-
-
 
 }
