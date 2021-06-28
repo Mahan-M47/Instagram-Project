@@ -2,6 +2,7 @@ package Server.Controller;
 
 import Server.Model.Post;
 import Server.Utils;
+
 import java.util.List;
 import Server.Model.User;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class MainManager
         {
             Data dat = req.getData();
             User user = null;
+            Post post = null;
             boolean flag;
 
             switch ( req.getTitle() )
@@ -52,6 +54,7 @@ public class MainManager
 
                 case Utils.REQ.FOLLOW:
                     DatabaseManager.follow(dat.clientUsername, dat.dataString);
+                    NotificationManager.followNotification(dat.clientUsername, dat.dataString);
                     user = DatabaseManager.assembleUser(dat.dataString);
                     return new Response(Utils.REQ.FOLLOW, new Data(user));
 
@@ -72,11 +75,13 @@ public class MainManager
 
                 case Utils.REQ.CREATE_POST:
                     DatabaseManager.createPost(dat.post);
+                    NotificationManager.postNotification(dat.clientUsername);
                     break;
 
 
                 case Utils.REQ.LIKE:
-                    DatabaseManager.like(dat.clientUsername, dat.dataString);
+                    post = DatabaseManager.like(dat.clientUsername, dat.dataString);
+                    NotificationManager.likeNotification(dat.clientUsername, post);
                     break;
 
 
@@ -86,7 +91,8 @@ public class MainManager
 
 
                 case Utils.REQ.COMMENT:
-                    DatabaseManager.comment(dat.clientUsername, dat.postID, dat.text);
+                    post = DatabaseManager.comment(dat.clientUsername, dat.postID, dat.text);
+                    NotificationManager.commentNotification(dat.clientUsername, post);
                     break;
 
 
@@ -113,33 +119,34 @@ public class MainManager
     }
 
 
-    //methods for adding and removing ActiveClients
-    public static List<ActiveClient> activeClientList = new ArrayList<>();
+    //methods for managing Active Clients
+    public static List<ActiveClient> activeClients = new ArrayList<>();
 
-    public static void addClient(ActiveClient client) {
-        activeClientList.add(client);
+
+    public synchronized static void addClient(ActiveClient client) {
+        activeClients.add(client);
         System.out.println("User \"" + client.getUsername() + "\" Logged In.");
     }
 
-    public static void removeClient(String username)
+    public synchronized static void removeClient(String username)
     {
-        for (ActiveClient client : activeClientList)
+        for (ActiveClient client : activeClients)
         {
             if ( client.getUsername().equals(username) ) {
+                activeClients.remove(client);
                 System.out.println("User \"" + client.getUsername() + "\" Logged Out.");
-                activeClientList.remove(client);
                 break;
             }
         }
     }
 
-    public static void removeClient(BlockingQueue<Response> queue)
+    public synchronized static void removeClient(BlockingQueue<Response> queue)
     {
-        for (ActiveClient client : activeClientList)
+        for (ActiveClient client : activeClients)
         {
             if ( client.getQueue().equals(queue) ) {
+                activeClients.remove(client);
                 System.out.println("User \"" + client.getUsername() + "\" Logged Out.");
-                activeClientList.remove(client);
                 break;
             }
         }

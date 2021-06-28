@@ -21,7 +21,22 @@ public class GUIManager
 
     public static void showProfilePage() { Starter.changeScene(Utils.GUI.PROFILE); }
 
-    public static void showViewMyPostPage() { Starter.changeScene(Utils.GUI.MY_POST); }
-
     public static void reload() { Starter.reloadScene(); }
+
+
+    public static void followNotification(String newFollower) {
+
+    }
+
+    public static void likeNotification(String likedBy) {
+
+    }
+
+    public static void commentNotification(String commentedBy) {
+
+    }
+
+    public static void postNotification(String PostedBy) {
+
+    }
 }

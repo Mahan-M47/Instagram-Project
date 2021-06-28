@@ -151,7 +151,7 @@ public class DatabaseManager {
         collection.insert(post.createPostDBObject());
     }
 
-    public synchronized static void like(String username, String postID)
+    public synchronized static Post like(String username, String postID)
     {
         DBCollection collection = db.getCollection(Utils.DB_POST);
         DBObject query = new BasicDBObject("ID",postID);
@@ -160,6 +160,8 @@ public class DatabaseManager {
         Post post = Post.parsePost(object);
         post.addLike(username);
         collection.update(query, post.createPostDBObject());
+
+        return post;
     }
 
     public synchronized static void unlike(String username, String postID)
@@ -173,7 +175,7 @@ public class DatabaseManager {
         collection.update(query, post.createPostDBObject());
     }
 
-    public synchronized static void comment(String username, String postID, String commentText)
+    public synchronized static Post comment(String username, String postID, String commentText)
     {
         DBCollection collection = db.getCollection(Utils.DB_POST);
         DBObject query = new BasicDBObject("ID",postID);
@@ -183,6 +185,8 @@ public class DatabaseManager {
         String comment = username + ": " + commentText;
         post.addComment(comment);
         collection.update(query, post.createPostDBObject());
+
+        return post;
     }
 
     public synchronized static ArrayList<Post> assembleTimeline(String username)

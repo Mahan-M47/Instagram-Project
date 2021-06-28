@@ -1,5 +1,7 @@
 package Server.Controller;
 
+import Server.Utils;
+
 import java.util.concurrent.BlockingQueue;
 
 public class Send implements Runnable
@@ -30,7 +32,7 @@ public class Send implements Runnable
 
     public void submitActiveClient(Response response)
     {
-        if ( response.getTitle().equals("login") || response.getTitle().equals("signup") )
+        if ( response.getTitle().equals(Utils.REQ.LOGIN) || response.getTitle().equals(Utils.REQ.SIGNUP) )
         {
             if (response.getData().flag) {
                 ActiveClient client = new ActiveClient(response.getData().clientUsername, queue);

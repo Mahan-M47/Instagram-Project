@@ -10,12 +10,12 @@ public class Utils
     //the currently logged in user
     public static String currentUser = "";
     public static User currentUserObj = null;
+    public static List<Post> timelineData = new ArrayList<>();
 
 
     //Received User
     public static User receivedUserObj = null;
     public static List<String> searchResults = new ArrayList<>();
-    public static List<Post> timelineData = new ArrayList<>();
 
 
     //Network constants
@@ -92,6 +92,11 @@ public class Utils
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
         public static final String TIMELINE = "getTimeline";
+        public static final String NOTIF_FOLLOW = "followNotification";
+        public static final String NOTIF_POST = "newPostNotification";
+        public static final String NOTIF_LIKE = "likeNotification";
+        public static final String NOTIF_COMMENT = "commentNotification";
+        public static final String NOTIF_MESSAGE = "messageNotification";
         public static final String TERMINATE = "terminate";
     }
 

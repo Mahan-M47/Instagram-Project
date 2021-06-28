@@ -6,10 +6,10 @@ import org.controlsfx.control.Notifications;
 
 public class NotificationController {
 
-    public static void show(String tittle, String text) {
+    public static void show(String title, String text) {
 
         Notifications notification = Notifications.create()
-                .title(tittle)
+                .title(title)
                 .text(text)
                 .hideAfter(Duration.seconds(5))
                 .position(Pos.BOTTOM_RIGHT);

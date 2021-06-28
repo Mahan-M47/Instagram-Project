@@ -43,6 +43,11 @@ public class Utils
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
         public static final String TIMELINE = "getTimeline";
+        public static final String NOTIF_FOLLOW = "followNotification";
+        public static final String NOTIF_POST = "newPostNotification";
+        public static final String NOTIF_LIKE = "likeNotification";
+        public static final String NOTIF_COMMENT = "commentNotification";
+        public static final String NOTIF_MESSAGE = "messageNotification";
         public static final String TERMINATE = "terminate";
     }
 }

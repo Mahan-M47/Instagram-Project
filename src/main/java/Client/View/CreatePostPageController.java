@@ -51,7 +51,7 @@ public class CreatePostPageController
         {
             filePath = chosenFile.getPath();
 
-            if (filePath.matches(".+\\.jpg")) {
+            if (filePath.matches(".+\\.jpe?g")) {
                 loadImage();
             }
             else if (filePath.matches(".+\\.mp4")) {
@@ -116,7 +116,7 @@ public class CreatePostPageController
     {
         Post post = new Post(Utils.currentUser, captionTF.getText(), filePath);
 
-        if (filePath.matches(".+\\.jpg")) {
+        if (filePath.matches(".+\\.jpe?g")) {
             post.setPostType(Utils.POST_IMAGE);
         }
         else {

@@ -103,6 +103,30 @@ public class MainManager
                 break;
 
 
+            case Utils.REQ.NOTIF_FOLLOW:
+                GUIManager.followNotification(dat.clientUsername);
+                break;
+
+
+            case Utils.REQ.NOTIF_LIKE:
+                GUIManager.likeNotification(dat.clientUsername);
+                break;
+
+
+            case Utils.REQ.NOTIF_COMMENT:
+                GUIManager.commentNotification(dat.clientUsername);
+                break;
+
+
+            case Utils.REQ.NOTIF_POST:
+                GUIManager.postNotification(dat.clientUsername);
+                break;
+
+
+            case Utils.REQ.NOTIF_MESSAGE:
+                break;
+
+
             case Utils.REQ.TIMELINE:
                 Utils.timelineData = dat.posts;
                 GUIManager.showTimeline();
