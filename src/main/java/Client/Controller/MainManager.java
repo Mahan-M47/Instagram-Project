@@ -47,7 +47,7 @@ public class MainManager
                     GUIManager.showNotification(
                             new Notification("Signup Was Successful", "Welcome " + dat.clientUsername) );
 
-                    //using CommonClickHandlers to send a show my profile request
+                    //using CommonClickHandlers to send a ShowMyProfile request
                     CommonClickHandlers.myProfileButton();
                 }
                 else {
@@ -64,7 +64,7 @@ public class MainManager
                     GUIManager.showNotification(
                             new Notification("Login Was Successful", "Welcome Back, " + dat.clientUsername) );
 
-                    //using CommonClickHandlers to send a show my profile request
+                    //using CommonClickHandlers to send a ShowMyProfile request
                     CommonClickHandlers.myProfileButton();
                 }
                 else {
@@ -108,6 +108,10 @@ public class MainManager
                 GUIManager.reload();
                 break;
 
+
+            case Utils.REQ.PERSONAL_CHAT:
+                GUIManager.showPersonalChatPage(dat.personalChat);
+                break;
 
             case Utils.REQ.NOTIFICATION:
                 GUIManager.showNotification(dat.notification);

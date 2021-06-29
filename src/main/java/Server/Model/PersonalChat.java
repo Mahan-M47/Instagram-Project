@@ -44,12 +44,6 @@ public class PersonalChat
                 .append("MessageList",getMessageList());
     }
 
-    public DBObject createChatIDDBObject() {
-        return new BasicDBObject()
-                .append("ChatID",getChatID())
-                .append("Members",getMembers());
-    }
-
     public static PersonalChat parsePersonalChatDBObject(DBObject object)
     {
         PersonalChat chat = new PersonalChat();

@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Server.Model.GroupChat;
 import Server.Model.PersonalChat;
 import Server.Model.Post;
 import Server.Model.User;
@@ -14,8 +15,8 @@ public class MainManager
     public synchronized static Response process(Request req, AtomicBoolean state) {
         {
             Data dat = req.getData();
-            User user = null;
-            Post post = null;
+            User user;
+            Post post;
             boolean flag;
 
             switch ( req.getTitle() )
@@ -114,7 +115,8 @@ public class MainManager
 
 
                 case Utils.REQ.GROUP_CHAT:
-                    break;
+                    GroupChat groupChat = DatabaseManager.createGroupChat(dat.clientUsername);
+                    return new Response(Utils.REQ.GROUP_CHAT, new Data(groupChat));
 
 
                 case Utils.REQ.ALL_CHATS:

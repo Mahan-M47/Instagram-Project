@@ -50,6 +50,8 @@ public class Utils
         public static final String PERSONAL_CHAT = "getPersonalChat";
         public static final String GROUP_CHAT = "getGroupChat";
         public static final String ALL_CHATS = "getAllChats";
+        public static final String MESSAGE = "addMessage";
+        public static final String ADD_MEMBER = "addMember";
         public static final String TERMINATE = "terminate";
     }
 }

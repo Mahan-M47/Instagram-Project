@@ -60,7 +60,7 @@ public class ChatListController implements Initializable
             chatLabel.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    ChatPageController.setPersonalChat(chat, chatTitle);
+                    ChatPageController.setPersonalChat(chat);
                     Starter.changeScene(Utils.GUI.CHAT_PAGE);
                 }
             });

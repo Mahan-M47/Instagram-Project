@@ -1,7 +1,9 @@
 package Client.Controller;
 
 import Client.Model.Notification;
+import Client.Model.PersonalChat;
 import Client.Utils;
+import Client.View.ChatPageController;
 import Client.View.Starter;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -28,12 +30,17 @@ public class GUIManager
 
     public static void reload() { Starter.reloadScene(); }
 
+    public static void showPersonalChatPage(PersonalChat chat) {
+        ChatPageController.setPersonalChat(chat);
+        Starter.changeScene(Utils.GUI.CHAT_PAGE);
+    }
+
     public static void showNotification(Notification notificationObj)
     {
         Platform.runLater(() -> {
             Notifications notification = Notifications.create()
                     .title( notificationObj.getTitle() )
-                    .text( notificationObj.getText() )
+                    .text ( notificationObj.getText() )
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.BOTTOM_RIGHT);
 

@@ -3,6 +3,7 @@ package Client.View;
 import Client.Model.PersonalChat;
 import Client.Model.Message;
 import Client.Utils;
+import Server.Model.GroupChat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ChatPageController implements Initializable {
@@ -27,20 +29,28 @@ public class ChatPageController implements Initializable {
     @FXML
     private VBox background;
 
-    private static PersonalChat chat;
-    private static String chatTitle;
-
-    public static void setPersonalChat(PersonalChat chosenChat, String chosenChatTitle) {
-        chat = chosenChat;
-        chatTitle = chosenChatTitle;
+    private static PersonalChat personalChat;
+    private static GroupChat groupChat;
+    public static void setPersonalChat(PersonalChat chosenChat) {
+        personalChat = chosenChat;
+        groupChat = null;
+    }
+    public static void setGroupChat(GroupChat chosenChat) {
+        groupChat = chosenChat;
+        personalChat = null;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        chatLabel.setText(chatTitle);
+        List<String> members = personalChat.getMembers();
 
-        for (Message message : chat.getMessageList()) {
+        if ( members.get(0).equals(Utils.currentUser) ) {
+            chatLabel.setText( members.get(1) );
+        }
+        else chatLabel.setText( members.get(0) );
+
+        for (Message message : personalChat.getMessageList()) {
             createMessage(message);
         }
 
@@ -82,7 +92,7 @@ public class ChatPageController implements Initializable {
             String messageText = messageTF.getText();
             Message message = new Message(Utils.currentUser, messageText);
             createMessage(message);
-            chat.addMessage(message);
+            personalChat.addMessage(message);
             messageTF.setText("");
         }
     }
