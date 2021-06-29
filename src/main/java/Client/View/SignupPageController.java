@@ -61,8 +61,20 @@ public class SignupPageController implements Initializable
         else if (username.equals("")) {
             errorLabel.setText("Please Enter Your Username.");
         }
+        else if (username.contains(" ")) {
+            errorLabel.setText("Username Cannot Contain White Space");
+        }
+        else if (username.length() < 4) {
+            errorLabel.setText("Username Must Have At Least 4 Characters.");
+        }
         else if (password.equals("")) {
             errorLabel.setText("Please Enter Your Password.");
+        }
+        else if (password.contains(" ")) {
+            errorLabel.setText("Password Cannot Contain White Space.");
+        }
+        else if (password.length() < 6) {
+            errorLabel.setText("Password Must Have At Least 6 Characters.");
         }
         else if (confirmPassword.equals("")) {
             errorLabel.setText("Please Confirm Your Password.");
@@ -70,12 +82,7 @@ public class SignupPageController implements Initializable
         else if (!password.equals(confirmPassword)) {
             errorLabel.setText("The Passwords Didn't Match. Please Try Again.");
         }
-        else if (username.contains(" ")) {
-            errorLabel.setText("Username Cannot Contain White Space");
-        }
-        else if (password.contains(" ")) {
-            errorLabel.setText("Password Cannot Contain White Space.");
-        }
+
         else {
             errorLabel.setText("");
             flag = true;

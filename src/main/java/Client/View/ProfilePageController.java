@@ -5,6 +5,7 @@ import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Model.Post;
 import Client.Utils;
+import Server.Model.PersonalChat;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -15,6 +16,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -32,6 +34,8 @@ public class ProfilePageController implements Initializable {
 
     @FXML
     private ImageView profilePicture;
+    @FXML
+    private AnchorPane scrollAnchorPane;
     @FXML
     private VBox scrollVBox;
     @FXML
@@ -74,6 +78,7 @@ public class ProfilePageController implements Initializable {
 
         for (int i = 0; i < Math.ceil(count/3); i++)
         {
+            scrollAnchorPane.setPrefHeight(scrollAnchorPane.getPrefHeight() + 270);
             HBox hBox = new HBox(10);
             hBox.setPrefSize(770,250);
 
@@ -165,6 +170,8 @@ public class ProfilePageController implements Initializable {
 
     @FXML
     void messageButtonClickHandler(ActionEvent event) {
+        Request req = new Request( Utils.REQ.PERSONAL_CHAT, new Data(Utils.currentUser, usernameLabel.getText()) );
+        NetworkManager.putRequest(req);
     }
 
     @FXML

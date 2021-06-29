@@ -47,7 +47,7 @@ public class MainManager
                     GUIManager.showNotification(
                             new Notification("Signup Was Successful", "Welcome " + dat.clientUsername) );
 
-                    //using CommonClickHandlers to send a show my profile request
+                    //using CommonClickHandlers to send a ShowMyProfile request
                     CommonClickHandlers.myProfileButton();
                 }
                 else {
@@ -64,7 +64,7 @@ public class MainManager
                     GUIManager.showNotification(
                             new Notification("Login Was Successful", "Welcome Back, " + dat.clientUsername) );
 
-                    //using CommonClickHandlers to send a show my profile request
+                    //using CommonClickHandlers to send a ShowMyProfile request
                     CommonClickHandlers.myProfileButton();
                 }
                 else {
@@ -109,14 +109,41 @@ public class MainManager
                 break;
 
 
-            case Utils.REQ.NOTIFICATION:
-                GUIManager.showNotification(dat.notification);
-                break;
-
-
             case Utils.REQ.TIMELINE:
                 Utils.timelineData = dat.posts;
                 GUIManager.showTimeline();
+                break;
+
+
+            case Utils.REQ.PERSONAL_CHAT:
+                GUIManager.showPersonalChatPage(dat.personalChat);
+                break;
+
+
+            case Utils.REQ.GROUP_CHAT:
+                GUIManager.showGroupChatPage(dat.groupChat);
+                break;
+
+
+            case Utils.REQ.ALL_CHATS:
+                Utils.personalChats = dat.personalChatList;
+                Utils.groupChats = dat.groupChatList;
+                GUIManager.showChatList();
+                break;
+
+
+            case Utils.REQ.ADD_MEMBER:
+
+                if (dat.groupChat == null) {
+                    Utils.ADD_MEMBER_ERROR_TEXT = "This User Does Not Exist.";
+                    GUIManager.reload();
+                }
+                else GUIManager.showGroupChatPage(dat.groupChat);
+                break;
+
+
+            case Utils.REQ.NOTIFICATION:
+                GUIManager.showNotification(dat.notification);
                 break;
         }
 

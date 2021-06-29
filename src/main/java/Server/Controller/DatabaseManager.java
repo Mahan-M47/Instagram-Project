@@ -11,8 +11,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DatabaseManager {
-
+public class DatabaseManager
+{
     private static MongoClient mongoClient;
     private static DB db;
 
@@ -21,43 +21,30 @@ public class DatabaseManager {
         db = mongoClient.getDB(databaseName);
     }
 
-    public synchronized static void adduser(User user) {
-        DBCollection login = db.getCollection(Utils.DB_LOGIN);
+    //--------------------------------------------Authentication & Search-----------------------------------------------
+
+    public synchronized static void adduser(User user)
+    {
+        DBCollection login = db.getCollection(Utils.DB.LOGIN);
         login.insert(user.createLoginDBObject());
 
-        DBCollection follow = db.getCollection(Utils.DB_FOLLOW);
+        DBCollection follow = db.getCollection(Utils.DB.FOLLOW);
         follow.insert(user.createFollowDBObject());
 
-        DBCollection Bio = db.getCollection(Utils.DB_BIO);
+        DBCollection Bio = db.getCollection(Utils.DB.BIO);
         Bio.insert(user.createBioDBObject());
 
+        DBCollection chatID = db.getCollection(Utils.DB.CHAT_ID);
+        DBObject obj = new BasicDBObject()
+                .append("Username", user.getUsername())
+                .append("ChatIDs", new ArrayList<String>());
+        chatID.insert(obj);
     }
 
-    public synchronized static ArrayList<String> getUsers(String collectionName) {
-        DBCollection collection = db.getCollection(collectionName);
-        DBCursor cursor = collection.find();
-        ArrayList<String> Users = new ArrayList<>();
-
-        for (DBObject query : cursor) {
-            Users.add(User.parseLoginDBObject(query).getUsername());
-        }
-        return Users;
-    }
-
-    public synchronized static User getUser(String collectionName, String username) {
-        DBCollection collection = db.getCollection(collectionName);
-        if (checkIfUserExists(collectionName, username)) {
-            BasicDBObject obj = new BasicDBObject().append("username", username);
-            DBObject one = collection.findOne(obj);
-            return User.parseLoginDBObject(one);
-        } else {
-            return null;
-        }
-    }
-
-    public synchronized static boolean checkIfUserExists(String collectionName, String username) {
-        DBCollection collection = db.getCollection(collectionName);
-        DBObject query = new BasicDBObject("username", username);
+    public synchronized static boolean checkIfUserExists(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.LOGIN);
+        DBObject query = new BasicDBObject("Username", username);
         DBObject existingQuery = collection.findOne(query);
 
         if (existingQuery == null) {
@@ -67,8 +54,9 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static boolean checkLogin(String username, String password) {
-        DBCollection collection = db.getCollection(Utils.DB_LOGIN);
+    public synchronized static boolean checkLogin(String username, String password)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.LOGIN);
         User user = new User(username, password);
 
         DBObject query = collection.findOne(user.createLoginDBObject());
@@ -79,69 +67,94 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized static boolean checkchatid(String chatid, String searchcollection) {
-        DBCollection collection = db.getCollection(searchcollection);
-        DBObject dbObject = new BasicDBObject()
-                .append("ChatID", chatid);
-
-        DBObject query = collection.findOne(dbObject);
-        if (query == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-    public synchronized static ArrayList<String> searchUser(String username) {
-        ArrayList<String> allUsers = getUsers(Utils.DB_LOGIN);
+    public synchronized static ArrayList<String> searchUser(String searchText)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.LOGIN);
         ArrayList<String> results = new ArrayList<>();
+        DBCursor allUsers = collection.find();
 
-        for (String str : allUsers) {
-            if (str.contains(username)) {
-                results.add(str);
+        for (DBObject query : allUsers)
+        {
+            String username = User.parseLoginDBObject(query).getUsername();
+
+            if (username.contains(searchText)) {
+                results.add(username);
             }
         }
+
         return results;
     }
 
-    public synchronized static void follow(String followerUsername, String followingUsername) {
-        DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
+    //-------------------------------------------------Follow and Bio---------------------------------------------------
+
+    public synchronized static void follow(String followerUsername, String followingUsername)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.FOLLOW);
         User followerUser = getFollowData(followerUsername);
         User followingUser = getFollowData(followingUsername);
 
-        followerUser.addFollowing(followingUsername);
-        followingUser.addFollower(followerUsername);
+        if (! followerUser.getFollowing().contains(followingUsername) ) {
+            followerUser.addFollowing(followingUsername);
+        }
+        if (! followingUser.getFollowers().contains(followerUsername) ) {
+            followingUser.addFollower(followerUsername);
+        }
 
-        DBObject followingUserQuery = new BasicDBObject("username", followingUser.getUsername());
+        DBObject followingUserQuery = new BasicDBObject("Username", followingUser.getUsername());
         collection.update(followingUserQuery, followingUser.createFollowDBObject());
 
-        DBObject followerUserQuery = new BasicDBObject("username", followerUser.getUsername());
+        DBObject followerUserQuery = new BasicDBObject("Username", followerUser.getUsername());
         collection.update(followerUserQuery, followerUser.createFollowDBObject());
     }
 
-    public synchronized static void unfollow(String followerUsername, String followingUsername) {
-        DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
+    public synchronized static void unfollow(String followerUsername, String followingUsername)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.FOLLOW);
         User followerUser = getFollowData(followerUsername);
         User followingUser = getFollowData(followingUsername);
 
         followerUser.removeFollowing(followingUsername);
         followingUser.removeFollowers(followerUsername);
 
-        DBObject followingUserQuery = new BasicDBObject("username", followingUser.getUsername());
+        DBObject followingUserQuery = new BasicDBObject("Username", followingUser.getUsername());
         collection.update(followingUserQuery, followingUser.createFollowDBObject());
 
-        DBObject followerUserQuery = new BasicDBObject("username", followerUser.getUsername());
+        DBObject followerUserQuery = new BasicDBObject("Username", followerUser.getUsername());
         collection.update(followerUserQuery, followerUser.createFollowDBObject());
     }
 
+    public synchronized static void setBio(User userData)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.BIO);
+
+        User user = getBioData(userData.getUsername());
+        user.setBioText(userData.getBioText());
+
+        DBObject query = new BasicDBObject("Username", userData.getUsername());
+        collection.update(query, user.createBioDBObject());
+    }
+
+    public synchronized static void setProfilePicture(User userData)
+    {
+        try {
+            Files.createDirectories( Paths.get(Utils.DIR_SERVER_PROFILE_PICTURES) );
+            File savedProfilePicture = new File( userData.getServerFilePath() );
+            FileOutputStream out = new FileOutputStream(savedProfilePicture);
+            out.write(userData.getProfilePicture());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //---------------------------------------------------Posts----------------------------------------------------------
 
     public synchronized static void createPost(Post post)
     {
-        DBCollection collection = db.getCollection(Utils.DB_POST);
+        DBCollection collection = db.getCollection(Utils.DB.POST);
 
         try {
-            Files.createDirectories( Paths.get(Utils.DIR_POSTS) );
+            Files.createDirectories( Paths.get(Utils.DIR_SERVER_POSTS) );
             File savedFile = new File( post.getServerFilePath() );
             FileOutputStream out = new FileOutputStream( savedFile );
             out.write( post.getFileBytes() );
@@ -154,10 +167,9 @@ public class DatabaseManager {
         collection.insert(post.createPostDBObject());
     }
 
-
     public synchronized static Post like(String username, String postID)
     {
-        DBCollection collection = db.getCollection(Utils.DB_POST);
+        DBCollection collection = db.getCollection(Utils.DB.POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
@@ -168,8 +180,9 @@ public class DatabaseManager {
         return post;
     }
 
-    public synchronized static void unlike(String username, String postID) {
-        DBCollection collection = db.getCollection(Utils.DB_POST);
+    public synchronized static void unlike(String username, String postID)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
@@ -180,7 +193,7 @@ public class DatabaseManager {
 
     public synchronized static Post comment(String username, String postID, String commentText)
     {
-        DBCollection collection = db.getCollection(Utils.DB_POST);
+        DBCollection collection = db.getCollection(Utils.DB.POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
@@ -192,7 +205,22 @@ public class DatabaseManager {
         return post;
     }
 
-    public synchronized static ArrayList<Post> assembleTimeline(String username) {
+    //------------------------------------------------Database Access---------------------------------------------------
+
+    public synchronized static User assembleUser(String username)
+    {
+        User user = new User();
+        user.setUsername       ( username );
+        user.setPosts          ( getPostData(username) );
+        user.setBioText        ( getBioData(username).getBioText() );
+        user.setFollowers      ( getFollowData(username).getFollowers() );
+        user.setFollowing      ( getFollowData(username).getFollowing() );
+        user.setProfilePicture ( user.getServerFilePath() );
+        return user;
+    }
+
+    public synchronized static ArrayList<Post> assembleTimeline(String username)
+    {
         ArrayList<Post> timelineData = new ArrayList<>(getPostData(username));
         User user = getFollowData(username);
 
@@ -205,34 +233,26 @@ public class DatabaseManager {
         return timelineData;
     }
 
-    public synchronized static User assembleUser(String username) {
-        User user = new User();
-        user.setUsername       ( username );
-        user.setPosts          ( getPostData(username) );
-        user.setBioText        ( getBioData(username).getBioText() );
-        user.setFollowers      ( getFollowData(username).getFollowers() );
-        user.setFollowing      ( getFollowData(username).getFollowing() );
-        user.setProfilePicture ( user.getServerFilePath() );
-        return user;
-    }
-
-    public synchronized static User getFollowData(String username) {
-        DBCollection collection = db.getCollection(Utils.DB_FOLLOW);
-        DBObject query = new BasicDBObject("username", username);
+    public synchronized static User getFollowData(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.FOLLOW);
+        DBObject query = new BasicDBObject("Username", username);
         query = collection.findOne(query);
         return User.parseFollowDBObject(query);
     }
 
-    public synchronized static User getBioData(String username) {
-        DBCollection collection = db.getCollection(Utils.DB_BIO);
-        DBObject query = new BasicDBObject("username", username);
+    public synchronized static User getBioData(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.BIO);
+        DBObject query = new BasicDBObject("Username", username);
         query = collection.findOne(query);
         return User.parseBioDBObject(query);
     }
 
-    public synchronized static ArrayList<Post> getPostData(String username) {
-        DBCollection collection = db.getCollection(Utils.DB_POST);
-        DBObject query = new BasicDBObject("username", username);
+    public synchronized static ArrayList<Post> getPostData(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.POST);
+        DBObject query = new BasicDBObject("Username", username);
         Cursor cursor = collection.find(query);
 
         ArrayList<Post> posts = new ArrayList<>();
@@ -245,156 +265,160 @@ public class DatabaseManager {
         return posts;
     }
 
-    public synchronized static void setBio(User userData)
+    //-------------------------------------------Personal and Group Chats-----------------------------------------------
+
+    public synchronized static String checkIfPersonalChatExists(String user1, String user2)
     {
-        DBCollection collection = db.getCollection(Utils.DB_BIO);
+        String chatID = null;
+        ArrayList<PersonalChat> chats = getAllPersonalChats(user1);
 
-        User user = getBioData(userData.getUsername());
-        user.setBioText(userData.getBioText());
-
-        DBObject query = new BasicDBObject("username", userData.getUsername());
-        collection.update(query, user.createBioDBObject());
-    }
-
-    public synchronized static void setProfilePicture(User userData)
-    {
-        try {
-            Files.createDirectories( Paths.get(Utils.DIR_PROFILE_PICTURES) );
-            File savedProfilePicture = new File( userData.getServerFilePath() );
-            FileOutputStream out = new FileOutputStream(savedProfilePicture);
-            out.write(userData.getProfilePicture());
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public synchronized static void CreateChatIDs(String username , String chatid){
-        DBCollection collection = db.getCollection(Utils.DB_CHATID);
-        ArrayList<String> chatids = new ArrayList<>();
-        chatids.add(chatid);
-        DBObject dbObject = new BasicDBObject()
-                .append("username",username)
-                .append("ChatIDs",chatids);
-        collection.insert(dbObject);
-    }
-
-    public synchronized static ArrayList<String> getChatids(String username){
-        DBCollection collection = db.getCollection(Utils.DB_CHATID);
-        DBObject dbObject = new BasicDBObject()
-                .append("username",username);
-        DBObject quary = collection.findOne(dbObject);
-        ArrayList<String> chatids = (ArrayList<String>) quary.get("ChatIDs");
-        return  chatids ;
-    }
-
-    public synchronized static void CreatePersonalChat(ChatPersonal chat) {
-        DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
-        collection.insert(chat.createChatPersonalDBObject());
-        collection = db.getCollection(Utils.DB_CHATID);
-        ArrayList<String> members = chat.getMembers();
-        for(int i = 0 ; i < members.size() ; i++){
-            if(!checkIfUserExists(Utils.DB_CHATID,members.get(i))){
-                CreateChatIDs(members.get(i),chat.getChatID());
-            }
-            else{
-                DBObject dbObject = new BasicDBObject()
-                        .append("username",members.get(i));
-                ArrayList<String> chatids = getChatids(members.get(i));
-                chatids.add(chat.getChatID());
-                DBObject quary = new BasicDBObject()
-                        .append("usename",members.get(i))
-                        .append("ChatIDs",chatids);
-                collection.update(dbObject,quary);
+        for (PersonalChat chat : chats) {
+            if ( chat.getMembers().contains(user2) ) {
+                chatID = chat.getChatID();
+                break;
             }
         }
+        return chatID;
     }
 
-    public synchronized static ChatPersonal getPersonalChat(String chatID) {
-        DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
+    public synchronized static void updateChatIDCollection(String member, String chatID)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.CHAT_ID);
+
+        ArrayList<String> chatIDs = getChatIDs(member);
+        chatIDs.add(chatID);
+
+        DBObject query = new BasicDBObject("Username", member);
+        DBObject obj = new BasicDBObject("Username", member)
+                .append("ChatIDs", chatIDs);
+
+        collection.update(query, obj);
+    }
+
+    public synchronized static ArrayList<String> getChatIDs(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.CHAT_ID);
+        DBObject query = new BasicDBObject("Username",username);
+        DBObject obj = collection.findOne(query);
+        return (ArrayList<String>) obj.get("ChatIDs");
+    }
+
+    public synchronized static PersonalChat createPersonalChat(String member1, String member2)
+    {
+        PersonalChat chat = new PersonalChat(member1, member2);
+        updateChatIDCollection(member1, chat.getChatID());
+        updateChatIDCollection(member2, chat.getChatID());
+
+        DBCollection collection = db.getCollection(Utils.DB.PERSONAL_CHAT);
+        collection.insert( chat.createChatPersonalDBObject() );
+
+        return chat;
+    }
+
+    public synchronized static PersonalChat getPersonalChat(String chatID)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.PERSONAL_CHAT);
         DBObject query = new BasicDBObject("ChatID", chatID);
         DBObject dbObject = collection.findOne(query);
-        return ChatPersonal.parsePersonalChatDBObject(dbObject);
+        return PersonalChat.parsePersonalChatDBObject(dbObject);
     }
 
-    public synchronized static void CreateGroupChat(ChatGroup chat) {
-        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
-        collection.insert(chat.createChatGroupDBObject());
-        collection = db.getCollection(Utils.DB_CHATID);
-        ArrayList<String> members = chat.getMembers();
-        for(int i = 0 ; i < members.size() ; i++){
-            if(!checkIfUserExists(Utils.DB_CHATID,members.get(i))){
-                CreateChatIDs(members.get(i),chat.getChatID());
-            }
-            else{
-                DBObject dbObject = new BasicDBObject()
-                        .append("username",members.get(i));
-                ArrayList<String> chatids = getChatids(members.get(i));
-                chatids.add(chat.getChatID());
-                DBObject quary = new BasicDBObject()
-                        .append("usename",members.get(i))
-                        .append("ChatIDs",chatids);
-                collection.update(dbObject,quary);
+    public synchronized static ArrayList<PersonalChat> getAllPersonalChats(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.PERSONAL_CHAT);
+        ArrayList<String> chatIDs = getChatIDs(username);
+        ArrayList<PersonalChat> personalChats = new ArrayList<>();
+
+        for (String chatID : chatIDs)
+        {
+            DBObject query = new BasicDBObject("ChatID", chatID);
+            DBObject obj = collection.findOne(query);
+
+            if (obj != null) {
+                personalChats.add( PersonalChat.parsePersonalChatDBObject(obj) );
             }
         }
+
+        return personalChats;
     }
 
-    public synchronized static ChatGroup getGroupChat(String chatID) {
-        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
+    public synchronized static GroupChat createGroupChat(String firstMember)
+    {
+        GroupChat chat = new GroupChat(firstMember);
+        updateChatIDCollection(firstMember, chat.getChatID());
+
+        DBCollection collection = db.getCollection(Utils.DB.GROUP_CHAT);
+        collection.insert( chat.createChatGroupDBObject() );
+
+        return chat;
+    }
+
+    public synchronized static GroupChat getGroupChat(String chatID)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.GROUP_CHAT);
         DBObject query = new BasicDBObject("ChatID", chatID);
         DBObject dbObject = collection.findOne(query);
-        return ChatGroup.parseGroupChatDBObject(dbObject);
+        return GroupChat.parseGroupChatDBObject(dbObject);
     }
 
-    public synchronized static void addMessage(String ChatID, Message message) {
-        if (checkchatid(ChatID, Utils.DB_PERSONALCHAT)) {
-            DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
-            ChatPersonal chat = getPersonalChat(ChatID);
+    public synchronized static ArrayList<GroupChat> getAllGroupChats(String username)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.GROUP_CHAT);
+        ArrayList<String> chatIDs = getChatIDs(username);
+        ArrayList<GroupChat> groupChats = new ArrayList<>();
+
+        for (String chatID : chatIDs)
+        {
+            DBObject query = new BasicDBObject("ChatID", chatID);
+            DBObject obj = collection.findOne(query);
+
+            if (obj != null) {
+                groupChats.add( GroupChat.parseGroupChatDBObject(obj) );
+            }
+        }
+
+        return groupChats;
+    }
+
+    public synchronized static ArrayList<String> addMessage(String chatID, Message message)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.PERSONAL_CHAT);
+        DBObject dbObject = new BasicDBObject("ChatID", chatID);
+        DBObject query = collection.findOne(dbObject);
+
+        if ( query != null )
+        {
+            collection = db.getCollection(Utils.DB.PERSONAL_CHAT);
+            PersonalChat chat = getPersonalChat(chatID);
             chat.addMessage(message);
-            DBObject query = new BasicDBObject("ChatID", ChatID);
-            collection.update(query, chat.createChatPersonalDBObject());
-        } else {
-            DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
-            ChatGroup chat = getGroupChat(ChatID);
+            query = new BasicDBObject("ChatID", chatID);
+            collection.update( query, chat.createChatPersonalDBObject() );
+
+            return chat.getMembers();
+        }
+        else
+        {
+            collection = db.getCollection(Utils.DB.GROUP_CHAT);
+            GroupChat chat = getGroupChat(chatID);
             chat.addMessage(message);
-            DBObject query = new BasicDBObject("ChatID", ChatID);
-            collection.update(query, chat.createChatGroupDBObject());
+            query = new BasicDBObject("ChatID", chatID);
+            collection.update( query, chat.createChatGroupDBObject() );
+
+            return chat.getMembers();
         }
     }
 
-    public synchronized static void addMember(String ChatID, String member) {
-            DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
-            ChatGroup chat = getGroupChat(ChatID);
-            chat.addMember(member);
-            DBObject query = new BasicDBObject("ChatID", ChatID);
-            collection.update(query, chat.createChatGroupDBObject());
-    }
+    public synchronized static GroupChat addMember(String member, String chatID)
+    {
+        GroupChat chat = getGroupChat(chatID);
+        chat.addMember(member);
+        updateChatIDCollection(member, chatID);
 
-    
-    public synchronized static ArrayList<ChatPersonal> getALLChatPersonal(String username) {
-        ArrayList<String> chatids = getChatids(username);
-        ArrayList<ChatPersonal> chatpersonals = new ArrayList<>();
+        DBCollection collection = db.getCollection(Utils.DB.GROUP_CHAT);
+        DBObject query = new BasicDBObject("ChatID", chatID);
+        collection.update( query, chat.createChatGroupDBObject() );
 
-        DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
-        for(int i = 0 ; i < chatids.size() ; i++){
-            chatpersonals.add(ChatPersonal.parsePersonalChatDBObject(collection.findOne(new BasicDBObject()
-                    .append("ChatID",chatids.get(i)))))
-            ;
-        }
-        return chatpersonals;
-    }
-
-    public synchronized static ArrayList<ChatGroup> getALLChatGroups(String username) {
-        ArrayList<String> chatids = getChatids(username);
-        ArrayList<ChatGroup> chatGroups = new ArrayList<>();
-
-        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
-        for(int i = 0 ; i < chatids.size() ; i++){
-            chatGroups.add(ChatGroup.parseGroupChatDBObject(collection.findOne(new BasicDBObject()
-                            .append("ChatID",chatids.get(i)))))
-                    ;
-        }
-        return chatGroups;
+        return chat;
     }
 
 }

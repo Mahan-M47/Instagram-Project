@@ -114,7 +114,7 @@ public class User
         }
     }
 
-    public String getServerFilePath() { return Utils.DIR_PROFILE_PICTURES + username + ".jpg"; }
+    public String getServerFilePath() { return Utils.DIR_SERVER_PROFILE_PICTURES + username + ".jpg"; }
 
     public void addPost(Post post) { this.posts.add(post); }
 

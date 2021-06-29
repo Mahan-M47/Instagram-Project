@@ -10,7 +10,7 @@ public class ServerMain
 {
     public static void main(String[] args) throws IOException
     {
-        DatabaseManager.startDatabase(Utils.DATABASE_NAME);
+        DatabaseManager.startDatabase(Utils.DB.DATABASE_NAME);
         ServerSocket serverSocket = new ServerSocket(Utils.PORT);
         while (true) {
             try {

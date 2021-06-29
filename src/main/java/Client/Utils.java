@@ -1,5 +1,7 @@
 package Client;
 
+import Client.Model.GroupChat;
+import Client.Model.PersonalChat;
 import Client.Model.Post;
 import Client.Model.User;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ public class Utils
     public static String currentUser = "";
     public static User currentUserObj = null;
     public static List<Post> timelineData = new ArrayList<>();
+    public static List<PersonalChat> personalChats = new ArrayList<>();
+    public static List<GroupChat> groupChats = new ArrayList<>();
 
 
     //Received User
@@ -43,17 +47,19 @@ public class Utils
     public static String SIGNUP_ERROR_TEXT = "";
     public static String LOGIN_ERROR_TEXT = "";
     public static String SEARCH_ERROR_TEXT = "";
+    public static String ADD_MEMBER_ERROR_TEXT = "";
 
     public static void resetErrorTexts() {
         SIGNUP_ERROR_TEXT = "";
         LOGIN_ERROR_TEXT = "";
         SEARCH_ERROR_TEXT = "";
+        ADD_MEMBER_ERROR_TEXT = "";
     }
 
 
     //File directories
-    public static final String DIR_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
-    public static final String DIR_POSTS = "src/main/java/Server/Resources/";
+    public static final String DIR_SERVER_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
+    public static final String DIR_SERVER_POSTS = "src/main/java/Server/Resources/";
     public static final String DIR_CLIENT_POST_VIDEOS = "src/main/java/Client/Resources/Post_Videos/";
 
 
@@ -73,6 +79,8 @@ public class Utils
         public static final String TIMELINE = "Timeline";
         public static final String MY_POST = "ViewMyPost";
         public static final String POST = "ViewPost";
+        public static final String CHAT_LIST = "ChatList";
+        public static final String CHAT_PAGE = "ChatPage";
     }
 
 
@@ -93,6 +101,11 @@ public class Utils
         public static final String CREATE_POST = "createPost";
         public static final String TIMELINE = "getTimeline";
         public static final String NOTIFICATION = "notification";
+        public static final String PERSONAL_CHAT = "getPersonalChat";
+        public static final String GROUP_CHAT = "getGroupChat";
+        public static final String ALL_CHATS = "getAllChats";
+        public static final String MESSAGE = "addMessage";
+        public static final String ADD_MEMBER = "addMember";
         public static final String TERMINATE = "terminate";
     }
 

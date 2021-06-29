@@ -1,10 +1,11 @@
 package Server.Controller;
 
+import Server.Model.GroupChat;
+import Server.Model.PersonalChat;
 import Server.Model.Post;
-import Server.Utils;
-
-import java.util.List;
 import Server.Model.User;
+import Server.Utils;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -14,21 +15,21 @@ public class MainManager
     public synchronized static Response process(Request req, AtomicBoolean state) {
         {
             Data dat = req.getData();
-            User user = null;
-            Post post = null;
+            User user;
+            Post post;
             boolean flag;
 
             switch ( req.getTitle() )
             {
                 case Utils.REQ.SIGNUP:
-                    boolean userExists = DatabaseManager.checkIfUserExists(Utils.DB_LOGIN, dat.clientUsername);
-
-                    if (!userExists) {
-                        user = new User(dat.clientUsername, dat.dataString );
+                    if (! DatabaseManager.checkIfUserExists(dat.clientUsername) )
+                    {
+                        user = new User(dat.clientUsername, dat.dataString);
                         DatabaseManager.adduser(user);
                         flag = true;
                     }
                     else flag = false;
+
                     return new Response(Utils.REQ.SIGNUP, new Data(dat.clientUsername, flag) );
 
 
@@ -99,6 +100,44 @@ public class MainManager
                 case Utils.REQ.TIMELINE:
                     ArrayList<Post> posts = DatabaseManager.assembleTimeline(dat.clientUsername);
                     return new Response(Utils.REQ.TIMELINE, new Data(posts));
+
+
+                case Utils.REQ.PERSONAL_CHAT:
+                    String chatID = DatabaseManager.checkIfPersonalChatExists(dat.clientUsername, dat.dataString);
+                    PersonalChat chat;
+
+                    if ( chatID == null ) {
+                        chat = DatabaseManager.createPersonalChat(dat.clientUsername, dat.dataString);
+                    }
+                    else chat = DatabaseManager.getPersonalChat(chatID);
+
+                    return new Response(Utils.REQ.PERSONAL_CHAT, new Data(chat));
+
+
+                case Utils.REQ.GROUP_CHAT:
+                    GroupChat groupChat = DatabaseManager.createGroupChat(dat.clientUsername);
+                    return new Response(Utils.REQ.GROUP_CHAT, new Data(groupChat));
+
+
+                case Utils.REQ.ALL_CHATS:
+                    ArrayList<PersonalChat> personalChats = DatabaseManager.getAllPersonalChats(dat.clientUsername);
+                    ArrayList<GroupChat> groupChats =DatabaseManager.getAllGroupChats(dat.clientUsername);
+                    return new Response(Utils.REQ.ALL_CHATS, new Data(personalChats, groupChats));
+
+
+                case Utils.REQ.MESSAGE:
+                    ArrayList<String> members = DatabaseManager.addMessage(dat.dataString, dat.message);
+                    NotificationManager.messageNotification(dat.message.getSender(), members);
+                    break;
+
+
+                case Utils.REQ.ADD_MEMBER:
+                    if ( DatabaseManager.checkIfUserExists(dat.clientUsername) )
+                    {
+                        GroupChat updatedChat = DatabaseManager.addMember(dat.clientUsername, dat.dataString);
+                        return new Response(Utils.REQ.ADD_MEMBER, new Data(updatedChat));
+                    }
+                    else return new Response(Utils.REQ.ADD_MEMBER, new Data(false));
 
 
                 case Utils.REQ.LOGOUT:

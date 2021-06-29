@@ -52,17 +52,17 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="followingLink" layoutX="1073.0" layoutY="24.0" onAction="#followingLinkClickHandler" text="0">
+            <Hyperlink fx:id="followingLink" alignment="CENTER" layoutX="1049.0" layoutY="24.0" minWidth="80.0" onAction="#followingLinkClickHandler" text="0000">
                <font>
                   <Font size="28.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="followersLink" layoutX="932.0" layoutY="24.0" onAction="#followersLinkClickHandler" text="0">
+            <Hyperlink fx:id="followersLink" alignment="CENTER" layoutX="908.0" layoutY="24.0" minWidth="80.0" onAction="#followersLinkClickHandler" text="0000">
                <font>
                   <Font size="28.0" />
                </font>
             </Hyperlink>
-            <Label fx:id="postsLabel" layoutX="794.0" layoutY="30.0" text="0">
+            <Label fx:id="postsLabel" alignment="CENTER" layoutX="762.0" layoutY="30.0" minWidth="80.0" text="0000">
                <font>
                   <Font size="28.0" />
                </font>
@@ -91,9 +91,9 @@
       </AnchorPane>
         <ScrollPane fitToWidth="true" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="475.0" prefWidth="1300.0">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="1300.0">
+                <AnchorPane fx:id="scrollAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="30.0" prefWidth="1300.0">
                <children>
-                  <VBox fx:id="scrollVBox" layoutX="265.0" layoutY="20.0" prefHeight="2000.0" prefWidth="770.0" spacing="10.0" />
+                  <VBox fx:id="scrollVBox" layoutX="265.0" layoutY="20.0" prefHeight="30.0" prefWidth="770.0" spacing="10.0" />
                </children></AnchorPane>
             </content>
         </ScrollPane>
