@@ -40,7 +40,7 @@ public class ViewPostController implements Initializable
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, playLabel;
+    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, dateLabel, playLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
@@ -80,6 +80,7 @@ public class ViewPostController implements Initializable
         likeLabel.setText("" + post.getLikedBy().size() );
         commentsLabel.setText( "" + post.getComments().size() );
         captionLabel.setText( post.getCaption() );
+        dateLabel.setText( post.getDate().toString() );
 
         if (post.getLikedBy().contains(Utils.currentUser)) {
             likeButton.setText("Unlike");
@@ -172,7 +173,8 @@ public class ViewPostController implements Initializable
 
     @FXML
     void messageButtonClickHandler(ActionEvent event) {
-        //chat Request
+        Request req = new Request( Utils.REQ.PERSONAL_CHAT, new Data(Utils.currentUser, usernameLabel.getText()) );
+        NetworkManager.putRequest(req);
         stopMediaPlayer();
     }
 

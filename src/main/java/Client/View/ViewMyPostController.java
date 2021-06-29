@@ -34,7 +34,7 @@ public class ViewMyPostController implements Initializable
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, playLabel;
+    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, dateLabel, playLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, editButton;
     @FXML
@@ -71,6 +71,7 @@ public class ViewMyPostController implements Initializable
         commentsLabel.setText("" + post.getComments().size());
         likeLabel.setText("" + post.getLikedBy().size());
         captionLabel.setText( post.getCaption() );
+        dateLabel.setText( post.getDate().toString() );
 
         if (post.getLikedBy().contains(Utils.currentUser)) {
             likeButton.setText("Unlike");

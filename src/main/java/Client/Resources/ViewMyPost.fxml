@@ -117,9 +117,14 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label fx:id="captionLabel" layoutX="530.0" layoutY="140.0" prefHeight="300.0" prefWidth="300.0" text="caption" wrapText="true">
+            <Label fx:id="captionLabel" layoutX="530.0" layoutY="140.0" prefHeight="270.0" prefWidth="300.0" text="caption" wrapText="true">
                <font>
                   <Font name="Calibri Light" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="dateLabel" alignment="CENTER" layoutX="530.0" layoutY="420.0" prefHeight="30.0" prefWidth="300.0" text="date" textFill="#5289a1">
+               <font>
+                  <Font size="18.0" />
                </font>
             </Label>
             <ScrollPane fx:id="commentsScrollPane" layoutX="880.0" layoutY="10.0" prefHeight="370.0" prefWidth="220.0">

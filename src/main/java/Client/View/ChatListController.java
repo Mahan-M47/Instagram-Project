@@ -67,7 +67,7 @@ public class ChatListController implements Initializable
 
         for (GroupChat chat : groupChats)
         {
-            StringBuilder chatTitle = new StringBuilder("(Group) ");
+            StringBuilder chatTitle = new StringBuilder("(Group)  ");
             List<String> members = chat.getMembers();
 
             for (String member : members) {

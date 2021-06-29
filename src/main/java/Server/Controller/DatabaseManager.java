@@ -93,8 +93,12 @@ public class DatabaseManager
         User followerUser = getFollowData(followerUsername);
         User followingUser = getFollowData(followingUsername);
 
-        followerUser.addFollowing(followingUsername);
-        followingUser.addFollower(followerUsername);
+        if (! followerUser.getFollowing().contains(followingUsername) ) {
+            followerUser.addFollowing(followingUsername);
+        }
+        if (! followingUser.getFollowers().contains(followerUsername) ) {
+            followingUser.addFollower(followerUsername);
+        }
 
         DBObject followingUserQuery = new BasicDBObject("Username", followingUser.getUsername());
         collection.update(followingUserQuery, followingUser.createFollowDBObject());

@@ -62,6 +62,7 @@ public class TimelineController implements Initializable
             Button likeButton = new Button("Like");
             Label likeLabel = new Label("" + post.getLikedBy().size());
             Label captionLabel = new Label(post.getCaption());
+            Label dateLabel = new Label(post.getDate().toString());
 
             Button sendButton = new Button("Send");
             TextField commentTF = new TextField();
@@ -73,7 +74,7 @@ public class TimelineController implements Initializable
                 likeButton.setText("Unlike");
             }
 
-            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel, post);
+            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel, dateLabel, post);
             ScrollPane commentsScrollPane = createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
 
             AnchorPane pane = new AnchorPane();
@@ -95,6 +96,7 @@ public class TimelineController implements Initializable
             pane.getChildren().add(commentsButton);
             pane.getChildren().add(commentsLabel);
             pane.getChildren().add(captionLabel);
+            pane.getChildren().add(dateLabel);
             pane.getChildren().add(commentTF);
             pane.getChildren().add(sendButton);
             pane.getChildren().add(commentsScrollPane);
@@ -188,26 +190,28 @@ public class TimelineController implements Initializable
         return null;
     }
 
-    public void createButtons(Button likeButton, Button commentsButton, Hyperlink usernameLink,
-                              Label likeLabel, Label commentsLabel, Label captionLabel, Post post)
+    public void createButtons(Button likeButton, Button commentsButton, Hyperlink usernameLink, Label likeLabel,
+                              Label commentsLabel, Label captionLabel, Label dateLabel, Post post)
     {
         commentsButton.setPrefSize(130,50);
         commentsLabel.setPrefSize(50,50);
         captionLabel.setPrefSize(300,290);
         usernameLink.setPrefSize(300,65);
         likeButton.setPrefSize(130,50);
+        dateLabel.setPrefSize(300,30);
         likeLabel.setPrefSize(50,50);
-
 
         commentsButton.setFont( new Font("System",20) );
         commentsLabel.setFont( new Font("System",25) );
         captionLabel.setFont( new Font("Calibri Light", 24));
         usernameLink.setFont( new Font("System",30) );
         likeButton.setFont( new Font("System",20) );
+        dateLabel.setFont( new Font("System",18) );
         likeLabel.setFont( new Font("System",25) );
 
         commentsButton.setStyle("-fx-background-color: #d4d4d4");
         likeButton.setStyle("-fx-background-color: #d4d4d4");
+        dateLabel.setStyle("-fx-text-fill: #5289a1");
 
         likeButton.setLayoutX(550);
         likeButton.setLayoutY(100);
@@ -228,9 +232,13 @@ public class TimelineController implements Initializable
         captionLabel.setLayoutY(210);
         captionLabel.setWrapText(true);
 
-        commentsLabel.setAlignment(Pos.CENTER);
+        dateLabel.setLayoutX(550);
+        dateLabel.setLayoutY(470);
+
         usernameLink.setAlignment(Pos.CENTER);
-        captionLabel.setAlignment(Pos.TOP_LEFT);
+        commentsLabel.setAlignment(Pos.CENTER);
+        captionLabel.setAlignment(Pos.CENTER);
+        dateLabel.setAlignment(Pos.CENTER);
         likeLabel.setAlignment(Pos.CENTER);
 
         likeButton.setOnAction(new EventHandler() {
