@@ -20,6 +20,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
+
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
@@ -237,7 +238,7 @@ public class TimelineController implements Initializable
 
         usernameLink.setAlignment(Pos.CENTER);
         commentsLabel.setAlignment(Pos.CENTER);
-        captionLabel.setAlignment(Pos.CENTER);
+        captionLabel.setAlignment(Pos.CENTER_LEFT);
         dateLabel.setAlignment(Pos.CENTER);
         likeLabel.setAlignment(Pos.CENTER);
 
