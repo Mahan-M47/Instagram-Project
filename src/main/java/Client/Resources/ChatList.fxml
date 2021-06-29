@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.ChatListController">
    <children>
-      <ScrollPane layoutX="420.0" layoutY="120.0" prefHeight="600.0" prefWidth="710.0">
+      <ScrollPane layoutX="420.0" layoutY="120.0" prefHeight="600.0" prefWidth="710.0" style="-fx-background-color: #f4f4f4;">
          <content>
             <VBox fx:id="itemHolder" prefHeight="90.0" prefWidth="700.0" />
          </content>

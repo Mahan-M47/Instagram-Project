@@ -31,24 +31,29 @@ import java.util.ResourceBundle;
 public class TimelineController implements Initializable
 {
     @FXML
+    private AnchorPane scrollAnchorPane;
+    @FXML
     private VBox scrollVBox;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, logoutButton, loadMoreButton;
 
+    private int postCounter = 0;
     private List<MediaPlayer> mediaPlayerList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mediaPlayerList = new ArrayList<>();
-        addPosts();
+        loadPosts();
     }
 
-    void addPosts()
+    void loadPosts()
     {
         List<Post> posts = Utils.timelineData;
 
-        for (int i = 0; i < posts.size() && i < 10; i++)
+        for (int i = postCounter; i < posts.size() && i < postCounter + 10; i++)
         {
+            scrollAnchorPane.setPrefHeight(scrollAnchorPane.getPrefHeight() + 600);
+            scrollVBox.setPrefHeight(scrollVBox.getPrefHeight() + 600);
             Post post = posts.get(i);
 
             Hyperlink usernameLink = new Hyperlink(post.getUsername());
@@ -72,7 +77,7 @@ public class TimelineController implements Initializable
             ScrollPane commentsScrollPane = createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
 
             AnchorPane pane = new AnchorPane();
-            pane.setPrefSize(900, 500);
+            pane.setPrefSize(900, 600);
 
             if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
                 ImageView postImage = loadImage(post);
@@ -94,7 +99,32 @@ public class TimelineController implements Initializable
             pane.getChildren().add(sendButton);
             pane.getChildren().add(commentsScrollPane);
 
+            Separator separator = new Separator();
+            separator.setPrefWidth(1000);
+            separator.setLayoutY(550);
+            pane.getChildren().add(separator);
+
             scrollVBox.getChildren().add(pane);
+        }
+
+        if ( postCounter + 10 < posts.size() )
+        {
+            Button loadMoreButton = new Button("Load More Posts");
+            loadMoreButton.setFont(new Font("System", 20));
+
+            loadMoreButton.setOnAction(new EventHandler() {
+                @Override
+                public void handle(Event event)
+                {
+                    scrollAnchorPane.setPrefHeight(scrollAnchorPane.getPrefHeight() + 50);
+                    scrollVBox.setPrefHeight(scrollVBox.getPrefHeight() + 50);
+                    scrollVBox.getChildren().add(new Label(""));
+                    postCounter += 10;
+                    loadPosts();
+                }
+            });
+
+            scrollVBox.getChildren().add(loadMoreButton);
         }
     }
 
@@ -271,11 +301,6 @@ public class TimelineController implements Initializable
         return commentsScrollPane;
     }
 
-
-    @FXML
-    void loadMoreButtonClickHandler(ActionEvent event) {
-        //reload page with another set of pictures
-    }
 
     public void stopMediaPlayers()
     {

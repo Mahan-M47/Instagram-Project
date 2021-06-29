@@ -13,20 +13,9 @@ public class Utils
     public static final String POST_VIDEO = ".mp4";
 
 
-    //Database titles
-    public static final String DATABASE_NAME = "instagram";
-    public static final String DB_LOGIN = "login";
-    public static final String DB_FOLLOW = "follow";
-    public static final String DB_BIO = "bio";
-    public static final String DB_POST = "post";
-    public static final String DB_PERSONALCHAT = "PersonalChat";
-    public static final String DB_GROUPCHAT = "GroupChat";
-    public static final String DB_CHATID = "ChatID";
-
-
     //File directories
-    public static final String DIR_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
-    public static final String DIR_POSTS = "src/main/java/Server/Resources/";
+    public static final String DIR_SERVER_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
+    public static final String DIR_SERVER_POSTS = "src/main/java/Server/Resources/";
     public static final String DIR_CLIENT_POST_VIDEOS = "src/main/java/Client/Resources/Post_Videos/";
 
 
@@ -53,5 +42,18 @@ public class Utils
         public static final String MESSAGE = "addMessage";
         public static final String ADD_MEMBER = "addMember";
         public static final String TERMINATE = "terminate";
+    }
+
+
+    //Collection Names
+    public static class DB {
+        public static final String DATABASE_NAME = "Instagram";
+        public static final String LOGIN = "Login";
+        public static final String FOLLOW = "Follow";
+        public static final String BIO = "Bio";
+        public static final String POST = "Post";
+        public static final String PERSONAL_CHAT = "PersonalChat";
+        public static final String GROUP_CHAT = "GroupChat";
+        public static final String CHAT_ID = "ChatID";
     }
 }

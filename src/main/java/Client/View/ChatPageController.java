@@ -93,29 +93,29 @@ public class ChatPageController implements Initializable
     {
         AnchorPane labelHolder = new AnchorPane();
         Label messageLabel = new Label("  " + message.getText() + "  ");
-        labelHolder.setStyle("-fx-background-color: white;");
-        messageLabel.setFont(new Font("Ebrima", 16));
+//        labelHolder.setStyle("-fx-background-color: white;");
+        messageLabel.setFont(new Font("Ebrima", 22));
 
         if ( message.getSender().equals(Utils.currentUser) )
         {
             labelHolder.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            messageLabel.setStyle("-fx-background-color: #efefef;" +
+            messageLabel.setStyle("-fx-background-color: #d4d4d4;" +
                     "-fx-background-radius: 18");
         }
         else
         {
-            messageLabel.setStyle("-fx-border-radius: 18;" +
-                    "-fx-border-color: #efefef;" +
+            messageLabel.setStyle(
+                    "-fx-background-color: #ffffff;" +
                     "-fx-background-radius: 18");
         }
 
-        labelHolder.setPrefSize(890, 40);
+        labelHolder.setPrefSize(880, 50);
         messageLabel.setPrefHeight(35);
         messageLabel.setLayoutX(5);
         messageLabel.setLayoutY(3);
 
         labelHolder.getChildren().add(messageLabel);
-        background.setPrefHeight(background.getPrefHeight() + 40);
+        background.setPrefHeight(background.getPrefHeight() + 50);
         background.getChildren().add(labelHolder);
     }
 

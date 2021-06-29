@@ -79,8 +79,23 @@ public class NotificationManager
         }
     }
 
-    public static synchronized void messageNotification() {
+    public static synchronized void messageNotification(String sender, ArrayList<String> members)
+    {
+        Notification notification = new Notification("New Message!", sender + " Sent a Message");
+        Response response = new Response( Utils.REQ.NOTIFICATION, new Data(notification) );
 
+        members.remove(sender);
+        Collections.sort(members);
+
+        for (ActiveClient client : MainManager.activeClients)
+        {
+            int index = Collections.binarySearch(members, client.getUsername());
+
+            if (index != -1) {
+                sendNotification(client, response);
+                System.out.println("Message Notification Sent.");
+            }
+        }
     }
 
     public static void sendNotification(ActiveClient client, Response response)

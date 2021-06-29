@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -53,8 +54,12 @@ public class ChatListController implements Initializable
                 }
             });
 
+            Separator separator = new Separator();
+            separator.setPrefWidth(880);
+
             itemHolder.getChildren().add(chatLabel);
-            itemHolder.setPrefHeight(itemHolder.getPrefHeight() + 90);
+            itemHolder.getChildren().add(separator);
+            itemHolder.setPrefHeight(itemHolder.getPrefHeight() + 80);
         }
 
         //Group Chats:
@@ -81,29 +86,33 @@ public class ChatListController implements Initializable
                 }
             });
 
+            Separator separator = new Separator();
+            separator.setPrefWidth(880);
+
             itemHolder.getChildren().add(chatLabel);
-            itemHolder.setPrefHeight(itemHolder.getPrefHeight() + 90);
+            itemHolder.getChildren().add(separator);
+            itemHolder.setPrefHeight(itemHolder.getPrefHeight() + 80);
         }
 
     }
 
     public void createChatLabel(Label chatLabel)
     {
-        chatLabel.setFont(new Font("ebrime", 20));
-        chatLabel.setPrefSize(700, 90);
-        chatLabel.setStyle("-fx-background-color: white");
+        chatLabel.setFont(new Font("ebrime", 24));
+        chatLabel.setPrefSize(700, 80);
+        chatLabel.setStyle("-fx-background-color: #c5c5c5");
 
         chatLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                chatLabel.setStyle("-fx-background-color: #dadada");
+                chatLabel.setStyle("-fx-background-color: white");
             }
         });
 
         chatLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                chatLabel.setStyle("-fx-background-color: white");
+                chatLabel.setStyle("-fx-background-color: #c5c5c5");
             }
         });
     }

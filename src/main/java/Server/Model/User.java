@@ -114,44 +114,50 @@ public class User
         }
     }
 
-    public String getServerFilePath() { return Utils.DIR_PROFILE_PICTURES + username + ".jpg"; }
+    public String getServerFilePath() { return Utils.DIR_SERVER_PROFILE_PICTURES + username + ".jpg"; }
 
     public void addPost(Post post) { this.posts.add(post); }
 
-    public DBObject createLoginDBObject() {
-        return new BasicDBObject("username", username)
-                .append("password", password);
+    public DBObject createLoginDBObject()
+    {
+        return new BasicDBObject("Username", username)
+                .append("Password", password);
     }
 
-    public DBObject createFollowDBObject() {
-        return new BasicDBObject("username", username)
+    public DBObject createFollowDBObject()
+    {
+        return new BasicDBObject("Username", username)
                 .append("Following", following)
                 .append("Followers", followers);
     }
 
-    public DBObject createBioDBObject() {
-        return new BasicDBObject("username", username)
+    public DBObject createBioDBObject()
+    {
+        return new BasicDBObject("Username", username)
                 .append("Bio", bioText);
     }
 
-    public static User parseLoginDBObject(DBObject object) {
+    public static User parseLoginDBObject(DBObject object)
+    {
         User user = new User();
-        user.setUsername((String) object.get("username"));
-        user.setPassword((String) object.get("password"));
+        user.setUsername((String) object.get("Username"));
+        user.setPassword((String) object.get("Password"));
         return user;
     }
 
-    public static User parseFollowDBObject(DBObject object) {
+    public static User parseFollowDBObject(DBObject object)
+    {
         User user = new User();
-        user.setUsername((String) object.get("username"));
+        user.setUsername((String) object.get("Username"));
         user.setFollowing((ArrayList<String>)object.get("Following"));
         user.setFollowers((ArrayList<String>)object.get("Followers"));
         return user;
     }
 
-    public static User parseBioDBObject(DBObject object) {
+    public static User parseBioDBObject(DBObject object)
+    {
         User user = new User();
-        user.setUsername((String) object.get("username"));
+        user.setUsername((String) object.get("Username"));
         user.setBioText((String) object.get("Bio"));
         return user;
     }

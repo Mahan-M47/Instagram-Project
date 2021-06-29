@@ -58,8 +58,8 @@ public class Utils
 
 
     //File directories
-    public static final String DIR_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
-    public static final String DIR_POSTS = "src/main/java/Server/Resources/";
+    public static final String DIR_SERVER_PROFILE_PICTURES = "src/main/java/Server/Resources/Profile_Pictures/";
+    public static final String DIR_SERVER_POSTS = "src/main/java/Server/Resources/";
     public static final String DIR_CLIENT_POST_VIDEOS = "src/main/java/Client/Resources/Post_Videos/";
 
 

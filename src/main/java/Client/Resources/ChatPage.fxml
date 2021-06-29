@@ -54,7 +54,7 @@
          </children></AnchorPane>
       <ScrollPane layoutX="250.0" layoutY="100.0" prefHeight="630.0" prefWidth="900.0">
          <content>
-            <VBox fx:id="background" prefHeight="0.0" prefWidth="890.0" />
+            <VBox fx:id="background" prefHeight="0.0" prefWidth="880.0" />
          </content>
       </ScrollPane>
       <TextField fx:id="messageTF" layoutX="250.0" layoutY="740.0" prefHeight="50.0" prefWidth="800.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="250.0">

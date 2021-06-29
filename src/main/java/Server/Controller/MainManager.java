@@ -126,7 +126,8 @@ public class MainManager
 
 
                 case Utils.REQ.MESSAGE:
-                    DatabaseManager.addMessage(dat.dataString, dat.message);
+                    ArrayList<String> members = DatabaseManager.addMessage(dat.dataString, dat.message);
+                    NotificationManager.messageNotification(dat.message.getSender(), members);
                     break;
 
 

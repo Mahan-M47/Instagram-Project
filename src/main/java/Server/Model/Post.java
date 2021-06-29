@@ -77,7 +77,7 @@ public class Post implements Comparable<Post>
     }
 
     public String getServerFilePath() {
-        return Utils.DIR_POSTS + ID + postType;
+        return Utils.DIR_SERVER_POSTS + ID + postType;
     }
 
     public void addLike(String username) {
@@ -114,13 +114,13 @@ public class Post implements Comparable<Post>
 
     public DBObject createPostDBObject() {
         return new BasicDBObject()
-                .append("PostType",postType)
-                .append("Caption",caption)
+                .append("PostType", postType)
+                .append("Caption", caption)
                 .append("ID",ID)
-                .append("username",username)
-                .append("Comments",comments)
-                .append("Date",date)
-                .append("LikedBy",likedBy);
+                .append("Username", username)
+                .append("Comments", comments)
+                .append("Date", date)
+                .append("LikedBy", likedBy);
     }
 
     public static Post parsePost(DBObject object)
@@ -128,7 +128,7 @@ public class Post implements Comparable<Post>
         Post post = new Post();
         post.setPostType((String) object.get("PostType"));
         post.setCaption((String) object.get("Caption"));
-        post.setUsername((String) object.get("username"));
+        post.setUsername((String) object.get("Username"));
         post.setLikedBy((ArrayList<String>) object.get("LikedBy"));
         post.setComments((ArrayList<String>) object.get("Comments"));
         post.setDate((Date) object.get("Date"));
