@@ -1,5 +1,6 @@
 package Client.Controller;
 
+import Client.Model.GroupChat;
 import Client.Model.Notification;
 import Client.Model.PersonalChat;
 import Client.Utils;
@@ -30,10 +31,18 @@ public class GUIManager
 
     public static void reload() { Starter.reloadScene(); }
 
+    public static void showChatList() { Starter.changeScene(Utils.GUI.CHAT_LIST); }
+
     public static void showPersonalChatPage(PersonalChat chat) {
         ChatPageController.setPersonalChat(chat);
         Starter.changeScene(Utils.GUI.CHAT_PAGE);
     }
+
+    public static void showGroupChatPage(GroupChat chat) {
+        ChatPageController.setGroupChat(chat);
+        Starter.changeScene(Utils.GUI.CHAT_PAGE);
+    }
+
 
     public static void showNotification(Notification notificationObj)
     {

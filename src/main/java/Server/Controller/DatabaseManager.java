@@ -53,9 +53,9 @@ public class DatabaseManager
         return Users;
     }
 
-    public synchronized static boolean checkIfUserExists(String collectionName, String username)
+    public synchronized static boolean checkIfUserExists(String username)
     {
-        DBCollection collection = db.getCollection(collectionName);
+        DBCollection collection = db.getCollection(Utils.DB_LOGIN);
         DBObject query = new BasicDBObject("username", username);
         DBObject existingQuery = collection.findOne(query);
 
@@ -347,7 +347,6 @@ public class DatabaseManager
 
     public synchronized static void addMessage(String chatID, Message message)
     {
-
         DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
         DBObject dbObject = new BasicDBObject("ChatID", chatID);
         DBObject query = collection.findOne(dbObject);
@@ -370,18 +369,22 @@ public class DatabaseManager
         }
     }
 
-    public synchronized static void addMember(String ChatID, String member)
+    public synchronized static GroupChat addMember(String member, String chatID)
     {
-            DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
-            GroupChat chat = getGroupChat(ChatID);
-            chat.addMember(member);
-            DBObject query = new BasicDBObject("ChatID", ChatID);
-            collection.update( query, chat.createChatGroupDBObject() );
+        GroupChat chat = getGroupChat(chatID);
+        chat.addMember(member);
+        updateChatIDCollection(member, chatID);
+
+        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
+        DBObject query = new BasicDBObject("ChatID", chatID);
+        collection.update( query, chat.createChatGroupDBObject() );
+
+        return chat;
     }
 
     public synchronized static ArrayList<PersonalChat> getAllPersonalChats(String username)
     {
-        DBCollection collection = db.getCollection(Utils.DB_GROUPCHAT);
+        DBCollection collection = db.getCollection(Utils.DB_PERSONALCHAT);
         ArrayList<String> chatIDs = getChatIDs(username);
         ArrayList<PersonalChat> personalChats = new ArrayList<>();
 

@@ -53,7 +53,7 @@ public class SearchPageController implements Initializable {
     {
         String searchText = searchTF.getText().toLowerCase();
 
-        if (!searchText.equals("")) {
+        if (! searchText.matches("\\s*")) {
             Request req = new Request(Utils.REQ.SEARCH, new Data(Utils.currentUser, searchText));
             NetworkManager.putRequest(req);
         }

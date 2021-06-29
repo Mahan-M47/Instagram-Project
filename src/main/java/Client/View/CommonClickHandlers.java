@@ -31,10 +31,14 @@ public class CommonClickHandlers
 
     public static void postButton() { Starter.changeScene(Utils.GUI.CREATE_POST); }
 
-    public static void chatsButton() { Starter.changeScene(Utils.GUI.CHAT_LIST); }
-
     public static void editProfileButton() {
         Starter.changeScene(Utils.GUI.EDIT_PROFILE);
+    }
+
+    public static void chatsButton()
+    {
+        Request req = new Request(Utils.REQ.ALL_CHATS, new Data(Utils.currentUser));
+        NetworkManager.putRequest(req);
     }
 
     public static void showProfileButton(String username)

@@ -72,16 +72,13 @@ public class Data
         this.groupChat = chat;
     }
 
-    public void setPersonalChatList(ArrayList<PersonalChat> personalChatList) {
+    public Data(ArrayList<PersonalChat> personalChatList, ArrayList<GroupChat> groupChatList) {
         this.personalChatList = new ArrayList<>(personalChatList);
-    }
-
-    public void setGroupChatList(ArrayList<GroupChat> groupChatList) {
         this.groupChatList = new ArrayList<>(groupChatList);
     }
 
-    public Data(String clientUsername, Message message) {
-        this.clientUsername = clientUsername;
+    public Data(String chatID, Message message) {
+        this.dataString = chatID;
         this.message = message;
     }
 

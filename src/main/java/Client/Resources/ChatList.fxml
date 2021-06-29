@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.ChatListController">
    <children>
-      <ScrollPane layoutX="295.0" layoutY="115.0" prefHeight="615.0" prefWidth="710.0">
+      <ScrollPane layoutX="420.0" layoutY="120.0" prefHeight="600.0" prefWidth="710.0">
          <content>
             <VBox fx:id="itemHolder" prefHeight="90.0" prefWidth="700.0" />
          </content>
@@ -23,7 +23,7 @@
                   <Font name="Ebrima Bold" size="27.0" />
                </font>
             </Label>
-            <Separator layoutX="150.0" layoutY="100.0" prefHeight="0.0" prefWidth="1000.0" />
+            <Separator layoutX="100.0" layoutY="100.0" prefHeight="0.0" prefWidth="1100.0" />
          </children></AnchorPane>
       <AnchorPane layoutY="725.0" prefHeight="125.0" prefWidth="1300.0" style="-fx-background-color: #e6e6e6;">
          <children>
@@ -58,5 +58,10 @@
             </HBox>
          </children>
       </AnchorPane>
+      <Button fx:id="groupChatButton" layoutX="140.0" layoutY="150.0" mnemonicParsing="false" onAction="#groupChatButtonClickHandler" prefHeight="68.0" prefWidth="250.0" text="Create New Group Chat">
+         <font>
+            <Font name="Ebrima" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

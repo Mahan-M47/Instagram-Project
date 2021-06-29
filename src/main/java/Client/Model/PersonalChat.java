@@ -1,5 +1,6 @@
 package Client.Model;
 
+import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import java.util.ArrayList;
@@ -35,28 +36,37 @@ public class PersonalChat
 
     public void setMessageList(ArrayList<Message> messageList) { this.messageList = messageList; }
 
-    public String IDBuilder() { return members.get(0) + " " + members.get(1) + UUID.randomUUID().toString(); }
+    public String IDBuilder() { return members.get(0) + "-" + members.get(1) + UUID.randomUUID().toString(); }
 
-    public DBObject createChatPersonalDBObject() {
-        return new BasicDBObject()
-                .append("ChatID",getChatID())
-                .append("Members",getMembers())
-                .append("MessageList",getMessageList());
-    }
-
-    public DBObject createChatIDDBObject() {
-        return new BasicDBObject()
-                .append("ChatID",getChatID())
-                .append("Members",getMembers())
-                .append("MessageList",getMessageList());
-    }
-
-    public static Server.Model.PersonalChat parsePersonalChatDBObject(DBObject object)
+    public DBObject createChatPersonalDBObject()
     {
-        Server.Model.PersonalChat chat = new Server.Model.PersonalChat();
+        Gson gson = new Gson();
+        ArrayList<String> jsonMessageList = new ArrayList<>();
+
+        for (Message message : messageList) {
+            jsonMessageList.add( gson.toJson(message) );
+        }
+
+        return new BasicDBObject()
+                .append("ChatID", chatID)
+                .append("Members", members)
+                .append("MessageList", jsonMessageList);
+    }
+
+    public static PersonalChat parsePersonalChatDBObject(DBObject object)
+    {
+        PersonalChat chat = new PersonalChat();
         chat.setChatID((String) object.get("ChatID"));
         chat.setMembers((ArrayList<String>) object.get("Members"));
-        chat.setMessageList((ArrayList<Server.Model.Message>) object.get(("MessageList")));
+
+        Gson gson = new Gson();
+        chat.setMessageList(new ArrayList<>());
+        ArrayList<String> jsonMessageList = (ArrayList<String>) object.get("MessageList");
+
+        for (String jsonMessage : jsonMessageList) {
+            chat.addMessage( gson.fromJson(jsonMessage, Message.class) );
+        }
+
         return chat;
     }
 

@@ -47,11 +47,13 @@ public class Utils
     public static String SIGNUP_ERROR_TEXT = "";
     public static String LOGIN_ERROR_TEXT = "";
     public static String SEARCH_ERROR_TEXT = "";
+    public static String ADD_MEMBER_ERROR_TEXT = "";
 
     public static void resetErrorTexts() {
         SIGNUP_ERROR_TEXT = "";
         LOGIN_ERROR_TEXT = "";
         SEARCH_ERROR_TEXT = "";
+        ADD_MEMBER_ERROR_TEXT = "";
     }
 
 

@@ -109,18 +109,41 @@ public class MainManager
                 break;
 
 
+            case Utils.REQ.TIMELINE:
+                Utils.timelineData = dat.posts;
+                GUIManager.showTimeline();
+                break;
+
+
             case Utils.REQ.PERSONAL_CHAT:
                 GUIManager.showPersonalChatPage(dat.personalChat);
                 break;
 
-            case Utils.REQ.NOTIFICATION:
-                GUIManager.showNotification(dat.notification);
+
+            case Utils.REQ.GROUP_CHAT:
+                GUIManager.showGroupChatPage(dat.groupChat);
                 break;
 
 
-            case Utils.REQ.TIMELINE:
-                Utils.timelineData = dat.posts;
-                GUIManager.showTimeline();
+            case Utils.REQ.ALL_CHATS:
+                Utils.personalChats = dat.personalChatList;
+                Utils.groupChats = dat.groupChatList;
+                GUIManager.showChatList();
+                break;
+
+
+            case Utils.REQ.ADD_MEMBER:
+
+                if (dat.groupChat == null) {
+                    Utils.ADD_MEMBER_ERROR_TEXT = "This User Does Not Exist.";
+                    GUIManager.reload();
+                }
+                else GUIManager.showGroupChatPage(dat.groupChat);
+                break;
+
+
+            case Utils.REQ.NOTIFICATION:
+                GUIManager.showNotification(dat.notification);
                 break;
         }
 

@@ -22,14 +22,14 @@ public class MainManager
             switch ( req.getTitle() )
             {
                 case Utils.REQ.SIGNUP:
-                    boolean userExists = DatabaseManager.checkIfUserExists(Utils.DB_LOGIN, dat.clientUsername);
-
-                    if (!userExists) {
+                    if (! DatabaseManager.checkIfUserExists(dat.clientUsername) )
+                    {
                         user = new User(dat.clientUsername, dat.dataString);
                         DatabaseManager.adduser(user);
                         flag = true;
                     }
                     else flag = false;
+
                     return new Response(Utils.REQ.SIGNUP, new Data(dat.clientUsername, flag) );
 
 
@@ -120,7 +120,23 @@ public class MainManager
 
 
                 case Utils.REQ.ALL_CHATS:
+                    ArrayList<PersonalChat> personalChats = DatabaseManager.getAllPersonalChats(dat.clientUsername);
+                    ArrayList<GroupChat> groupChats =DatabaseManager.getAllGroupChats(dat.clientUsername);
+                    return new Response(Utils.REQ.ALL_CHATS, new Data(personalChats, groupChats));
+
+
+                case Utils.REQ.MESSAGE:
+                    DatabaseManager.addMessage(dat.dataString, dat.message);
                     break;
+
+
+                case Utils.REQ.ADD_MEMBER:
+                    if ( DatabaseManager.checkIfUserExists(dat.clientUsername) )
+                    {
+                        GroupChat updatedChat = DatabaseManager.addMember(dat.clientUsername, dat.dataString);
+                        return new Response(Utils.REQ.ADD_MEMBER, new Data(updatedChat));
+                    }
+                    else return new Response(Utils.REQ.ADD_MEMBER, new Data(false));
 
 
                 case Utils.REQ.LOGOUT:
