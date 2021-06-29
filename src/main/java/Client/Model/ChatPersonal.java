@@ -8,7 +8,7 @@ public class ChatPersonal
 {
     String chatID;
     List<String> members;
-    List<Message> messageList;
+    List<Message> messageList = new ArrayList<>();
 
     public ChatPersonal(String user1, String user2) {
         members = new ArrayList<>(2);

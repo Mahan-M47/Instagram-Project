@@ -1,5 +1,6 @@
 package Client;
 
+import Client.Model.ChatPersonal;
 import Client.Model.Post;
 import Client.Model.User;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class Utils
     //the currently logged in user
     public static String currentUser = "";
     public static User currentUserObj = null;
-
+    public static List<ChatPersonal> personalChats = null;
 
     //General constants
     public static final String IP_ADDRESS = "localhost";
