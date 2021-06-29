@@ -2,32 +2,26 @@ package Server.Model;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-public class ChatPersonal
+public class PersonalChat
 {
-    String chatID;
-    ArrayList<String> members;
-    ArrayList<Message> messageList;
+    private String chatID;
+    private ArrayList<String> members;
+    private ArrayList<Message> messageList;
 
-    public ChatPersonal(String user1, String user2) {
+    public PersonalChat(String user1, String user2) {
+        messageList = new ArrayList<>();
         members = new ArrayList<>(2);
         members.add(user1);
         members.add(user2);
         chatID = IDBuilder();
     }
 
-    public ChatPersonal(){
-    }
+    public PersonalChat() {}
 
     public void addMessage(Message message) { messageList.add(message); }
-
-    public void addMember(String member){
-        members.add(member);
-    }
 
     public ArrayList<String> getMembers() { return members; }
 
@@ -47,20 +41,18 @@ public class ChatPersonal
         return new BasicDBObject()
                 .append("ChatID",getChatID())
                 .append("Members",getMembers())
-                .append("MessageList",getMessageList())
-                ;
+                .append("MessageList",getMessageList());
     }
 
     public DBObject createChatIDDBObject() {
         return new BasicDBObject()
                 .append("ChatID",getChatID())
-                .append("Members",getMembers())
-                .append("MessageList",getMessageList())
-                ;
+                .append("Members",getMembers());
     }
 
-    public static ChatPersonal parsePersonalChatDBObject(DBObject object) {
-        ChatPersonal chat = new ChatPersonal();
+    public static PersonalChat parsePersonalChatDBObject(DBObject object)
+    {
+        PersonalChat chat = new PersonalChat();
         chat.setChatID((String) object.get("ChatID"));
         chat.setMembers((ArrayList<String>) object.get("Members"));
         chat.setMessageList((ArrayList<Message>) object.get(("MessageList")));

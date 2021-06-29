@@ -7,7 +7,7 @@ public class Message
 {
     private String messageType, sender, text;
     private Date date;
-    private File file;
+    private File file = null;
 
     public Message(String sender, String text) {
         messageType = "TEXT";

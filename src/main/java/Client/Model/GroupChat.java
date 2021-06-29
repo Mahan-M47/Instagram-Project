@@ -1,25 +1,24 @@
-package Server.Model;
+package Client.Model;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-public class ChatGroup
+public class GroupChat
 {
-    String chatID;
-    ArrayList<String> members;
-    ArrayList<Message> messageList;
+    private String chatID;
+    private ArrayList<String> members;
+    private ArrayList<Message> messageList;
 
-    public ChatGroup(String firstMember) {
+    public GroupChat(String firstMember) {
+        messageList = new ArrayList<>();
         members = new ArrayList<>();
         members.add(firstMember);
         chatID = IDBuilder();
     }
 
-    public ChatGroup() {
+    public GroupChat() {
     }
 
     public void addMessage(Message message) {
@@ -52,12 +51,11 @@ public class ChatGroup
         return new BasicDBObject()
                 .append("ChatID",getChatID())
                 .append("Members",getMembers())
-                .append("MessageList",getMessageList())
-                ;
+                .append("MessageList",getMessageList());
     }
 
-    public static ChatGroup parseGroupChatDBObject(DBObject object) {
-        ChatGroup chat = new ChatGroup();
+    public static GroupChat parseGroupChatDBObject(DBObject object) {
+        GroupChat chat = new GroupChat();
         chat.setChatID((String) object.get("ChatID"));
         chat.setMembers((ArrayList<String>) object.get("Members"));
         chat.setMessageList((ArrayList<Message>) object.get(("MessageList")));

@@ -264,7 +264,7 @@ public class TimelineController implements Initializable
         sendButton.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                CommonClickHandlers.sendButton(commentsVBox, commentTF, commentsLabel, post);
+                CommonClickHandlers.sendCommentButton(commentsVBox, commentTF, commentsLabel, post);
             }
         });
 

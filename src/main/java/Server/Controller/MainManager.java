@@ -1,10 +1,10 @@
 package Server.Controller;
 
+import Server.Model.PersonalChat;
 import Server.Model.Post;
-import Server.Utils;
-
-import java.util.List;
 import Server.Model.User;
+import Server.Utils;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -24,7 +24,7 @@ public class MainManager
                     boolean userExists = DatabaseManager.checkIfUserExists(Utils.DB_LOGIN, dat.clientUsername);
 
                     if (!userExists) {
-                        user = new User(dat.clientUsername, dat.dataString );
+                        user = new User(dat.clientUsername, dat.dataString);
                         DatabaseManager.adduser(user);
                         flag = true;
                     }
@@ -99,6 +99,26 @@ public class MainManager
                 case Utils.REQ.TIMELINE:
                     ArrayList<Post> posts = DatabaseManager.assembleTimeline(dat.clientUsername);
                     return new Response(Utils.REQ.TIMELINE, new Data(posts));
+
+
+                case Utils.REQ.PERSONAL_CHAT:
+                    String chatID = DatabaseManager.checkIfPersonalChatExists(dat.clientUsername, dat.dataString);
+                    PersonalChat chat;
+
+                    if ( chatID == null ) {
+                        chat = DatabaseManager.createPersonalChat(dat.clientUsername, dat.dataString);
+                    }
+                    else chat = DatabaseManager.getPersonalChat(chatID);
+
+                    return new Response(Utils.REQ.PERSONAL_CHAT, new Data(chat));
+
+
+                case Utils.REQ.GROUP_CHAT:
+                    break;
+
+
+                case Utils.REQ.ALL_CHATS:
+                    break;
 
 
                 case Utils.REQ.LOGOUT:

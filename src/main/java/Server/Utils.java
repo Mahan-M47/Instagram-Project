@@ -47,6 +47,9 @@ public class Utils
         public static final String CREATE_POST = "createPost";
         public static final String TIMELINE = "getTimeline";
         public static final String NOTIFICATION = "notification";
+        public static final String PERSONAL_CHAT = "getPersonalChat";
+        public static final String GROUP_CHAT = "getGroupChat";
+        public static final String ALL_CHATS = "getAllChats";
         public static final String TERMINATE = "terminate";
     }
 }

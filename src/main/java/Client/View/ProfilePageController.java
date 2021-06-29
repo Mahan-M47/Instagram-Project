@@ -5,6 +5,7 @@ import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Model.Post;
 import Client.Utils;
+import Server.Model.PersonalChat;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -165,6 +166,8 @@ public class ProfilePageController implements Initializable {
 
     @FXML
     void messageButtonClickHandler(ActionEvent event) {
+        Request req = new Request( Utils.REQ.PERSONAL_CHAT, new Data(Utils.currentUser, usernameLabel.getText()) );
+        NetworkManager.putRequest(req);
     }
 
     @FXML

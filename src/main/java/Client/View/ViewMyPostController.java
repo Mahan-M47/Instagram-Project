@@ -136,7 +136,7 @@ public class ViewMyPostController implements Initializable
     void commentsButtonClickHandler(ActionEvent event) { CommonClickHandlers.commentsButton(commentsScrollPane, sendButton, commentsTF); }
 
     @FXML
-    void sendButtonClickHandler() { CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post); }
+    void sendButtonClickHandler() { CommonClickHandlers.sendCommentButton(commentsVBox, commentsTF, commentsLabel, post); }
 
     @FXML
     void followersLinkClickHandler(ActionEvent event) {

@@ -15,12 +15,14 @@ import javafx.scene.text.Font;
 
 public class CommonClickHandlers
 {
-    public static void homeButton() {
+    public static void homeButton()
+    {
         Request req = new Request(Utils.REQ.TIMELINE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
 
-    public static void myProfileButton() {
+    public static void myProfileButton()
+    {
         Request req = new Request(Utils.REQ.MY_PROFILE, new Data(Utils.currentUser));
         NetworkManager.putRequest(req);
     }
@@ -29,7 +31,7 @@ public class CommonClickHandlers
 
     public static void postButton() { Starter.changeScene(Utils.GUI.CREATE_POST); }
 
-    public static void chatsButton() { }
+    public static void chatsButton() { Starter.changeScene(Utils.GUI.CHAT_LIST); }
 
     public static void editProfileButton() {
         Starter.changeScene(Utils.GUI.EDIT_PROFILE);
@@ -104,7 +106,7 @@ public class CommonClickHandlers
         }
     }
 
-    public static void sendButton(VBox commentsVBox, TextField commentsTF, Label commentsLabel, Post post)
+    public static void sendCommentButton(VBox commentsVBox, TextField commentsTF, Label commentsLabel, Post post)
     {
         if (! commentsTF.getText().matches("\\s*") )
         {

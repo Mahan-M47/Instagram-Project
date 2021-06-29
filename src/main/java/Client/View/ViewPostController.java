@@ -148,7 +148,7 @@ public class ViewPostController implements Initializable
 
     @FXML
     void sendButtonClickHandler() {
-        CommonClickHandlers.sendButton(commentsVBox, commentsTF, commentsLabel, post);
+        CommonClickHandlers.sendCommentButton(commentsVBox, commentsTF, commentsLabel, post);
     }
 
     @FXML

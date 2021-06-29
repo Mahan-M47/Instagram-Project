@@ -16,8 +16,10 @@ public class Data
     public List<Post> posts = null;
     public Notification notification = null;
     public Message message = null;
-    public ChatPersonal chatPersonal = null;
-    public ChatGroup chatGroup = null;
+    public PersonalChat personalChat = null;
+    public GroupChat groupChat = null;
+    public ArrayList<PersonalChat> personalChatList = null;
+    public ArrayList<GroupChat> groupChatList = null;
     public boolean flag;
 
     public Data() {}
@@ -62,14 +64,20 @@ public class Data
         this.notification = notification;
     }
 
-    public Data(String clientUsername, ChatPersonal chat) {
-        this.clientUsername = clientUsername;
-        this.chatPersonal = chat;
+    public Data(PersonalChat chat) {
+        this.personalChat = chat;
     }
 
-    public Data(String clientUsername, ChatGroup chat) {
-        this.clientUsername = clientUsername;
-        this.chatGroup = chat;
+    public Data(GroupChat chat) {
+        this.groupChat = chat;
+    }
+
+    public void setPersonalChatList(ArrayList<PersonalChat> personalChatList) {
+        this.personalChatList = new ArrayList<>(personalChatList);
+    }
+
+    public void setGroupChatList(ArrayList<GroupChat> groupChatList) {
+        this.groupChatList = new ArrayList<>(groupChatList);
     }
 
     public Data(String clientUsername, Message message) {
