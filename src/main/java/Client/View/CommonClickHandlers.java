@@ -114,13 +114,14 @@ public class CommonClickHandlers
     {
         if (! commentsTF.getText().matches("\\s*") )
         {
-            String commentText = Utils.currentUser + ": " + commentsTF.getText();
-            post.addComment(commentText);
             Request req = new Request(Utils.REQ.COMMENT, new Data( Utils.currentUser, post.getID() ,commentsTF.getText() ));
             NetworkManager.putRequest(req);
 
-            Label comment = createCommentLabel(commentText);
-            commentsVBox.getChildren().add(comment);
+            String comment = Utils.currentUser + ": " + commentsTF.getText();
+            post.addComment(comment);
+
+            Label commentLabel = createCommentLabel("  " + comment);
+            commentsVBox.getChildren().add(commentLabel);
             commentsLabel.setText("" + post.getComments().size());
             commentsTF.setText("");
         }

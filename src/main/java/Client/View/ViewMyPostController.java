@@ -2,6 +2,7 @@ package Client.View;
 
 import Client.Model.Post;
 import Client.Utils;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,11 +31,13 @@ public class ViewMyPostController implements Initializable
     @FXML
     private ScrollPane commentsScrollPane;
     @FXML
+    private JFXTextArea captionTextArea;
+    @FXML
     private TextField commentsTF;
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, dateLabel, playLabel;
+    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, dateLabel, playLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, editButton;
     @FXML
@@ -70,7 +73,7 @@ public class ViewMyPostController implements Initializable
     {
         commentsLabel.setText("" + post.getComments().size());
         likeLabel.setText("" + post.getLikedBy().size());
-        captionLabel.setText( post.getCaption() );
+        captionTextArea.setText( post.getCaption() );
         dateLabel.setText( post.getDate().toString() );
 
         if (post.getLikedBy().contains(Utils.currentUser)) {
@@ -78,7 +81,7 @@ public class ViewMyPostController implements Initializable
         }
 
         for (String commentText : post.getComments()) {
-            Label comment = CommonClickHandlers.createCommentLabel(commentText);
+            Label comment = CommonClickHandlers.createCommentLabel("  " + commentText);
             commentsVBox.getChildren().add(comment);
         }
 

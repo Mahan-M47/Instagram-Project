@@ -35,6 +35,11 @@ public class Utils
     public static final String POST_VIDEO = ".mp4";
 
 
+    //Maximum file size
+    public static final int POST_FILE_MAX_SIZE = 15000000;
+    public static final int MESSAGE_FILE_MAX_SIZE = 1000000;
+
+
     //PlayButton CSS string
     public static final String PLAY_BUTTON_CSS = "  -fx-background-color: #ffffff;" +
             "  -fx-background-radius: 15;" +

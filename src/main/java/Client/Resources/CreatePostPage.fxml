@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.View.CreatePostPageController">
    <children>
-      <Label fx:id="errorLabel" layoutX="740.0" layoutY="322.0" prefHeight="75.0" prefWidth="420.0" text="You Can Only Post jpg and mp4 Files." textAlignment="CENTER" textFill="#d31111" visible="false" wrapText="true">
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="740.0" layoutY="322.0" prefHeight="75.0" prefWidth="420.0" text="error" textAlignment="CENTER" textFill="#d31111" visible="false" wrapText="true">
          <font>
             <Font name="System Italic" size="25.0" />
          </font>

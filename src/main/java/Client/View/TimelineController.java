@@ -5,6 +5,7 @@ import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Model.Post;
 import Client.Utils;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,7 +21,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
-
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
@@ -57,12 +57,12 @@ public class TimelineController implements Initializable
             scrollVBox.setPrefHeight(scrollVBox.getPrefHeight() + 600);
             Post post = posts.get(i);
 
+            JFXTextArea captionTextArea = new JFXTextArea(post.getCaption());
             Hyperlink usernameLink = new Hyperlink(post.getUsername());
             Button commentsButton = new Button("Comments");
             Label commentsLabel = new Label("" + post.getComments().size());
             Button likeButton = new Button("Like");
             Label likeLabel = new Label("" + post.getLikedBy().size());
-            Label captionLabel = new Label(post.getCaption());
             Label dateLabel = new Label(post.getDate().toString());
 
             Button sendButton = new Button("Send");
@@ -70,12 +70,11 @@ public class TimelineController implements Initializable
 
             Label playLabel = new Label("PLAY");
 
-
             if (post.getLikedBy().contains(Utils.currentUser)) {
                 likeButton.setText("Unlike");
             }
 
-            createButtons(likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, captionLabel, dateLabel, post);
+            createButtons(captionTextArea, likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, dateLabel, post);
             ScrollPane commentsScrollPane = createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
 
             AnchorPane pane = new AnchorPane();
@@ -96,7 +95,7 @@ public class TimelineController implements Initializable
             pane.getChildren().add(likeLabel);
             pane.getChildren().add(commentsButton);
             pane.getChildren().add(commentsLabel);
-            pane.getChildren().add(captionLabel);
+            pane.getChildren().add(captionTextArea);
             pane.getChildren().add(dateLabel);
             pane.getChildren().add(commentTF);
             pane.getChildren().add(sendButton);
@@ -191,12 +190,12 @@ public class TimelineController implements Initializable
         return null;
     }
 
-    public void createButtons(Button likeButton, Button commentsButton, Hyperlink usernameLink, Label likeLabel,
-                              Label commentsLabel, Label captionLabel, Label dateLabel, Post post)
+    public void createButtons(JFXTextArea captionTextArea, Button likeButton, Button commentsButton,
+                              Hyperlink usernameLink, Label likeLabel, Label commentsLabel, Label dateLabel, Post post)
     {
         commentsButton.setPrefSize(130,50);
         commentsLabel.setPrefSize(50,50);
-        captionLabel.setPrefSize(300,290);
+        captionTextArea.setPrefSize(300,250);
         usernameLink.setPrefSize(300,65);
         likeButton.setPrefSize(130,50);
         dateLabel.setPrefSize(300,30);
@@ -204,7 +203,7 @@ public class TimelineController implements Initializable
 
         commentsButton.setFont( new Font("System",20) );
         commentsLabel.setFont( new Font("System",25) );
-        captionLabel.setFont( new Font("Calibri Light", 24));
+        captionTextArea.setFont( new Font("Calibri Light", 20));
         usernameLink.setFont( new Font("System",30) );
         likeButton.setFont( new Font("System",20) );
         dateLabel.setFont( new Font("System",18) );
@@ -229,16 +228,15 @@ public class TimelineController implements Initializable
         commentsLabel.setLayoutX(760);
         commentsLabel.setLayoutY(150);
 
-        captionLabel.setLayoutX(550);
-        captionLabel.setLayoutY(210);
-        captionLabel.setWrapText(true);
+        captionTextArea.setLayoutX(550);
+        captionTextArea.setLayoutY(210);
+        captionTextArea.setEditable(false);
 
         dateLabel.setLayoutX(550);
         dateLabel.setLayoutY(470);
 
         usernameLink.setAlignment(Pos.CENTER);
         commentsLabel.setAlignment(Pos.CENTER);
-        captionLabel.setAlignment(Pos.CENTER_LEFT);
         dateLabel.setAlignment(Pos.CENTER);
         likeLabel.setAlignment(Pos.CENTER);
 
@@ -289,7 +287,7 @@ public class TimelineController implements Initializable
 
 
         for (String commentText : post.getComments()) {
-            Label comment = CommonClickHandlers.createCommentLabel(commentText);
+            Label comment = CommonClickHandlers.createCommentLabel("  " + commentText);
             commentsVBox.getChildren().add(comment);
         }
 

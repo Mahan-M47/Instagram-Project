@@ -62,7 +62,7 @@
                   <Font size="28.0" />
                </font>
             </Hyperlink>
-            <Label fx:id="postsLabel" alignment="CENTER" layoutX="762.0" layoutY="30.0" minWidth="80.0" text="0000">
+            <Label fx:id="postsLabel" alignment="CENTER" layoutX="760.0" layoutY="30.0" minWidth="80.0" text="0000">
                <font>
                   <Font size="28.0" />
                </font>

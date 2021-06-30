@@ -72,7 +72,7 @@ public class NotificationManager
         {
             int index = Collections.binarySearch(followers, client.getUsername());
 
-            if (index != -1) {
+            if (index > -1) {
                 sendNotification(client, response);
                 System.out.println("Post Notification Sent.");
             }
@@ -91,7 +91,7 @@ public class NotificationManager
         {
             int index = Collections.binarySearch(members, client.getUsername());
 
-            if (index != -1) {
+            if (index > -1) {
                 sendNotification(client, response);
                 System.out.println("Message Notification Sent.");
             }

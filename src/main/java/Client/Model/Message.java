@@ -1,13 +1,16 @@
 package Client.Model;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 
 public class Message
 {
     private String messageType, sender, text;
     private Date date;
-    private File file = null;
+    private String imageBytes;
 
     public Message(String sender, String text) {
         messageType = "TEXT";
@@ -19,8 +22,22 @@ public class Message
     public Message(String sender, File file) {
         messageType = "FILE";
         this.sender = sender;
-        this.file = file;
         date = new Date();
+        createImageBytes(file.getPath());
+    }
+
+    public void createImageBytes(String filePath)
+    {
+        try {
+            File savedFile = new File(filePath);
+            FileInputStream in = new FileInputStream(savedFile);
+            byte[] bytes = new byte[(int) savedFile.length()];
+            in.read(bytes);
+            this.imageBytes = new String(Base64.getEncoder().encode(bytes), "UTF-8");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getMessageType() { return messageType; }
@@ -31,7 +48,7 @@ public class Message
 
     public Date getDate() { return date; }
 
-    public File getFile() { return file; }
+    public byte[] getImageBytes() { return Base64.getDecoder().decode(imageBytes); }
 
     public void setMessageType(String messageType) { this.messageType = messageType; }
 
@@ -41,5 +58,5 @@ public class Message
 
     public void setDate(Date date) { this.date = date; }
 
-    public void setFile(File file) { this.file = file; }
+    public void setImageBytes(String imageBytes) { this.imageBytes = imageBytes; }
 }

@@ -137,7 +137,7 @@ public class MainManager
                         GroupChat updatedChat = DatabaseManager.addMember(dat.clientUsername, dat.dataString);
                         return new Response(Utils.REQ.ADD_MEMBER, new Data(updatedChat));
                     }
-                    else return new Response(Utils.REQ.ADD_MEMBER, new Data(false));
+                    else return new Response(Utils.REQ.ADD_MEMBER);
 
 
                 case Utils.REQ.LOGOUT:
