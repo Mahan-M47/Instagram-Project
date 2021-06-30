@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
@@ -114,14 +115,14 @@ public class CommonClickHandlers
     {
         if (! commentsTF.getText().matches("\\s*") )
         {
-            Request req = new Request(Utils.REQ.COMMENT, new Data( Utils.currentUser, post.getID() ,commentsTF.getText() ));
+            String commentText = Utils.currentUser + ": " + commentsTF.getText();
+            post.addComment(commentText);
+
+            Request req = new Request( Utils.REQ.COMMENT, new Data(Utils.currentUser, post.getID(), commentText) );
             NetworkManager.putRequest(req);
 
-            String comment = Utils.currentUser + ": " + commentsTF.getText();
-            post.addComment(comment);
-
-            Label commentLabel = createCommentLabel("  " + comment);
-            commentsVBox.getChildren().add(commentLabel);
+            AnchorPane commentHolder = createComment(commentText);
+            commentsVBox.getChildren().add(commentHolder);
             commentsLabel.setText("" + post.getComments().size());
             commentsTF.setText("");
         }
@@ -136,5 +137,21 @@ public class CommonClickHandlers
         comment.setFont( new Font("System",16) );
         comment.setWrapText(true);
         return comment;
+    }
+
+    public static AnchorPane createComment(String commentText)
+    {
+        AnchorPane commentHolder = new AnchorPane();
+        commentHolder.setPrefWidth(200);
+
+        Label comment = new Label(commentText);
+        comment.setPrefWidth(200);
+        comment.setLayoutX(5);
+        comment.setLayoutY(15);
+        comment.setFont( new Font("Calibri Light",18) );
+        comment.setWrapText(true);
+
+        commentHolder.getChildren().add(comment);
+        return commentHolder;
     }
 }

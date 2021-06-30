@@ -135,7 +135,7 @@
             </JFXTextArea>
             <ScrollPane fx:id="commentsScrollPane" layoutX="880.0" layoutY="10.0" prefHeight="370.0" prefWidth="220.0">
                <content>
-                  <VBox fx:id="commentsVBox" prefHeight="1000.0" prefWidth="205.0" />
+                  <VBox fx:id="commentsVBox" prefHeight="0.0" prefWidth="205.0" />
                </content>
             </ScrollPane>
             <TextField fx:id="commentsTF" layoutX="880.0" layoutY="381.0" prefHeight="30.0" prefWidth="220.0" promptText="Leave a Comment">

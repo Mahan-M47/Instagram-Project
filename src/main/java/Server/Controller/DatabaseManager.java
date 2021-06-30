@@ -206,14 +206,13 @@ public class DatabaseManager
         collection.update(query, post.createPostDBObject());
     }
 
-    public synchronized static Post comment(String username, String postID, String commentText)
+    public synchronized static Post comment(String comment, String postID)
     {
         DBCollection collection = db.getCollection(Utils.DB.POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
         Post post = Post.parsePost(object);
-        String comment = username + ": " + commentText;
         post.addComment(comment);
         collection.update(query, post.createPostDBObject());
 
@@ -423,7 +422,7 @@ public class DatabaseManager
         }
     }
 
-    public synchronized static GroupChat addMember(String member, String chatID)
+    public synchronized static GroupChat addMember(String chatID, String member)
     {
         GroupChat chat = getGroupChat(chatID);
         chat.addMember(member);

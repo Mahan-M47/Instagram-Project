@@ -77,36 +77,36 @@ public class TimelineController implements Initializable
             createButtons(captionTextArea, likeButton, commentsButton, usernameLink, likeLabel, commentsLabel, dateLabel, post);
             ScrollPane commentsScrollPane = createCommentScrollPane(commentTF, commentsButton, sendButton, commentsLabel, post);
 
-            AnchorPane pane = new AnchorPane();
-            pane.setPrefSize(900, 600);
+            AnchorPane postHolder = new AnchorPane();
+            postHolder.setPrefSize(900, 600);
 
             if ( post.getPostType().equals(Utils.POST_IMAGE) ) {
                 ImageView postImage = loadImage(post);
-                pane.getChildren().add(postImage);
+                postHolder.getChildren().add(postImage);
             }
             else {
                 MediaView postVideo = loadVideo(post, playLabel);
-                pane.getChildren().add(postVideo);
-                pane.getChildren().add(playLabel);
+                postHolder.getChildren().add(postVideo);
+                postHolder.getChildren().add(playLabel);
             }
 
-            pane.getChildren().add(usernameLink);
-            pane.getChildren().add(likeButton);
-            pane.getChildren().add(likeLabel);
-            pane.getChildren().add(commentsButton);
-            pane.getChildren().add(commentsLabel);
-            pane.getChildren().add(captionTextArea);
-            pane.getChildren().add(dateLabel);
-            pane.getChildren().add(commentTF);
-            pane.getChildren().add(sendButton);
-            pane.getChildren().add(commentsScrollPane);
+            postHolder.getChildren().add(usernameLink);
+            postHolder.getChildren().add(likeButton);
+            postHolder.getChildren().add(likeLabel);
+            postHolder.getChildren().add(commentsButton);
+            postHolder.getChildren().add(commentsLabel);
+            postHolder.getChildren().add(captionTextArea);
+            postHolder.getChildren().add(dateLabel);
+            postHolder.getChildren().add(commentTF);
+            postHolder.getChildren().add(sendButton);
+            postHolder.getChildren().add(commentsScrollPane);
 
             Separator separator = new Separator();
             separator.setPrefWidth(1000);
             separator.setLayoutY(550);
-            pane.getChildren().add(separator);
+            postHolder.getChildren().add(separator);
 
-            scrollVBox.getChildren().add(pane);
+            scrollVBox.getChildren().add(postHolder);
         }
 
         if ( postCounter + 10 < posts.size() )
@@ -120,7 +120,7 @@ public class TimelineController implements Initializable
                 {
                     scrollAnchorPane.setPrefHeight(scrollAnchorPane.getPrefHeight() + 50);
                     scrollVBox.setPrefHeight(scrollVBox.getPrefHeight() + 50);
-                    scrollVBox.getChildren().add(new Label(""));
+                    scrollVBox.getChildren().add(new Label());
                     postCounter += 10;
                     loadPosts();
                 }
@@ -260,8 +260,7 @@ public class TimelineController implements Initializable
     {
         ScrollPane commentsScrollPane = new ScrollPane();
         VBox commentsVBox = new VBox();
-        commentsVBox.setPrefSize(205,1000);
-
+        commentsVBox.setPrefWidth(205);
 
         commentTF.setFont( new Font("System",14) );
         commentTF.setPrefSize(220,30);
@@ -287,8 +286,8 @@ public class TimelineController implements Initializable
 
 
         for (String commentText : post.getComments()) {
-            Label comment = CommonClickHandlers.createCommentLabel("  " + commentText);
-            commentsVBox.getChildren().add(comment);
+            AnchorPane commentHolder = CommonClickHandlers.createComment(commentText);
+            commentsVBox.getChildren().add(commentHolder);
         }
 
         commentsButton.setOnAction(new EventHandler() {

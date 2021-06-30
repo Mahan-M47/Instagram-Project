@@ -97,7 +97,7 @@ public class MainManager
 
 
             case Utils.REQ.COMMENT:
-                post = DatabaseManager.comment(dat.clientUsername, dat.postID, dat.text);
+                post = DatabaseManager.comment(dat.text, dat.postID);
                 NotificationManager.commentNotification(dat.clientUsername, post);
                 break;
 
@@ -139,7 +139,7 @@ public class MainManager
             case Utils.REQ.ADD_MEMBER:
                 if ( DatabaseManager.checkIfUserExists(dat.clientUsername) )
                 {
-                    GroupChat updatedChat = DatabaseManager.addMember(dat.clientUsername, dat.dataString);
+                    GroupChat updatedChat = DatabaseManager.addMember(dat.dataString, dat.clientUsername);
                     return new Response(Utils.REQ.ADD_MEMBER, new Data(updatedChat));
                 }
                 else return new Response(Utils.REQ.ADD_MEMBER);

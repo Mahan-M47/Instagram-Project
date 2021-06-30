@@ -13,10 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -35,6 +32,8 @@ public class ChatPageController implements Initializable
 {
     @FXML
     private Label chatLabel, errorLabel;
+    @FXML
+    private Hyperlink usernameLink;
     @FXML
     private TextField messageTF, addMemberTF;
     @FXML
@@ -67,12 +66,13 @@ public class ChatPageController implements Initializable
     {
         if (personalChat != null)
         {
+            usernameLink.setVisible(true);
             List<String> members = personalChat.getMembers();
 
             if (members.get(0).equals(Utils.currentUser)) {
-                chatLabel.setText(members.get(1));
+                usernameLink.setText(members.get(1));
             }
-            else chatLabel.setText(members.get(0));
+            else usernameLink.setText(members.get(0));
 
             for (Message message : personalChat.getMessageList()) {
                 createMessage(message);
@@ -85,7 +85,7 @@ public class ChatPageController implements Initializable
             membersListView.setItems(searchResults);
             membersListView.setStyle(" -fx-font: 18pt \"System\" ");
 
-            chatLabel.setText("Group Chat");
+            chatLabel.setVisible(true);
             errorLabel.setText(Utils.ADD_MEMBER_ERROR_TEXT);
             membersPane.setVisible(true);
             Utils.resetErrorTexts();
@@ -134,17 +134,30 @@ public class ChatPageController implements Initializable
 
             imageView.setFitWidth(350);
             imageView.setFitHeight(350);
-            imageView.setLayoutX(20);
+            imageView.setLayoutX(10);
             imageView.setLayoutY(10);
+
+            AnchorPane imageHolder = new AnchorPane();
+            imageHolder.setPrefSize(370, 370);
 
             if ( message.getSender().equals(Utils.currentUser) ) {
                 messageHolder.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+                imageHolder.setStyle("-fx-background-color: #d4d4d4;" +
+                        "-fx-background-radius: 18");
+            }
+            else {
+                imageHolder.setStyle("-fx-background-color: #ffffff;" +
+                        "-fx-background-radius: 18");
             }
 
-            messageHolder.setPrefSize(880, 370);
-            messageHolder.getChildren().add(imageView);
+            imageHolder.getChildren().add(imageView);
+            imageHolder.setLayoutX(10);
+            imageHolder.setLayoutY(10);
 
-            background.setPrefHeight(background.getPrefHeight() + 370);
+            messageHolder.setPrefSize(880, 390);
+            messageHolder.getChildren().add(imageHolder);
+
+            background.setPrefHeight(background.getPrefHeight() + 390);
         }
 
         background.getChildren().add(messageHolder);
@@ -202,6 +215,11 @@ public class ChatPageController implements Initializable
             NetworkManager.putRequest(req);
         }
 
+    }
+
+    @FXML
+    void usernameLinkClickHandler(ActionEvent event) {
+        CommonClickHandlers.showProfileButton( usernameLink.getText() );
     }
 
     @FXML

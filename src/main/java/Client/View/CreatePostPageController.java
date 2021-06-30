@@ -132,6 +132,8 @@ public class CreatePostPageController
 
         Request req = new Request(Utils.REQ.CREATE_POST, new Data(Utils.currentUser, post));
         NetworkManager.putRequest(req);
+
+        Utils.currentUserObj.addPost(post);
         ViewMyPostController.setPost(post);
         Starter.changeScene(Utils.GUI.MY_POST);
     }

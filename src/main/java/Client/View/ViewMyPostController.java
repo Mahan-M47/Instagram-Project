@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -84,8 +85,8 @@ public class ViewMyPostController implements Initializable
         }
 
         for (String commentText : post.getComments()) {
-            Label comment = CommonClickHandlers.createCommentLabel("  " + commentText);
-            commentsVBox.getChildren().add(comment);
+            AnchorPane commentHolder = CommonClickHandlers.createComment(commentText);
+            commentsVBox.getChildren().add(commentHolder);
         }
 
         commentsScrollPane.setVisible(false);
