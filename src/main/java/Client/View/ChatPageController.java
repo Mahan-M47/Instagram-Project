@@ -105,6 +105,11 @@ public class ChatPageController implements Initializable
             Label messageLabel = new Label();
             messageLabel.setFont(new Font("Ebrima", 22));
 
+            messageHolder.setPrefSize(880, 50);
+            messageLabel.setPrefHeight(45);
+            messageLabel.setLayoutX(5);
+            messageLabel.setLayoutY(3);
+
             if ( message.getSender().equals(Utils.currentUser) )
             {
                 messageHolder.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
@@ -118,11 +123,6 @@ public class ChatPageController implements Initializable
                         "-fx-background-radius: 18");
             }
 
-            messageHolder.setPrefSize(880, 50);
-            messageLabel.setPrefHeight(45);
-            messageLabel.setLayoutX(5);
-            messageLabel.setLayoutY(3);
-
             messageHolder.getChildren().add(messageLabel);
             background.setPrefHeight(background.getPrefHeight() + 50);
         }
@@ -132,8 +132,8 @@ public class ChatPageController implements Initializable
             Image img = new Image(in);
             ImageView imageView = new ImageView(img);
 
-            imageView.setFitWidth(400);
-            imageView.setFitHeight(400);
+            imageView.setFitWidth(350);
+            imageView.setFitHeight(350);
             imageView.setLayoutX(20);
             imageView.setLayoutY(10);
 
@@ -141,10 +141,10 @@ public class ChatPageController implements Initializable
                 messageHolder.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
             }
 
-            messageHolder.setPrefSize(880, 420);
+            messageHolder.setPrefSize(880, 370);
             messageHolder.getChildren().add(imageView);
 
-            background.setPrefHeight(background.getPrefHeight() + 420);
+            background.setPrefHeight(background.getPrefHeight() + 370);
         }
 
         background.getChildren().add(messageHolder);

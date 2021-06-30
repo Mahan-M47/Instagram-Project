@@ -12,8 +12,10 @@ public class ServerIO
     private DataInputStream in;
     private DataOutputStream out;
     private Gson gson;
+    private Encryption encryption;
 
-    public ServerIO(Socket socket) {
+    public ServerIO(Socket socket)
+    {
         try {
             this.socket = socket;
             in  = new DataInputStream( socket.getInputStream() );
@@ -22,18 +24,22 @@ public class ServerIO
         catch (IOException e) {
             e.printStackTrace();
         }
+
+        encryption = new Encryption();
         gson = new Gson();
     }
 
-    public Request receiveFromClient() {
+    public Request receiveFromClient()
+    {
         String json = "";
 
         try {
             byte[] bytes = new byte[in.readInt()];
             in.readFully(bytes);
-            json = new String(bytes);
+            byte[] decryptedBytes = encryption.decrypt(bytes);
+            json = new String(decryptedBytes);
         }
-        catch (IOException e) {
+        catch (Exception e) {
             close();
         }
 
@@ -44,16 +50,19 @@ public class ServerIO
     {
         String json = gson.toJson(response);
         byte[] bytes = json.getBytes();
+
         try {
-            out.writeInt(bytes.length);
-            out.write(bytes);
+            byte[] encryptedBytes = encryption.encrypt(bytes);
+            out.writeInt(encryptedBytes.length);
+            out.write(encryptedBytes);
         }
-        catch (IOException e) {
+        catch (Exception e) {
             close();
         }
     }
 
-    public void close() {
+    public void close()
+    {
         try {
             in.close();
             out.close();

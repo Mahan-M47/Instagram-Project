@@ -29,6 +29,10 @@ public class Utils
     public static final long MAIN_SLEEP_TIMER = 100;
     public static final long DISCONNECT_SLEEP_TIMER = 500;
 
+    //Key Bytes Was generated using the keyGenerator class in another program. the Key Bytes for Client and Server are identical.
+    public static final byte[] ENCRYPTION_KEY_BYTES = { -85 ,-83 ,-6 ,82 ,93 ,125 ,-36 ,-35 ,-104 ,33 ,4 ,96, 49 ,-75,
+            -125, 113, -96, 114, -51, -109, 18, 33, -98, 27, 18, -79, -39, 65, 71, 76, 42, -116 };
+
 
     //Post types
     public static final String POST_IMAGE = ".jpg";
