@@ -47,7 +47,7 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Button fx:id="chooseFileButton" layoutX="297.0" layoutY="495.0" mnemonicParsing="false" onAction="#chooseFileButtonClickHandler" prefHeight="50.0" prefWidth="130.0" text="Choose File">
+      <Button fx:id="chooseFileButton" layoutX="297.0" layoutY="495.0" mnemonicParsing="false" onAction="#chooseFileButtonClickHandler" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: #d4d4d4;" text="Choose File">
          <font>
             <Font size="20.0" />
          </font>
@@ -57,9 +57,9 @@
             <Font size="21.0" />
          </font>
       </Button>
-      <Button fx:id="applyButton" layoutX="960.0" layoutY="600.0" mnemonicParsing="false" onAction="#applyButtonClickHandler" prefHeight="50.0" prefWidth="100.0" text="Apply" textFill="#589687">
+      <Button fx:id="applyButton" layoutX="960.0" layoutY="600.0" mnemonicParsing="false" onAction="#applyButtonClickHandler" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #d4d4d4;" text="Apply" textFill="#589687">
          <font>
-            <Font name="System Bold" size="22.0" />
+            <Font name="Calibri Bold" size="24.0" />
          </font>
       </Button>
       <Label fx:id="errorLabel" layoutX="545.0" layoutY="630.0" prefHeight="75.0" prefWidth="400.0" text="You Can Only Use jpg Files As Profile Picture" textAlignment="CENTER" textFill="#d31111" visible="false">

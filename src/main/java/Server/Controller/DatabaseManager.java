@@ -141,6 +141,7 @@ public class DatabaseManager
             File savedProfilePicture = new File( userData.getServerFilePath() );
             FileOutputStream out = new FileOutputStream(savedProfilePicture);
             out.write(userData.getProfilePicture());
+            out.close();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -158,6 +159,7 @@ public class DatabaseManager
             File savedFile = new File( post.getServerFilePath() );
             FileOutputStream out = new FileOutputStream( savedFile );
             out.write( post.getFileBytes() );
+            out.close();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -165,6 +167,19 @@ public class DatabaseManager
 
         post.emptyFileBytes();
         collection.insert(post.createPostDBObject());
+    }
+
+    public synchronized static void deletePost(String postID)
+    {
+        DBCollection collection = db.getCollection(Utils.DB.POST);
+        DBObject query = new BasicDBObject("ID", postID);
+        DBObject object = collection.findOne(query);
+
+        Post post = Post.parsePost(object);
+        File savedFile = new File( post.getServerFilePath() );
+        System.out.println(savedFile.delete());
+
+        collection.remove(query);
     }
 
     public synchronized static Post like(String username, String postID)
@@ -191,14 +206,13 @@ public class DatabaseManager
         collection.update(query, post.createPostDBObject());
     }
 
-    public synchronized static Post comment(String username, String postID, String commentText)
+    public synchronized static Post comment(String comment, String postID)
     {
         DBCollection collection = db.getCollection(Utils.DB.POST);
         DBObject query = new BasicDBObject("ID", postID);
         DBObject object = collection.findOne(query);
 
         Post post = Post.parsePost(object);
-        String comment = username + ": " + commentText;
         post.addComment(comment);
         collection.update(query, post.createPostDBObject());
 
@@ -408,7 +422,7 @@ public class DatabaseManager
         }
     }
 
-    public synchronized static GroupChat addMember(String member, String chatID)
+    public synchronized static GroupChat addMember(String chatID, String member)
     {
         GroupChat chat = getGroupChat(chatID);
         chat.addMember(member);

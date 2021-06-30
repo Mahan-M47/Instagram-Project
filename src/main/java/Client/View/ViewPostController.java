@@ -5,6 +5,7 @@ import Client.Controller.NetworkManager;
 import Client.Controller.Request;
 import Client.Model.Post;
 import Client.Utils;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -36,11 +38,13 @@ public class ViewPostController implements Initializable
     @FXML
     private ScrollPane commentsScrollPane;
     @FXML
+    private JFXTextArea captionTextArea;
+    @FXML
     private TextField commentsTF;
     @FXML
     private Hyperlink followingLink, followersLink;
     @FXML
-    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, captionLabel, dateLabel, playLabel;
+    private Label usernameLabel, bioLabel, postsLabel, likeLabel, commentsLabel, dateLabel, playLabel;
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton;
     @FXML
@@ -79,7 +83,7 @@ public class ViewPostController implements Initializable
     public void loadPost() {
         likeLabel.setText("" + post.getLikedBy().size() );
         commentsLabel.setText( "" + post.getComments().size() );
-        captionLabel.setText( post.getCaption() );
+        captionTextArea.setText( post.getCaption() );
         dateLabel.setText( post.getDate().toString() );
 
         if (post.getLikedBy().contains(Utils.currentUser)) {
@@ -87,8 +91,8 @@ public class ViewPostController implements Initializable
         }
 
         for (String commentText : post.getComments()) {
-            Label comment = CommonClickHandlers.createCommentLabel(commentText);
-            commentsVBox.getChildren().add(comment);
+            AnchorPane commentHolder = CommonClickHandlers.createComment(commentText);
+            commentsVBox.getChildren().add(commentHolder);
         }
 
         commentsScrollPane.setVisible(false);

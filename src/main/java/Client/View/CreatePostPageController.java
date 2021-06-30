@@ -51,7 +51,12 @@ public class CreatePostPageController
         {
             filePath = chosenFile.getPath();
 
-            if (filePath.matches(".+\\.jpe?g")) {
+            if (chosenFile.length() > Utils.POST_FILE_MAX_SIZE) {
+                errorLabel.setText("Maximum File Size Is 15 MB.");
+                errorLabel.setVisible(true);
+                createPostButton.setDisable(true);
+            }
+            else if (filePath.matches(".+\\.jpe?g")) {
                 loadImage();
             }
             else if (filePath.matches(".+\\.mp4")) {
@@ -60,8 +65,9 @@ public class CreatePostPageController
             else {
                 postImage.setImage(null);
                 postVideo.setMediaPlayer(null);
-                createPostButton.setDisable(true);
+                errorLabel.setText("You Can Only Post jpg and mp4 Files.");
                 errorLabel.setVisible(true);
+                createPostButton.setDisable(true);
                 playLabel.setVisible(false);
             }
         }
@@ -126,6 +132,8 @@ public class CreatePostPageController
 
         Request req = new Request(Utils.REQ.CREATE_POST, new Data(Utils.currentUser, post));
         NetworkManager.putRequest(req);
+
+        Utils.currentUserObj.addPost(post);
         ViewMyPostController.setPost(post);
         Starter.changeScene(Utils.GUI.MY_POST);
     }

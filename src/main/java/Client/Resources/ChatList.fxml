@@ -58,9 +58,9 @@
             </HBox>
          </children>
       </AnchorPane>
-      <Button fx:id="groupChatButton" layoutX="140.0" layoutY="150.0" mnemonicParsing="false" onAction="#groupChatButtonClickHandler" prefHeight="68.0" prefWidth="250.0" text="Create New Group Chat">
+      <Button fx:id="groupChatButton" layoutX="140.0" layoutY="150.0" mnemonicParsing="false" onAction="#groupChatButtonClickHandler" prefHeight="68.0" prefWidth="250.0" style="-fx-background-color: #d4d4d4;" text="Create New Group Chat">
          <font>
-            <Font name="Ebrima" size="20.0" />
+            <Font size="21.0" />
          </font>
       </Button>
    </children>

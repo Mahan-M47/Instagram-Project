@@ -109,6 +109,12 @@ public class MainManager
                 break;
 
 
+            case Utils.REQ.DELETE_POST:
+                Utils.currentUserObj = dat.user;
+                GUIManager.showMyProfilePage();
+                break;
+
+
             case Utils.REQ.TIMELINE:
                 Utils.timelineData = dat.posts;
                 GUIManager.showTimeline();

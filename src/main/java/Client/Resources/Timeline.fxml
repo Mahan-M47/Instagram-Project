@@ -59,7 +59,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <Button fx:id="logoutButton" alignment="CENTER" layoutX="1080.0" layoutY="38.0" mnemonicParsing="false" onAction="#logoutButtonClickHandler" prefHeight="50.0" prefWidth="120.0" text="Logout" textFill="#9a1313c4">
+      <Button fx:id="logoutButton" alignment="CENTER" layoutX="1080.0" layoutY="38.0" mnemonicParsing="false" onAction="#logoutButtonClickHandler" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #d4d4d4;" text="Logout" textFill="#a61e1ecd">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>

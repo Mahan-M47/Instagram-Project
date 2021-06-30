@@ -7,6 +7,10 @@ public class Utils
     public static final int BLOCKING_QUEUE_CAPACITY = 20;
     public static final long MONITOR_SLEEP_TIMER = 1000;
 
+    //Key Bytes Was generated using the keyGenerator class in another program. the Key Bytes for Client and Server are identical.
+    public static final byte[] ENCRYPTION_KEY_BYTES = { -85 ,-83 ,-6 ,82 ,93 ,125 ,-36 ,-35 ,-104 ,33 ,4 ,96, 49 ,-75,
+            -125, 113, -96, 114, -51, -109, 18, 33, -98, 27, 18, -79, -39, 65, 71, 76, 42, -116 };
+
 
     //Post types
     public static final String POST_IMAGE = ".jpg";
@@ -34,6 +38,7 @@ public class Utils
         public static final String UNLIKE = "unlike";
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
+        public static final String DELETE_POST = "deletePost";
         public static final String TIMELINE = "getTimeline";
         public static final String NOTIFICATION = "notification";
         public static final String PERSONAL_CHAT = "getPersonalChat";

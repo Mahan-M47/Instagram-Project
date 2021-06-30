@@ -12,8 +12,10 @@ public class ClientIO
     private DataInputStream in;
     private DataOutputStream out;
     private Gson gson;
+    private Encryption encryption;
 
-    public ClientIO(Socket socket) {
+    public ClientIO(Socket socket)
+    {
         try {
             this.socket = socket;
             in  = new DataInputStream( socket.getInputStream() );
@@ -22,37 +24,45 @@ public class ClientIO
         catch (IOException e) {
             e.printStackTrace();
         }
+
+        encryption = new Encryption();
         gson = new Gson();
     }
 
-    public void sendToServer(Request req) {
+    public void sendToServer(Request req)
+    {
         String json = gson.toJson(req);
         byte[] bytes = json.getBytes();
+
         try {
-            out.writeInt(bytes.length);
-            out.write(bytes);
+            byte[] encryptedBytes = encryption.encrypt(bytes);
+            out.writeInt(encryptedBytes .length);
+            out.write(encryptedBytes );
         }
-        catch (IOException e) {
+        catch (Exception e) {
             close();
         }
     }
 
-    public Response receiveFromServer() {
+    public Response receiveFromServer()
+    {
         String json = "";
 
         try {
             byte[] bytes = new byte[in.readInt()];
             in.readFully(bytes);
-            json = new String(bytes);
+            byte[] decryptedBytes = encryption.decrypt(bytes);
+            json = new String(decryptedBytes);
         }
-        catch (IOException e) {
+        catch (Exception e) {
             close();
         }
 
         return gson.fromJson(json, Response.class);
     }
 
-    public void close() {
+    public void close()
+    {
         try {
             socket.close();
             in.close();
