@@ -19,11 +19,11 @@ public class Message
         date = new Date();
     }
 
-    public Message(String sender, File file) {
-        messageType = "FILE";
+    public Message(String sender, File image) {
+        messageType = "IMAGE";
         this.sender = sender;
         date = new Date();
-        createImageBytes(file.getPath());
+        createImageBytes(image.getPath());
     }
 
     public void createImageBytes(String filePath)
@@ -33,6 +33,7 @@ public class Message
             FileInputStream in = new FileInputStream(savedFile);
             byte[] bytes = new byte[(int) savedFile.length()];
             in.read(bytes);
+            in.close();
             this.imageBytes = new String(Base64.getEncoder().encode(bytes), "UTF-8");
         }
         catch (IOException e) {

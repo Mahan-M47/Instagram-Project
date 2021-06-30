@@ -34,6 +34,7 @@ public class Utils
         public static final String UNLIKE = "unlike";
         public static final String COMMENT = "comment";
         public static final String CREATE_POST = "createPost";
+        public static final String DELETE_POST = "deletePost";
         public static final String TIMELINE = "getTimeline";
         public static final String NOTIFICATION = "notification";
         public static final String PERSONAL_CHAT = "getPersonalChat";

@@ -1,5 +1,8 @@
 package Client.View;
 
+import Client.Controller.Data;
+import Client.Controller.NetworkManager;
+import Client.Controller.Request;
 import Client.Model.Post;
 import Client.Utils;
 import com.jfoenix.controls.JFXTextArea;
@@ -41,7 +44,7 @@ public class ViewMyPostController implements Initializable
     @FXML
     private Button chatsButton, searchButton, homeButton, postButton, profileButton, editButton;
     @FXML
-    private Button backButton, commentsButton, likeButton, sendButton;
+    private Button backButton, commentsButton, likeButton, sendButton, deleteButton;
 
     private MediaPlayer mediaPlayer;
 
@@ -141,6 +144,13 @@ public class ViewMyPostController implements Initializable
 
     @FXML
     void sendButtonClickHandler() { CommonClickHandlers.sendCommentButton(commentsVBox, commentsTF, commentsLabel, post); }
+
+    @FXML
+    void deleteButtonClickHandler(ActionEvent event) {
+        stopMediaPlayer();
+        Request req = new Request( Utils.REQ.DELETE_POST, new Data(Utils.currentUser, post.getID()) );
+        NetworkManager.putRequest(req);
+    }
 
     @FXML
     void followersLinkClickHandler(ActionEvent event) {

@@ -65,6 +65,7 @@ public class Post implements Comparable<Post>
             FileInputStream in = new FileInputStream(savedFile);
             byte[] bytes = new byte[(int) savedFile.length()];
             in.read(bytes);
+            in.close();
             this.fileBytes = new String(Base64.getEncoder().encode(bytes), "UTF-8");
         }
         catch (IOException e) {
