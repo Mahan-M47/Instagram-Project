@@ -28,6 +28,7 @@ public class FollowersPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> followers = FXCollections.observableList(Utils.receivedUserObj.getFollowers());
         listView.setItems(followers);
+        listView.setStyle(" -fx-font: 26pt \"System\" ");
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 

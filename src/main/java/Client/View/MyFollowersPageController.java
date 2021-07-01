@@ -28,6 +28,7 @@ public class MyFollowersPageController implements Initializable
     {
         ObservableList<String> followers = FXCollections.observableList(Utils.currentUserObj.getFollowers());
         listView.setItems(followers);
+        listView.setStyle(" -fx-font: 26pt \"System\" ");
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 

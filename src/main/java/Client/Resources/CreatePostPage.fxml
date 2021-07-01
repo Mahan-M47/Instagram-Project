@@ -33,12 +33,12 @@
             <Font name="System Bold" size="45.0" />
          </font>
       </Label>
-      <Button fx:id="chooseFileButton" layoutX="205.0" layoutY="160.0" mnemonicParsing="false" onAction="#chooseFileButtonClickHandler" prefHeight="45.0" prefWidth="220.0" text="Choose File">
+      <Button fx:id="chooseFileButton" layoutX="205.0" layoutY="160.0" mnemonicParsing="false" onAction="#chooseFileButtonClickHandler" prefHeight="45.0" prefWidth="220.0" style="-fx-background-color: #d4d4d4;" text="Choose File">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
-      <Button fx:id="createPostButton" disable="true" layoutX="240.0" layoutY="510.0" mnemonicParsing="false" onAction="#createPostButtonClickHandler" prefHeight="75.0" prefWidth="150.0" text="Create Post">
+      <Button fx:id="createPostButton" disable="true" layoutX="240.0" layoutY="510.0" mnemonicParsing="false" onAction="#createPostButtonClickHandler" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #d4d4d4;" text="Create Post">
          <font>
             <Font name="System Bold" size="22.0" />
          </font></Button>

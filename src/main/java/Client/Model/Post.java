@@ -21,10 +21,10 @@ public class Post implements Comparable<Post>
 
     public Post(String username, String caption, String clientFilePath) {
         ID = IDBuilder(username);
-        date = new Date() ;
+        date = new Date();
         this.username = username;
         this.caption = caption;
-        comments = new ArrayList<>() ;
+        comments = new ArrayList<>();
         likedBy = new ArrayList<>();
         setFileBytes(clientFilePath);
     }

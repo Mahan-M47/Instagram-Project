@@ -15,10 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.net.URL;
-import java.util.Base64;
 import java.util.ResourceBundle;
 
 public class EditProfilePageController implements Initializable
@@ -56,9 +54,14 @@ public class EditProfilePageController implements Initializable
         FileChooser fileChooser = new FileChooser();
         chosenFile = fileChooser.showOpenDialog(new Stage());
 
-        if (chosenFile != null && chosenFile.getPath().matches(".+\\.jpg") )
+        if (chosenFile != null && chosenFile.getPath().matches(".+\\.jpe?g") )
         {
-            try {
+            if (chosenFile.length() > Utils.PROFILE_PICTURE_MAX_SIZE) {
+                errorLabel.setText("Maximum File Size Is 5 MB.");
+                errorLabel.setVisible(true);
+                chosenFile = null;
+            }
+            else try {
                 InputStream in = new FileInputStream(chosenFile);
                 Image img = new Image(in);
                 profilePicture.setImage(img);
@@ -70,6 +73,7 @@ public class EditProfilePageController implements Initializable
         }
         else {
             chosenFile = null;
+            errorLabel.setText("You Can Only Use jpg Files As Profile Picture");
             errorLabel.setVisible(true);
         }
     }

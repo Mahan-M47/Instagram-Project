@@ -34,6 +34,7 @@ public class SearchPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources)
     {
         errorLabel.setText(Utils.SEARCH_ERROR_TEXT);
+        listView.setStyle(" -fx-font: 26pt \"System\" ");
         ObservableList<String> searchResults = FXCollections.observableList(Utils.searchResults);
 
         if (searchResults.size() > 0) {
