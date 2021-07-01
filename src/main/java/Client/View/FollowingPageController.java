@@ -28,6 +28,7 @@ public class FollowingPageController implements Initializable
     {
         ObservableList<String> following = FXCollections.observableList(Utils.receivedUserObj.getFollowing());
         listView.setItems(following);
+        listView.setStyle(" -fx-font: 26pt \"System\" ");
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 

@@ -20,7 +20,7 @@
             <Font size="50.0" />
          </font>
       </Label>
-      <ListView fx:id="listView" layoutX="280.0" layoutY="140.0" prefHeight="550.0" prefWidth="450.0" stylesheets="@ListViewStyle.css">
+      <ListView fx:id="listView" layoutX="280.0" layoutY="140.0" prefHeight="550.0" prefWidth="450.0">
          <opaqueInsets>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </opaqueInsets>

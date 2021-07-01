@@ -59,7 +59,7 @@ public class DatabaseManager
         DBCollection collection = db.getCollection(Utils.DB.LOGIN);
         User user = new User(username, password);
 
-        DBObject query = collection.findOne(user.createLoginDBObject());
+        DBObject query = collection.findOne( user.createLoginDBObject() );
         if (query == null) {
             return false;
         } else {
@@ -267,7 +267,7 @@ public class DatabaseManager
     {
         DBCollection collection = db.getCollection(Utils.DB.POST);
         DBObject query = new BasicDBObject("Username", username);
-        Cursor cursor = collection.find(query);
+        DBCursor cursor = collection.find(query);
 
         ArrayList<Post> posts = new ArrayList<>();
         while (cursor.hasNext()) {

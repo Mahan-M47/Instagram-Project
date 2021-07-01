@@ -23,7 +23,7 @@
             <Font size="28.0" />
          </font>
       </TextField>
-      <ListView fx:id="listView" layoutX="310.0" layoutY="150.0" prefHeight="550.0" prefWidth="450.0" stylesheets="@ListViewStyle.css" visible="false">
+      <ListView fx:id="listView" layoutX="310.0" layoutY="150.0" prefHeight="550.0" prefWidth="450.0" visible="false">
          <opaqueInsets>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </opaqueInsets>

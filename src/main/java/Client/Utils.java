@@ -40,8 +40,9 @@ public class Utils
 
 
     //Maximum file size
-    public static final int POST_FILE_MAX_SIZE = 15000000;
-    public static final int MESSAGE_FILE_MAX_SIZE = 1000000;
+    public static final int POST_FILE_MAX_SIZE       = 30000000;
+    public static final int PROFILE_PICTURE_MAX_SIZE = 5000000;
+    public static final int MESSAGE_FILE_MAX_SIZE    = 1000000;
 
 
     //PlayButton CSS string
