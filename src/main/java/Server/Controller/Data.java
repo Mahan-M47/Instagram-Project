@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Data
 {
+    // Objects of the Data class are used to store data transferred between the Client and the Server.
     public String clientUsername = null;
     public ArrayList<String> usernameList = null;
     public String dataString = null;

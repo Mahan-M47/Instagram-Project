@@ -1,6 +1,8 @@
 package Server.Controller;
 
-public class Response {
+public class Response
+{
+    // Request Objects are messages sent from the Server to the Client, after being converted to Json Strings.
     private String title;
     private Data data;
 

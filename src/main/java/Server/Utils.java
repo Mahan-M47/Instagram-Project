@@ -61,4 +61,24 @@ public class Utils
         public static final String GROUP_CHAT = "GroupChat";
         public static final String CHAT_ID = "ChatID";
     }
+
+
+    //MongoDB Keys
+    public static class KEY {
+        public static final String USERNAME = "Username";
+        public static final String PASSWORD  = "Password";
+        public static final String BIO = "Bio";
+        public static final String FOLLOWING = "Following";
+        public static final String FOLLOWERS = "Followers";
+        public static final String POST_TYPE = "PostType";
+        public static final String CAPTION = "Caption";
+        public static final String POST_ID = "PostID";
+        public static final String COMMENTS = "Comments";
+        public static final String LIKED_BY = "LikedBy";
+        public static final String DATE = "Date";
+        public static final String CHAT_ID = "ChatID";
+        public static final String CHAT_ID_LIST = "ChatIDList";
+        public static final String MEMBERS = "Members";
+        public static final String MESSAGE_LIST = "MessageList";
+    }
 }

@@ -8,6 +8,7 @@ import java.net.Socket;
 
 public class ServerIO
 {
+    // This Class includes all communication and data transmission methods for sending Responses and receiving Requests.
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;

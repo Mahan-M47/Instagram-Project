@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NetworkManager implements Runnable
 {
+    // A Network Manager object manages the connection between the Server and The Client.
     private BlockingQueue<Request>  queueRequest;
     private BlockingQueue<Response> queueResponse;
     private ServerIO serverIO;

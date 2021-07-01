@@ -4,6 +4,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class Send implements Runnable
 {
+    // This Thread is always ready to transmit Requests to the Server.
     private BlockingQueue<Request> queue;
     private ClientIO clientIO;
 

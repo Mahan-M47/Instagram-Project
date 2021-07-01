@@ -120,45 +120,45 @@ public class User
 
     public DBObject createLoginDBObject()
     {
-        return new BasicDBObject("Username", username)
-                .append("Password", password);
+        return new BasicDBObject(Utils.KEY.USERNAME, username)
+                .append(Utils.KEY.PASSWORD, password);
     }
 
     public DBObject createFollowDBObject()
     {
-        return new BasicDBObject("Username", username)
-                .append("Following", following)
-                .append("Followers", followers);
+        return new BasicDBObject(Utils.KEY.USERNAME, username)
+                .append(Utils.KEY.FOLLOWING, following)
+                .append(Utils.KEY.FOLLOWERS, followers);
     }
 
     public DBObject createBioDBObject()
     {
-        return new BasicDBObject("Username", username)
-                .append("Bio", bioText);
+        return new BasicDBObject(Utils.KEY.USERNAME, username)
+                .append(Utils.KEY.BIO, bioText);
     }
 
     public static User parseLoginDBObject(DBObject object)
     {
         User user = new User();
-        user.setUsername((String) object.get("Username"));
-        user.setPassword((String) object.get("Password"));
+        user.setUsername( (String) object.get(Utils.KEY.USERNAME) );
+        user.setPassword( (String) object.get(Utils.KEY.PASSWORD) );
         return user;
     }
 
     public static User parseFollowDBObject(DBObject object)
     {
         User user = new User();
-        user.setUsername((String) object.get("Username"));
-        user.setFollowing((ArrayList<String>)object.get("Following"));
-        user.setFollowers((ArrayList<String>)object.get("Followers"));
+        user.setUsername( (String) object.get(Utils.KEY.USERNAME) );
+        user.setFollowing( (ArrayList<String>)object.get(Utils.KEY.FOLLOWING) );
+        user.setFollowers( (ArrayList<String>)object.get(Utils.KEY.FOLLOWERS) );
         return user;
     }
 
     public static User parseBioDBObject(DBObject object)
     {
         User user = new User();
-        user.setUsername((String) object.get("Username"));
-        user.setBioText((String) object.get("Bio"));
+        user.setUsername( (String) object.get(Utils.KEY.USERNAME) );
+        user.setBioText( (String) object.get(Utils.KEY.BIO) );
         return user;
     }
 

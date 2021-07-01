@@ -1,5 +1,6 @@
 package Client.Model;
 
+import Client.Utils;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -56,20 +57,20 @@ public class GroupChat
         }
 
         return new BasicDBObject()
-                .append("ChatID", chatID)
-                .append("Members", members)
-                .append("MessageList", jsonMessageList);
+                .append(Utils.KEY.CHAT_ID, chatID)
+                .append(Utils.KEY.MEMBERS, members)
+                .append(Utils.KEY.MESSAGE_LIST, jsonMessageList);
     }
 
     public static GroupChat parseGroupChatDBObject(DBObject object)
     {
         GroupChat chat = new GroupChat();
-        chat.setChatID((String) object.get("ChatID"));
-        chat.setMembers((ArrayList<String>) object.get("Members"));
+        chat.setChatID( (String) object.get(Utils.KEY.CHAT_ID) );
+        chat.setMembers( (ArrayList<String>) object.get(Utils.KEY.MEMBERS) );
 
         Gson gson = new Gson();
         chat.setMessageList(new ArrayList<>());
-        ArrayList<String> jsonMessageList = (ArrayList<String>) object.get("MessageList");
+        ArrayList<String> jsonMessageList = (ArrayList<String>) object.get(Utils.KEY.MESSAGE_LIST);
 
         for (String jsonMessage : jsonMessageList) {
             chat.addMessage( gson.fromJson(jsonMessage, Message.class) );

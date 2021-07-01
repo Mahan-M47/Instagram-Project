@@ -7,6 +7,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class NetworkManager
 {
+    // A Network Manager object manages the connection between the Server and The Client.
     private static BlockingQueue<Request> queueRequest;
     private ClientIO clientIO;
     private BlockingQueue<Response> queueResponse;
@@ -37,20 +38,21 @@ public class NetworkManager
         sendThread.start();
     }
 
-    public static void putRequest(Request req) {
+    public void stopClient() {
+        getThread.interrupt();
+        processThread.interrupt();
+        sendThread.interrupt();
+        clientIO.close();
+    }
+
+
+    public static void putRequest(Request req)
+    {
         try {
             queueRequest.put(req);
         }
         catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void stopClient() {
-        getThread.interrupt();
-        processThread.interrupt();
-        sendThread.interrupt();
-        clientIO.close();
     }
 }

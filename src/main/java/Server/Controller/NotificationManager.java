@@ -8,6 +8,7 @@ import java.util.Collections;
 
 public class NotificationManager
 {
+    // This class contains method necessary for sending Notifications using the Active Clients List in Main Manager.
     public static synchronized void followNotification(String newFollower, String followedUser)
     {
         Notification notification = new Notification("New Follower!", newFollower + " Followed You");

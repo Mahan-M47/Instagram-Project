@@ -4,6 +4,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class ResponseProcessor implements Runnable
 {
+    // This thread takes Responses from a Blocking Queue and processes them using the Main Manager's Process method.
     private BlockingQueue<Response> queue;
 
     public ResponseProcessor(BlockingQueue<Response> queue) {

@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainManager
 {
+//    All of the Main processes of the Client are handled by this class.
     public synchronized static Response process(Request req, AtomicBoolean state)
     {
         Data dat = req.getData();
@@ -142,7 +143,7 @@ public class MainManager
                     GroupChat updatedChat = DatabaseManager.addMember(dat.dataString, dat.clientUsername);
                     return new Response(Utils.REQ.ADD_MEMBER, new Data(updatedChat));
                 }
-                else return new Response(Utils.REQ.ADD_MEMBER);
+                else return new Response(Utils.REQ.ADD_MEMBER, new Data(false));
 
 
             case Utils.REQ.LOGOUT:
@@ -157,12 +158,12 @@ public class MainManager
 
         return null;
 
-        //each Request.title corresponds to a case in the switch statement which summons a method from mongo
-        //to process the Request. These methods should all return a Response object which is sent back to the client.
+        //each Request.title corresponds to a case in the switch statement which summons a method from Database Manager
+        //to process the Request. Some of these methods return a Response object which is sent back to the client.
     }
 
 
-    //methods for managing Active Clients
+    //Nethods for managing Active Clients
     public static List<ActiveClient> activeClients = new ArrayList<>();
 
     public synchronized static void addClient(ActiveClient client) {

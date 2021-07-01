@@ -1,11 +1,11 @@
 package Server.Controller;
 
 import Server.Utils;
-
 import java.util.concurrent.BlockingQueue;
 
 public class Send implements Runnable
 {
+    // This Thread is always ready to transmit Requests to the Client.
     private BlockingQueue<Response> queue;
     private ServerIO serverIO;
 

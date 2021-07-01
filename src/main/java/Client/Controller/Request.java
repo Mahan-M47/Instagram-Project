@@ -4,6 +4,7 @@ import Client.Utils;
 
 public class Request
 {
+    // Request Objects are messages sent from the Client to the Server, after being converted to Json Strings.
     private String title;
     private Data data = null;
 

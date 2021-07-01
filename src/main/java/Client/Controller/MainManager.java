@@ -3,12 +3,12 @@ package Client.Controller;
 import Client.Model.Notification;
 import Client.Utils;
 import Client.View.CommonClickHandlers;
-import javafx.application.Platform;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class MainManager
 {
+    // All of the Main processes of the Client are handled by this class.
     private static NetworkManager networkManager;
 
     public static void startClient (Socket socket) {
@@ -139,7 +139,6 @@ public class MainManager
 
 
             case Utils.REQ.ADD_MEMBER:
-
                 if (dat.groupChat == null) {
                     Utils.ADD_MEMBER_ERROR_TEXT = "This User Does Not Exist.";
                     GUIManager.reload();

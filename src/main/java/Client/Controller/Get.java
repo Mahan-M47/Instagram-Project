@@ -4,6 +4,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class Get implements Runnable
 {
+    // This Thread constantly listens for any response sent from the Server.
     private BlockingQueue<Response> queue;
     private ClientIO clientIO;
 

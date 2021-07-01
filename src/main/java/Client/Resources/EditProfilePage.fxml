@@ -62,7 +62,7 @@
             <Font name="Calibri Bold" size="24.0" />
          </font>
       </Button>
-      <Label fx:id="errorLabel" layoutX="545.0" layoutY="630.0" prefHeight="75.0" prefWidth="400.0" textAlignment="CENTER" textFill="#d31111" visible="false">
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="545.0" layoutY="630.0" prefHeight="75.0" prefWidth="400.0" textAlignment="CENTER" textFill="#d31111" visible="false">
          <font>
             <Font name="System Italic" size="20.0" />
          </font>

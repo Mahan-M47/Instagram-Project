@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Encryption
 {
+    // This class encrypts byte arrays before they are sent and decrypts byte arrays received from the the Client.
     private Cipher encryptCipher, decryptCipher;
 
     public Encryption()

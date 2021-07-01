@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Data
 {
+    // Objects of the Data class are used to store data transferred between the Client and the Server.
     public String clientUsername = null;
     public ArrayList<String> usernameList = null;
     public String dataString = null;
@@ -28,13 +29,11 @@ public class Data
         this.clientUsername = clientUsername;
     }
 
-    //used by all Requests and Responses with just ONE String of data other than the client's username. (e.g. login)
     public Data(String clientUsername, String dataString) {
         this.clientUsername = clientUsername;
         this.dataString = dataString;
     }
 
-    //only used by the server so there's no need to add the client's username. (e.g. returning search results)
     public Data(ArrayList<String> usernameList) {
         this.usernameList = new ArrayList<>(usernameList);
     }
@@ -45,7 +44,6 @@ public class Data
         this.text = text;
     }
 
-    //User already contains the username
     public Data(User user) {
         this.user = user;
     }
@@ -55,7 +53,6 @@ public class Data
         this.post = post;
     }
 
-    //only used by the server so there's no need to add the client's username. (e.g. posts in the Timeline)
     public Data(List<Post> posts) {
         this.posts = new ArrayList<>(posts);
     }

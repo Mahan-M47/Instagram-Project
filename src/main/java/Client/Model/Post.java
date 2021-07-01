@@ -115,25 +115,27 @@ public class Post implements Comparable<Post>
 
     public DBObject createPostDBObject() {
         return new BasicDBObject()
-                .append("PostType", postType)
-                .append("Caption", caption)
-                .append("ID",ID)
-                .append("Username", username)
-                .append("Comments", comments)
-                .append("Date", date)
-                .append("LikedBy", likedBy);
+                .append(Utils.KEY.POST_TYPE, postType)
+                .append(Utils.KEY.CAPTION, caption)
+                .append(Utils.KEY.POST_ID,ID)
+                .append(Utils.KEY.USERNAME, username)
+                .append(Utils.KEY.COMMENTS, comments)
+                .append(Utils.KEY.DATE, date)
+                .append(Utils.KEY.LIKED_BY, likedBy);
     }
 
     public static Post parsePost(DBObject object)
     {
         Post post = new Post();
-        post.setPostType((String) object.get("PostType"));
-        post.setCaption((String) object.get("Caption"));
-        post.setUsername((String) object.get("Username"));
-        post.setLikedBy((ArrayList<String>) object.get("LikedBy"));
-        post.setComments((ArrayList<String>) object.get("Comments"));
-        post.setDate((Date) object.get("Date"));
-        post.setID((String) object.get("ID"));
+        post.setPostType( (String) object.get(Utils.KEY.POST_TYPE) );
+        post.setCaption( (String) object.get(Utils.KEY.CAPTION)) ;
+        post.setID( (String) object.get(Utils.KEY.POST_ID) );
+        post.setUsername( (String) object.get(Utils.KEY.USERNAME) );
+        post.setLikedBy( (ArrayList<String>) object.get(Utils.KEY.LIKED_BY) );
+        post.setComments( (ArrayList<String>) object.get(Utils.KEY.COMMENTS) );
+        post.setDate( (Date) object.get(Utils.KEY.DATE) );
+        post.setFileBytes( post.getServerFilePath() );
+
         return post;
     }
 

@@ -13,6 +13,7 @@ import org.controlsfx.control.Notifications;
 
 public class GUIManager
 {
+    // This class connects Main Manager to UI elements inside the View Package.
     public static void start() {
         javafx.application.Application.launch(Starter.class);
     }

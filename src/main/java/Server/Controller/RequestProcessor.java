@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RequestProcessor implements Runnable
 {
+    // This thread takes Requests from a Blocking Queue and processes them using the Main Manager's Process method.
     private BlockingQueue<Request> queueRequest;
     private BlockingQueue<Response> queueResponse;
     private AtomicBoolean state;
